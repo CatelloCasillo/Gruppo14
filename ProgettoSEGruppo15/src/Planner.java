@@ -21,6 +21,7 @@ public class Planner {
 
     public Planner() {
         this.repository= new Repository();
+
     }
     
     //this method create a maintance activity 
