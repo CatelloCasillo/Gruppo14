@@ -26,6 +26,7 @@ public class MaintanceActivity {
         this.intervationTime = intervationTime;
         this.interruptible = interruptible;
         this.week = week;
+        
     }
 
     
