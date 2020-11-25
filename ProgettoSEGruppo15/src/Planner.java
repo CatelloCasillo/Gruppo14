@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,22 +18,23 @@ import java.util.List;
 public class Planner {
   MaintanceActivity activity;
   Repository repository;
+  ArrayList<MaintanceActivity> listmaintance = new ArrayList<>();
  
 
     public Planner() {
         this.repository= new Repository();
-
     }
     
     //this method create a maintance activity 
     public void createActivity(String id, String site, String typology, String activityDescription, String intervationTime, boolean interruptible, String week ){
        MaintanceActivity a= new MaintanceActivity(id, site, typology, activityDescription, intervationTime, interruptible, week);
+       listmaintance.add(a);
        
     }
-    
+   
     //this method create a maintance list from maintance activity table retrive from database 
-    public List<MaintanceActivity> getActivityTable(){
-        List<MaintanceActivity> list= new LinkedList<>();
+    public ArrayList<MaintanceActivity> getActivityTable(){
+        ArrayList<MaintanceActivity> list= new ArrayList<>();
         return list;
-    }
+    } 
 }
