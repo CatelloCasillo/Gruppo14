@@ -12,7 +12,7 @@ import javax.swing.border.Border;
 
 /**
  *
- * @author User
+ * @author Gabriella
  */
 public class FirstPagePlannerGUI extends javax.swing.JFrame {
     
