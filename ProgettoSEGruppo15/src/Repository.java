@@ -42,28 +42,204 @@ public class Repository {
         }
     }
    
-    public void getMaintenanceActivity(){
+    public ResultSet getInformationOfMaintenanceActivity(){
+       
         try {
-            
-            String query = "select* from MaintenanceActivity";
+            String query = "select* from "
+                    + "MaintenanceActivity as ma "
+                    + "join Procedure as p on (ma.procedureID=p.procedureID )"
+                    + "join Site as s on (ma.siteID=s.siteID )"
+                    + "order by ma.activityID;";
             ResultSet rst = stm.executeQuery(query);
-   
-            while (rst.next()) {
-                String activityID = rst.getString("activityID");
-                String activityDescription = rst.getString("activityDescription");
+            return rst;
+           
+            /*while (rst.next()) {
+              String activityDescription = rst.getString("activityDescription");
                 int activityInterventionTime = rst.getInt("activityInterventionTime");
                 boolean interruptibleActivity = rst.getBoolean("interruptibleActivity");
                 int activityWeekNumber = rst.getInt("activityWeekNumber");
                 String activityTypology = rst.getString("activityTypology");
                 
                 System.out.println(activityID+"\t"+activityDescription+"\t"+activityInterventionTime+"\t"+interruptibleActivity+
-                        "\t"+activityWeekNumber+"\t"+activityTypology);
+                       "\t"+activityWeekNumber+"\t"+activityTypology);
+            } */ 
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        
+    }
+    public String getActivityID(ResultSet rst){
+        try {
+            return rst.getString("activityID");
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+       
+    }
+    public String getActivityDescription(ResultSet rst){
+        try {
+            return rst.getString("activityDescription");
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        
+    }
+    public int getActivityInterventionTime(ResultSet rst){
+        try {
+            return rst.getInt("activityInterventionTime");
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
+      
+    }
+    public boolean isInterruptibleActivity(ResultSet rst){
+        try {
+            return rst.getBoolean("interruptibleActivity");
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+    }
+    public int getActivityWeekNumber(ResultSet rst){
+        try {
+            return rst.getInt("activityWeekNumber");
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
+    }
+    public String getActivityTypology(ResultSet rst){
+        try {
+            return rst.getString("activityTypology");
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    public String getSiteID(ResultSet rst){
+        try {
+            return rst.getString("siteID");
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    public String getFactorySite(ResultSet rst){
+        try {
+            return rst.getString("FactorySite");
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        
+    }
+    public String getAreaSite(ResultSet rst){
+        try {
+            return rst.getString("AreaSite");
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        
+    }
+    public String getProcedureID(ResultSet rst){
+        try {
+            return rst.getString("ProcedureID");
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        
+    }
+    public String getProcedureName(ResultSet rst){
+        try {
+            return rst.getString("ProcedureName");
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+
+        }
+    }
+    public String getProcedureDescription(ResultSet rst){
+        try {
+            return rst.getString("ProcedureDescription");
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        
+    }
+      public String getFileSMP(ResultSet rst){
+        try {
+            return rst.getString("FileSMP");
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        
+    }
+    public void insertNewMaintenanceActivity(String activityID,
+               // String plannerID, String maintainerID, String siteID, String procedureID,
+                String activityDescription,int activityInterventionTime,
+                boolean interruptibleActivity,String activityMaterials,int activityWeekNumber,
+                String activityWorkspaceNotes,String activityTypology){
+ 
+        StringBuilder temp = new StringBuilder();
+        temp.append("insert into MaintenanceActivity(activityID, "
+                //+ "plannerID,maintainerID,siteID,procedureID,"
+                + "activityDescription,activityInterventionTime,"
+                + "interruptibleActivity,activityMaterials,activityWeekNumber,"
+                + "activityWorkspaceNotes,activityTypology )");
+        temp.append("values(");
+        temp.append("'").append(activityID).append("',");
+        
+       // temp.append("'").append(plannerID).append("',");
+        //temp.append("'").append(maintainerID).append("',");
+        //temp.append("'").append(siteID).append("',");
+       // temp.append("'").append(procedureID).append("',");
+        
+        temp.append("'").append(activityDescription).append("',");
+        temp.append(" ").append(activityInterventionTime).append(",");
+        temp.append(" ").append(interruptibleActivity).append(" ,");
+        temp.append("' ").append(activityMaterials).append("' ,");
+        temp.append(" ").append(activityWeekNumber).append(" ,");
+        temp.append("'").append(activityWorkspaceNotes).append("',");
+        temp.append("'").append(activityTypology).append("' ");
+        temp.append(");");
+        
+        try {
+            stm.executeUpdate(temp.toString());
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void viewMaintenanceActivityTable(){
+            
+        try {
+            String query = "select* from "
+                    + "MaintenanceActivity ";
+            ResultSet rst = stm.executeQuery(query);
+            
+            System.out.println("activityID"+"\t"+"activityDescription"+"\t"+"activityInterventionTime"+"\t"+"interruptibleActivity"+
+            "\t"+"activityWeekNumber"+"\t"+"activityTypology");
+            while (rst.next()) {
+            String activityID = rst.getString("activityID");
+            String activityDescription = rst.getString("activityDescription");
+            int activityInterventionTime = rst.getInt("activityInterventionTime");
+            boolean interruptibleActivity = rst.getBoolean("interruptibleActivity");
+            int activityWeekNumber = rst.getInt("activityWeekNumber");
+            String activityTypology = rst.getString("activityTypology");
+            
+            System.out.println(activityID+"\t"+activityDescription+"\t"+activityInterventionTime+"\t"+interruptibleActivity+
+            "\t"+activityWeekNumber+"\t"+activityTypology);
             } 
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
     }
-    
-   
 }
