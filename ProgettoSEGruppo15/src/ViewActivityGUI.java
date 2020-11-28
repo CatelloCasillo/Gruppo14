@@ -216,10 +216,10 @@ public class ViewActivityGUI extends javax.swing.JFrame {
 
     private void jButtonViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonViewActionPerformed
         dtm.setRowCount(0);
-        for(int i=0; i<p.listmaintance.size(); i++){
-           Object[] objs = {p.listmaintance.get(i).id, p.listmaintance.get(i).site, p.listmaintance.get(i).typology,
-               p.listmaintance.get(i).activityDescription, p.listmaintance.get(i).intervationTime, p.listmaintance.get(i).interruptible,
-               p.listmaintance.get(i).week} ;
+        for(int i=0; i<p.activityList.size(); i++){
+           Object[] objs = {p.activityList.get(i).id, p.activityList.get(i).site, p.activityList.get(i).typology,
+               p.activityList.get(i).activityDescription, p.activityList.get(i).intervationTime, p.activityList.get(i).interruptible,
+               p.activityList.get(i).weekNumber} ;
            dtm.addRow(objs);
         }
     }//GEN-LAST:event_jButtonViewActionPerformed

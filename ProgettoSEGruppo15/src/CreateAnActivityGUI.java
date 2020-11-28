@@ -374,7 +374,7 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
     
     private void jButtonCreateeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreateeeActionPerformed
         if(verifData()){
-        p.createActivity(jTextFieldId.getText(),jTextFieldSite.getText(), jComboBoxTipo.getItemAt(jComboBoxTipo.getSelectedIndex()), jTextFieldDescription.getText(),jTextFieldTime.getText(), verifRadioButton() , jTextFieldWeek.getText());
+        //p.createActivity(jTextFieldId.getText(),jTextFieldSite.getText(), jComboBoxTipo.getItemAt(jComboBoxTipo.getSelectedIndex()), jTextFieldDescription.getText(),jTextFieldTime.getText(), verifRadioButton() , jTextFieldWeek.getText());
         JOptionPane.showMessageDialog(rootPane, "create successfully");
         clearField();
         /*FirstPagePlannerGUI planner= new FirstPagePlannerGUI();
