@@ -1,6 +1,5 @@
 package SelectionGUI;
 
-
 import PrimoPackege.Planner;
 import java.awt.Color;
 import java.awt.Component;
