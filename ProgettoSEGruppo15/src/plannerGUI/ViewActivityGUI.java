@@ -97,13 +97,13 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         jLabelClose.setBorder(label_border);
         jLabelClose.setForeground(Color.black);
     }
-    
+   
     public void populateTable(){
         dtm.setRowCount(0);
-        for(int i=0; i<p.getListmaintance().size(); i++){
-           Object[] objs = {p.getListmaintance().get(i).getId(), p.getListmaintance().get(i).getSite(), p.getListmaintance().get(i).getTypology(),
-               p.getListmaintance().get(i).getActivityDescription(), p.getListmaintance().get(i).getIntervationTime(), p.getListmaintance().get(i).isInterruptible(),
-               p.getListmaintance().get(i).getWeek()} ;
+        for(int i=0; i<p.getActivityList().size(); i++){
+           Object[] objs = {p.getActivityList().get(i).getId(), p.getActivityList().get(i).getSite().getArea()+ '-'+ p.getActivityList().get(i).getSite().getFactory()  , p.getActivityList().get(i).getTypology(),
+               p.getActivityList().get(i).getActivityDescription(), p.getActivityList().get(i).getIntervationTime(), p.getActivityList().get(i).isInterruptible(),
+               p.getActivityList().get(i).getWeekNumber()} ;
            dtm.addRow(objs);
     }
     }
@@ -396,9 +396,9 @@ public class ViewActivityGUI extends javax.swing.JFrame {
     int dialogResult= JOptionPane.showConfirmDialog(this, "Delete this data", "Delete", dialogButton);
     if(dialogResult == 0){
         dtm.removeRow(row);
-        p.getListmaintance().remove(row);
+       // p.getListmaintance().remove(row);
        // p.listmaintance.remove(row);
-        populateTable();
+       // populateTable();
         }clearField();      
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
@@ -410,12 +410,12 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         String updateSite = jTextFieldSite.getText();
         String updateTypology = jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
         String updateDescription = jTextFieldDescription.getText();
-        String updateTime = jTextFieldTime.getText();
+        int updateTime = Integer.parseInt(jTextFieldTime.getText());
         boolean updateInterruptible= verifRadioButton();
-        String updateWeek = jTextFieldWeek.getText();
+        int updateWeek = Integer.parseInt(jTextFieldWeek.getText());
         
      
-       
+       /*
         p.getListmaintance().get(row).setId(updateId);
         p.getListmaintance().get(row).setSite(updateSite);
         p.getListmaintance().get(row).setTypology(updateTypology);
@@ -432,7 +432,7 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         p.listmaintance.get(row).intervationTime = updateTime;
         p.listmaintance.get(row).interruptible= updateInterruptible;
         p.listmaintance.get(row).week = updateWeek;*/
-        populateTable();
+      //  populateTable();
     }//GEN-LAST:event_jButtonUpdateActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked

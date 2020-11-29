@@ -27,8 +27,9 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
      * Creates new form CreateAnActivity
      */
     public CreateAnActivityGUI(Planner p) {
-        initComponents();
         this.p = p;
+        initComponents();
+        
        
         this.setLocationRelativeTo(null);
     }
@@ -40,7 +41,6 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
     
     public void clearField(){
         jTextFieldId.setText("");
-        jTextFieldSite.setText("");
         jComboBoxTipo.setSelectedIndex(0);
         jTextFieldDescription.setText("");
         jTextFieldTime.setText("");
@@ -48,6 +48,7 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
         jRadioButton2.setSelected(false);
         jTextFieldMaterial.setText("");
         jTextFieldWeek.setText("");
+        jTextAreaWorkSpace.setText("");
     }
     
     public boolean verifRadioButton(){
@@ -59,11 +60,15 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
     
     // verify if data are empty
     public boolean verifData(){
-        if (jTextFieldId.getText().equals("") || jTextFieldSite.getText().equals("") 
+        if (jTextFieldId.getText().equals("")  
                 || jTextFieldDescription.getText().equals("") || jTextFieldTime.getText().equals("") 
                 || jTextFieldMaterial.getText().equals("") || jTextFieldWeek.getText().equals("") 
                 ||(jRadioButton1.isSelected() == false) &&(jRadioButton2.isSelected()== false)){
             JOptionPane.showMessageDialog(null, "One or more fields are empty");
+            return false;
+        }
+        if (jTextFieldId.getText().length()!=6 ){
+            JOptionPane.showMessageDialog(null, "ID must has 6 char");
             return false;
         }
         else if (jRadioButton1.isSelected() && jRadioButton2.isSelected()){
@@ -109,7 +114,6 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jTextFieldDescription = new javax.swing.JTextField();
         jTextFieldId = new javax.swing.JTextField();
-        jTextFieldSite = new javax.swing.JTextField();
         jTextFieldTime = new javax.swing.JTextField();
         jTextFieldMaterial = new javax.swing.JTextField();
         jTextFieldWeek = new javax.swing.JTextField();
@@ -121,6 +125,7 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
         jButtonCancel = new javax.swing.JButton();
         jButtonCreateee = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -182,11 +187,9 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(41, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelClose)
-                    .addComponent(jLabelMin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabelClose)
+                .addComponent(jLabelMin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(245, 171, 53));
@@ -246,11 +249,6 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
         jTextFieldId.setPreferredSize(new java.awt.Dimension(6, 25));
         jPanel2.add(jTextFieldId);
         jTextFieldId.setBounds(100, 20, 100, 30);
-
-        jTextFieldSite.setBackground(new java.awt.Color(253, 227, 167));
-        jTextFieldSite.setPreferredSize(new java.awt.Dimension(6, 25));
-        jPanel2.add(jTextFieldSite);
-        jTextFieldSite.setBounds(60, 60, 90, 30);
 
         jTextFieldTime.setBackground(new java.awt.Color(253, 227, 167));
         jPanel2.add(jTextFieldTime);
@@ -322,6 +320,13 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
         jPanel2.add(jButton1);
         jButton1.setBounds(160, 470, 110, 30);
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        for(int i=0; i<p.getSiteList().size(); i++){
+            jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { p.getSiteList().get(i).getId()+':'+ p.getSiteList().get(i).getArea()+'-'+ p.getSiteList().get(i).getFactory() }));
+        }
+        jPanel2.add(jComboBox1);
+        jComboBox1.setBounds(80, 60, 160, 20);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -384,7 +389,9 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
 
     private void jButtonCreateeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreateeeActionPerformed
         if(verifData()){
-        p.createActivity(jTextFieldId.getText(),jTextFieldSite.getText(), jComboBoxTipo.getItemAt(jComboBoxTipo.getSelectedIndex()), jTextFieldDescription.getText(),jTextFieldTime.getText(), verifRadioButton() , jTextFieldWeek.getText());
+            System.out.println((jComboBox1.getItemAt(jComboBox1.getSelectedIndex()))) ;
+          p.createActivity(jTextFieldId.getText(), p.findSiteInList( jComboBox1.getItemAt(jComboBox1.getSelectedIndex()) , p.getSiteList()) ,  jComboBoxTipo.getItemAt(jComboBoxTipo.getSelectedIndex()), jTextFieldDescription.getText(), Integer.parseInt(jTextFieldTime.getText()), verifRadioButton(), Integer.parseInt(jTextFieldWeek.getText()), jTextAreaWorkSpace.getText());
+        
         JOptionPane.showMessageDialog(rootPane, "create successfully");
         clearField();
         }
@@ -430,6 +437,7 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCancel;
     private javax.swing.JButton jButtonCreateee;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBoxTipo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -452,7 +460,6 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldDescription;
     private javax.swing.JTextField jTextFieldId;
     private javax.swing.JTextField jTextFieldMaterial;
-    private javax.swing.JTextField jTextFieldSite;
     private javax.swing.JTextField jTextFieldTime;
     private javax.swing.JTextField jTextFieldWeek;
     // End of variables declaration//GEN-END:variables

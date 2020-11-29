@@ -2,7 +2,12 @@ package PrimoPackege;
 
 
 import PrimoPackege.MaintanceActivity;
+import Repository.Repository;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 
@@ -19,43 +24,103 @@ import java.util.ArrayList;
 public class Planner {
   MaintanceActivity activity;
   Repository repository;
-  ArrayList<MaintanceActivity> listmaintance = new ArrayList<>();
+  ArrayList<MaintanceActivity> activityList;
+  ArrayList<Site> siteList;
+  
  
 
     public Planner() {
         this.repository= new Repository();
+         //inizializzazione delle strutture dati che contengono i dati presi dal DB
+        this.initSiteList();
+        this.initActivityList();
     }
     
     //this method create a maintance activity 
-    public void createActivity(String id, String site, String typology, String activityDescription, String intervationTime, boolean interruptible, String week ){
-       MaintanceActivity a= new MaintanceActivity(id, site, typology, activityDescription, intervationTime, interruptible, week);
-       listmaintance.add(a);
-       
+    public void createActivity(String id, Site site, String typology, String activityDescription, int intervationTime, boolean interruptible, int week, String workspacenotes ){
+       MaintanceActivity a= new MaintanceActivity(id, site, typology, activityDescription, intervationTime, interruptible, week, workspacenotes);
+       //activityList.add(a);
+       repository.insertNewMaintenanceActivity(a.id, a.getSite().id, a.activityDescription, a.intervationTime, a.interruptible, a.weekNumber, a.workspacenotes, a.typology);
+       activityList.add(a);
     }
-   
-    //this method create a maintance list from maintance activity table retrive from database 
-    public ArrayList<MaintanceActivity> getActivityTable(){
-        ArrayList<MaintanceActivity> list= new ArrayList<>();
-        return list;
-    } 
-
+    
+    public void initActivityList(){
+        this.activityList = new ArrayList<>();
+        try {
+            ResultSet rst = repository.getInformationOfMaintenanceActivity();
+            while (rst.next()) {
+                String id = repository.getActivityID(rst);
+                
+                String siteID = repository.getSiteID(rst);
+                //trovare il site nella lista
+                //System.out.println("siteId = "+siteID);
+                Site site = this.findSiteInList(siteID,this.siteList);
+                //--
+                
+                String procedureID = repository.getProcedureID(rst);
+                String fileSMP = repository.getFileSMP(rst);
+                
+                int weekNumber = repository.getActivityWeekNumber(rst);
+                int intervationTimeNumber = repository.getActivityInterventionTime(rst);
+                String typology = repository.getActivityTypology(rst);
+                String activityDescription = repository.getActivityDescription(rst);
+                boolean interruptible = repository.isInterruptibleActivity(rst);
+                MaintanceActivity mainActivity= new MaintanceActivity(id, site, typology, activityDescription, intervationTimeNumber, interruptible, weekNumber, procedureID, fileSMP);
+                this.activityList.add(mainActivity);
+           } 
+        } catch (SQLException ex) {
+          Logger.getLogger(Planner.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+    
+    
+    public void initSiteList(){
+      this.siteList = new ArrayList<>();
+      try {
+        ResultSet rst = repository.getSiteTable();
+        while (rst.next()) {
+          String id = repository.getSiteID(rst);
+          String factory = repository.getFactorySite(rst);
+          String area = repository.getAreaSite(rst);
+          Site site = new Site(id, factory, area);
+          this.siteList.add(site);
+        } 
+      } catch (SQLException ex) {
+          Logger.getLogger(Planner.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    
+    }
+    public Site findSiteInList(String idSite, ArrayList<Site> siteList) {
+        //String [] id= idSite.split(":");
+        String id= idSite.trim();
+          for (Site s : siteList) {
+              //System.out.println(id.concat(s.getId()));
+              if (s.getId().trim().equals(id)) {
+                  System.out.println(id);
+                  return s;
+              }
+          }
+          return null;
+    }
+    
     public MaintanceActivity getActivity() {
         return activity;
     }
 
-    public ArrayList<MaintanceActivity> getListmaintance() {
-        return listmaintance;
-    }
 
     public void setActivity(MaintanceActivity activity) {
         this.activity = activity;
     }
 
     public void setListmaintance(ArrayList<MaintanceActivity> listmaintance) {
-        this.listmaintance = listmaintance;
+        this.activityList = listmaintance;
     }
 
+    public ArrayList<MaintanceActivity> getActivityList() {
+        return activityList;
+    }
 
-
-    
+    public ArrayList<Site> getSiteList() {
+        return siteList;
+    }
 }

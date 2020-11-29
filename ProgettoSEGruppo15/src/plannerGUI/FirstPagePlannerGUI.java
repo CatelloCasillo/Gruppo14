@@ -33,7 +33,7 @@ public class FirstPagePlannerGUI extends javax.swing.JFrame {
 
     private FirstPagePlannerGUI() {
         initComponents();
-        this.p= new Planner();
+        this.p = new Planner();
         this.setLocationRelativeTo(null);
       }
     

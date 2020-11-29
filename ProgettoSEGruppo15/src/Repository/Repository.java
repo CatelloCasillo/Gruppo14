@@ -190,7 +190,7 @@ public class Repository {
                 //+ "plannerID,maintainerID,procedureID,"
                 +"siteID,"
                 + "activityDescription,activityInterventionTime,"
-                + "interruptibleActivity,activityMaterials,activityWeekNumber,"
+                + "interruptibleActivity,activityWeekNumber,"
                 + "activityWorkspaceNotes,activityTypology )");
         temp.append("values(");
         temp.append("'").append(activityID).append("',");
@@ -208,7 +208,9 @@ public class Repository {
         temp.append("'").append(activityWorkspaceNotes).append("',");
         temp.append("'").append(activityTypology).append("' ");
         temp.append(");");
-        
+        System.out.println("activityID"+"\t"+"activityDescription"+"\t"+"activityInterventionTime"+"\t"+"interruptibleActivity"+
+            "\t"+"activityWeekNumber"+"\t"+"activityTypology");
+           viewMaintenanceActivityTable();
         try {
             stm.executeUpdate(temp.toString());
         } catch (SQLException ex) {
