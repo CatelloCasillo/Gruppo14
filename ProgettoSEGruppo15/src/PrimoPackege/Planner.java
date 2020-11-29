@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 
 
 
@@ -101,6 +102,42 @@ public class Planner {
               }
           }
           return null;
+    }
+    private MaintanceActivity getActivityWithMinimumWeek(ArrayList<MaintanceActivity> maintanceList){
+        int numRighe=maintanceList.size();
+        MaintanceActivity actMin=maintanceList.get(0);
+        int min=actMin.weekNumber;
+        int indexMin=0;
+        for (int i=1; i<numRighe; i++){
+            MaintanceActivity act = maintanceList.get(i);
+            if(act.weekNumber < min){
+                min =act.weekNumber;
+                actMin = act;
+                indexMin=i;
+            }
+        }
+        maintanceList.remove(indexMin);
+        return actMin;
+    }
+    
+    public Object[][] getSelectionableAttribute(){
+        int numRighe=this.activityList.size();
+        final int numAttr=4;
+        ArrayList<MaintanceActivity> appoggio = (ArrayList<MaintanceActivity>)this.activityList.clone();
+        Object attrTable[][]= new Object[numRighe][];
+        for (int i=0; i<numRighe; i++){
+            MaintanceActivity act= getActivityWithMinimumWeek(appoggio);
+            String id= act.getId();
+            Site site= act.getSite();
+            String area= site.area;
+            String factory =site.factory;
+            String type= act.typology;
+            String time= ""+act.intervationTime;
+            attrTable[i]=new Object[]{id,area+" "+factory,type,time,new JButton("Select")};
+            System.out.println(act.weekNumber);
+        }
+        
+        return attrTable;
     }
     
     public void deleteActivity(String idActivity, int row){
