@@ -103,22 +103,25 @@ public class Planner {
           }
           return null;
     }
+    //Trova l'attività di manutenzione con il week number minore da più tempo nella lista delle attività e la restituisce
     private MaintanceActivity getActivityWithMinimumWeek(ArrayList<MaintanceActivity> maintanceList){
         int numRighe=maintanceList.size();
         MaintanceActivity actMin=maintanceList.get(0);
-        int min=actMin.weekNumber;
+        int min=actMin.getWeekNumber();
         int indexMin=0;
         for (int i=1; i<numRighe; i++){
             MaintanceActivity act = maintanceList.get(i);
-            if(act.weekNumber < min){
-                min =act.weekNumber;
+            if(act.getWeekNumber() < min){
+                min =act.getWeekNumber();
                 actMin = act;
                 indexMin=i;
             }
         }
-        maintanceList.remove(indexMin);
         return actMin;
     }
+    //metodo che converte la lista delle attività di manutenzione in una matrice di oggetti
+    //per permettere al planner di scegliere l'attività vuole assegnare. Le righe sono inserite
+    //in ordine crescente di numero di settimana
     
     public Object[][] getSelectionableAttribute(){
         int numRighe=this.activityList.size();
@@ -129,14 +132,13 @@ public class Planner {
             MaintanceActivity act= getActivityWithMinimumWeek(appoggio);
             String id= act.getId();
             Site site= act.getSite();
-            String area= site.area;
-            String factory =site.factory;
-            String type= act.typology;
-            String time= ""+act.intervationTime;
+            String area= site.getArea();
+            String factory =site.getFactory();
+            String type= act.getTypology();
+            String time= ""+act.getIntervationTime();
             attrTable[i]=new Object[]{id,area+" "+factory,type,time,new JButton("Select")};
-            System.out.println(act.weekNumber);
+            appoggio.remove(act);
         }
-        
         return attrTable;
     }
     

@@ -1,5 +1,6 @@
 package PrimoPackege;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
 /*
@@ -122,5 +123,30 @@ public class MaintanceActivity {
     public void setFileSMP(String fileSMP) {
         this.fileSMP = fileSMP;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MaintanceActivity other = (MaintanceActivity) obj;
+        if (!this.id.equals(other.id)) {
+            return false;
+        }
+        return true;
+    }
+    
     
 }

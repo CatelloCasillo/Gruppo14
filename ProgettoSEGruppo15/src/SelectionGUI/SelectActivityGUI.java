@@ -43,7 +43,7 @@ import plannerGUI.FirstPagePlannerGUI;
  */
 public class SelectActivityGUI extends javax.swing.JFrame {
     Planner planner;
-    
+    //Creazione di un modello personalizzato per la JTable
     private class MyTableModel extends AbstractTableModel{
         private String[] columnNames;
         private Object[][] data;
@@ -52,8 +52,7 @@ public class SelectActivityGUI extends javax.swing.JFrame {
             this.columnNames = columnNames;
             this.data = data;
         }
-        
-        
+           
         @Override
         public int getRowCount() {
             return data.length;
@@ -94,7 +93,7 @@ public class SelectActivityGUI extends javax.swing.JFrame {
             } //To change body of generated methods, choose Tools | Templates.
         }
     }
-    
+    //Creazione di un header renderer vuoto e dello stesso colore dello sfondo per la quainta colonna
     private class ButtonHeaderRenderer extends JLabel implements TableCellRenderer{
 
         public ButtonHeaderRenderer() {
@@ -108,6 +107,7 @@ public class SelectActivityGUI extends javax.swing.JFrame {
            return this;
         }
     }
+    //Creazione di un header renderer per tutte le altre colonne che non sono l'ultima
     public class DefaultHeaderRenderer extends JLabel implements TableCellRenderer {
  
         public DefaultHeaderRenderer() {
@@ -133,45 +133,7 @@ public class SelectActivityGUI extends javax.swing.JFrame {
         }
  
     }
-    /* Da cancellare se non centri la quarta colonna
-    private class TimeHeaderRenderer extends JTextPane implements TableCellRenderer {
- 
-        public TimeHeaderRenderer() {
-            setOpaque(true);
-            setBackground(new Color(245,171,53));
-            Border b = BorderFactory.createCompoundBorder();
-            b = BorderFactory.createCompoundBorder(b, BorderFactory.createMatteBorder(1,0,0,0,Color.WHITE));
-            b = BorderFactory.createCompoundBorder(b, BorderFactory.createMatteBorder(0,1,0,0,Color.WHITE));
-            b = BorderFactory.createCompoundBorder(b, BorderFactory.createMatteBorder(0,0,2,0,Color.WHITE));
-            b = BorderFactory.createCompoundBorder(b, BorderFactory.createMatteBorder(0,0,0,1,Color.WHITE));
-            setBorder(b);
-            Dimension d=this.getPreferredSize();
-            d.height=40;
-            this.setPreferredSize(d);
-            StyledDocument doc = this.getStyledDocument();
-            SimpleAttributeSet center = new SimpleAttributeSet();
-            SimpleAttributeSet background = new SimpleAttributeSet();
-            StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
-            StyleConstants.setBackground(background, new Color(245,171,53));
-            doc.setParagraphAttributes(0, doc.getLength(), center, false);
-            doc.setParagraphAttributes(0, doc.getLength(),background, false);
-        }
-     
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                boolean isSelected, boolean hasFocus, int row, int column) {
-            setText(value.toString());
-            return this;
-        }
- 
-    }*/
-    private int getCurrentWeekNumenber(){
-        Calendar calendar=new GregorianCalendar();
-        Date currentDate = new Date();
-        calendar.setTime(currentDate);
-        return calendar.get(calendar.WEEK_OF_YEAR);
-    }
- 
+    
     /**
      * Creates new form SelectActivityGUI
      */
@@ -191,22 +153,14 @@ public class SelectActivityGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabelClose = new javax.swing.JLabel();
-        jLabelMin = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable(){
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
             {
                 JComponent c = (JComponent)super.prepareRenderer(renderer, row, column);
-
-                //  Alternate row color
-
                 if (!isRowSelected(row))
                 if(column!=4){
                     c.setBackground(row % 2 == 0 ? new Color(255, 230, 240) : new Color(255, 240, 255));
-                    /*Border outside = new MatteBorder(1, 0, 1, 0, Color.WHITE);
-                    Border inside = new EmptyBorder(0, 1, 0, 1);
-                    Border highlight = new CompoundBorder(outside, inside);*/
                     Border b = BorderFactory.createCompoundBorder();
                     b = BorderFactory.createCompoundBorder(b, BorderFactory.createMatteBorder(1,0,0,0,Color.WHITE));
                     b = BorderFactory.createCompoundBorder(b, BorderFactory.createMatteBorder(0,1,0,0,Color.WHITE));
@@ -217,9 +171,11 @@ public class SelectActivityGUI extends javax.swing.JFrame {
                 return c;
             }
         };
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        closeButton1 = new CommonComponents.CloseButton();
+        minimizeButton1 = new CommonComponents.MinimizeButton();
+        weekNumber2 = new CommonComponents.WeekNumber();
+        labelForWeekNumber2 = new CommonComponents.LabelForWeekNumber();
+        operationButton1 = new CommonComponents.OperationButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 153, 0));
@@ -227,40 +183,6 @@ public class SelectActivityGUI extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(245, 171, 53));
         jPanel1.setPreferredSize(new java.awt.Dimension(700, 300));
-
-        jLabelClose.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelClose.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelClose.setText("X");
-        jLabelClose.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabelClose.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabelClose.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabelCloseMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabelCloseMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabelCloseMouseExited(evt);
-            }
-        });
-
-        jLabelMin.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelMin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelMin.setText("-");
-        jLabelMin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabelMin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabelMin.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabelMinMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabelMinMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabelMinMouseExited(evt);
-            }
-        });
 
         jScrollPane1.getViewport().setBackground(new Color(245,171,53));
         jScrollPane1.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
@@ -276,14 +198,13 @@ public class SelectActivityGUI extends javax.swing.JFrame {
             },
             planner.getSelectionableAttribute()
         ));
+        //setting dei vari renderer
         jTable1.getTableHeader().setDefaultRenderer(new DefaultHeaderRenderer());
         jTable1.getColumnModel().getColumn(4).setHeaderRenderer(new ButtonHeaderRenderer());
-
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         jTable1.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
         jTable1.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-
         jTable1.setDefaultRenderer(JButton.class,new JButtonRenderer());
         jTable1.setDefaultEditor(JButton.class,new JButtonEditor());
         jTable1.setFocusable(false);
@@ -301,27 +222,12 @@ public class SelectActivityGUI extends javax.swing.JFrame {
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Week n°");
-        jLabel1.setOpaque(true);
-
-        jLabel2.setBackground(new java.awt.Color(80, 80, 80));
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setOpaque(true);
-        jLabel2.setText(""+getCurrentWeekNumenber());
-
-        jButton1.setBackground(new java.awt.Color(211, 84, 0));
-        jButton1.setFont(new java.awt.Font("Cooper Black", 1, 12)); // NOI18N
-        jButton1.setText("Back to welcome window");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.setFocusPainted(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        operationButton1.setText("Backto welcome window");
+        operationButton1.setFont(new java.awt.Font("Cooper Black", 0, 13)); // NOI18N
+        operationButton1.setPreferredSize(new java.awt.Dimension(155, 22));
+        operationButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                operationButton1ActionPerformed(evt);
             }
         });
 
@@ -331,44 +237,46 @@ public class SelectActivityGUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabelMin, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(2, 2, 2)
-                        .addComponent(jLabelClose, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 632, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(34, Short.MAX_VALUE))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(239, 239, 239)
-                .addComponent(jButton1)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 632, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(34, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(labelForWeekNumber2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(minimizeButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(closeButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(weekNumber2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(operationButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(238, 238, 238))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelMin)
-                            .addComponent(jLabelClose))
-                        .addGap(4, 4, 4)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(weekNumber2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelForWeekNumber2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(closeButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(minimizeButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 46, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addGap(22, 22, 22))
+                .addGap(15, 15, 15)
+                .addComponent(operationButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -384,47 +292,15 @@ public class SelectActivityGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jLabelCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCloseMouseClicked
-        System.exit(0);
-    }//GEN-LAST:event_jLabelCloseMouseClicked
-
-    private void jLabelCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCloseMouseEntered
-        Border label_border= BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white);
-        jLabelClose.setBorder(label_border);
-        jLabelClose.setForeground(Color.white);
-    }//GEN-LAST:event_jLabelCloseMouseEntered
-
-    private void jLabelCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCloseMouseExited
-        Border label_border= BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black);
-        jLabelClose.setBorder(label_border);
-        jLabelClose.setForeground(Color.black);
-    }//GEN-LAST:event_jLabelCloseMouseExited
-
-    private void jLabelMinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMinMouseClicked
-        this.setState(JFrame.ICONIFIED);
-    }//GEN-LAST:event_jLabelMinMouseClicked
-
-    private void jLabelMinMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMinMouseEntered
-        Border label_border= BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white);
-        jLabelMin.setBorder(label_border);
-        jLabelMin.setForeground(Color.white);
-    }//GEN-LAST:event_jLabelMinMouseEntered
-
-    private void jLabelMinMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMinMouseExited
-        Border label_border= BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black);
-        jLabelMin.setBorder(label_border);
-        jLabelMin.setForeground(Color.black);
-    }//GEN-LAST:event_jLabelMinMouseExited
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    // Chiusura di questa inferfaccia e apertura di FirtstPagePlannerGUI alla pressione del bottone corrispondente
+    private void operationButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton1ActionPerformed
         FirstPagePlannerGUI welcome= new FirstPagePlannerGUI(planner);
         welcome.setVisible(true);
         welcome.pack();
         welcome.setLocationRelativeTo(null);
         welcome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_operationButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -462,13 +338,13 @@ public class SelectActivityGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabelClose;
-    private javax.swing.JLabel jLabelMin;
+    private CommonComponents.CloseButton closeButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private CommonComponents.LabelForWeekNumber labelForWeekNumber2;
+    private CommonComponents.MinimizeButton minimizeButton1;
+    private CommonComponents.OperationButton operationButton1;
+    private CommonComponents.WeekNumber weekNumber2;
     // End of variables declaration//GEN-END:variables
 }

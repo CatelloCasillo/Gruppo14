@@ -27,6 +27,7 @@ import javax.swing.table.TableCellEditor;
  *
  * @author Catello
  */
+//editor che permette ai bottoni di essere cliccabili e di aprire l'interfaccia successiva a click avvenuto
 public class JButtonEditor extends AbstractCellEditor implements TableCellEditor, ActionListener{
     private JButton button;
     private Object editorValue;
@@ -43,12 +44,12 @@ public class JButtonEditor extends AbstractCellEditor implements TableCellEditor
     public Component getTableCellEditorComponent(JTable jtable, Object o, boolean bln, int i, int i1) {
         editorValue=o;
         table=jtable;
-        return button; //To change body of generated methods, choose Tools | Templates.
+        return button; 
     }
 
     @Override
     public Object getCellEditorValue() {
-        return editorValue; //To change body of generated methods, choose Tools | Templates.
+        return editorValue;
     }
 
     @Override

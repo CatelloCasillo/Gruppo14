@@ -21,7 +21,7 @@ import java.awt.event.MouseListener;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableCellRenderer;
 
-//public class JButtonRenderer extends JButton implements TableCellRenderer{
+//renderer che permette la renderizzazione delle celle come bottoni
 public class JButtonRenderer extends DefaultTableCellRenderer{ 
     @Override
     public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
