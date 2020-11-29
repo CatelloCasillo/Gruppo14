@@ -29,13 +29,14 @@ public class ViewActivityGUI extends javax.swing.JFrame {
 
     /** Creates new form ViewActivityGUI */
     public ViewActivityGUI(Planner p) {
+        this.p= p;
         initComponents();
         //maintanceList= new ArrayList<>();
-        this.p= p;
         dtm=  new DefaultTableModel(header, 0);
         jTable1.setModel(dtm);
         this.setLocationRelativeTo(null);
         disabledField();
+        populateTable();
     }
 
     private ViewActivityGUI() {
@@ -48,8 +49,8 @@ public class ViewActivityGUI extends javax.swing.JFrame {
     
     public void disabledField(){
         jTextFieldId.setEnabled(false);
-        jTextFieldSite.setEnabled(false);
-        jComboBox1.setEnabled(false);
+        jComboBox2.setEnabled(false);
+        jComboBoxTyp.setEnabled(false);
         jTextFieldDescription.setEnabled(false);
         jTextFieldTime.setEnabled(false);
         jTextFieldWeek.setEnabled(false);
@@ -59,8 +60,8 @@ public class ViewActivityGUI extends javax.swing.JFrame {
    
     public void enabledField(){
        jTextFieldId.setEnabled(true);
-        jTextFieldSite.setEnabled(true);
-        jComboBox1.setEnabled(true);
+        jComboBox2.setEnabled(true);
+        jComboBoxTyp.setEnabled(true);
         jTextFieldDescription.setEnabled(true);
         jTextFieldTime.setEnabled(true);
         jRadioButton1.setEnabled(true);
@@ -70,8 +71,8 @@ public class ViewActivityGUI extends javax.swing.JFrame {
     
     public void clearField(){
         jTextFieldId.setText("");
-        jTextFieldSite.setText("");
-        jComboBox1.setSelectedIndex(0);
+        jComboBox2.setSelectedIndex(0);
+        jComboBoxTyp.setSelectedIndex(0);
         jTextFieldDescription.setText("");
         jTextFieldTime.setText("");
         jRadioButton1.setSelected(false);
@@ -123,13 +124,11 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButtonView = new javax.swing.JButton();
         jButtonDelete = new javax.swing.JButton();
         jButtonUpdate = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jTextFieldId = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextFieldSite = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jTextFieldDescription = new javax.swing.JTextField();
@@ -140,7 +139,8 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         jTextFieldWeek = new javax.swing.JTextField();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBoxTyp = new javax.swing.JComboBox<>();
+        jComboBox2 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -234,18 +234,7 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jPanel2.add(jScrollPane1);
-        jScrollPane1.setBounds(10, 110, 480, 180);
-
-        jButtonView.setBackground(new java.awt.Color(211, 84, 0));
-        jButtonView.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButtonView.setText("view all activities ");
-        jButtonView.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonViewActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButtonView);
-        jButtonView.setBounds(30, 50, 140, 23);
+        jScrollPane1.setBounds(10, 40, 480, 180);
 
         jButtonDelete.setBackground(new java.awt.Color(211, 84, 0));
         jButtonDelete.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -256,7 +245,7 @@ public class ViewActivityGUI extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jButtonDelete);
-        jButtonDelete.setBounds(210, 50, 110, 23);
+        jButtonDelete.setBounds(10, 460, 110, 23);
 
         jButtonUpdate.setBackground(new java.awt.Color(211, 84, 0));
         jButtonUpdate.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -267,82 +256,84 @@ public class ViewActivityGUI extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jButtonUpdate);
-        jButtonUpdate.setBounds(360, 50, 73, 23);
+        jButtonUpdate.setBounds(390, 460, 73, 23);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("activity ID:");
         jPanel2.add(jLabel2);
-        jLabel2.setBounds(20, 310, 70, 14);
+        jLabel2.setBounds(20, 260, 70, 14);
 
         jTextFieldId.setBackground(new java.awt.Color(253, 227, 167));
         jTextFieldId.setPreferredSize(new java.awt.Dimension(6, 25));
         jPanel2.add(jTextFieldId);
-        jTextFieldId.setBounds(100, 310, 59, 25);
+        jTextFieldId.setBounds(100, 260, 59, 25);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("site:");
         jPanel2.add(jLabel3);
-        jLabel3.setBounds(20, 350, 30, 14);
-
-        jTextFieldSite.setBackground(new java.awt.Color(253, 227, 167));
-        jTextFieldSite.setPreferredSize(new java.awt.Dimension(6, 25));
-        jPanel2.add(jTextFieldSite);
-        jTextFieldSite.setBounds(60, 350, 80, 25);
+        jLabel3.setBounds(20, 310, 30, 14);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("typology: ");
         jPanel2.add(jLabel4);
-        jLabel4.setBounds(20, 400, 60, 14);
+        jLabel4.setBounds(20, 360, 60, 14);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("activity Description: ");
         jPanel2.add(jLabel5);
-        jLabel5.setBounds(20, 460, 116, 14);
+        jLabel5.setBounds(20, 410, 116, 14);
 
         jTextFieldDescription.setBackground(new java.awt.Color(253, 227, 167));
         jTextFieldDescription.setPreferredSize(new java.awt.Dimension(6, 25));
         jPanel2.add(jTextFieldDescription);
-        jTextFieldDescription.setBounds(150, 460, 110, 25);
+        jTextFieldDescription.setBounds(150, 410, 110, 25);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel6.setText("intervation time:");
         jPanel2.add(jLabel6);
-        jLabel6.setBounds(240, 310, 100, 14);
+        jLabel6.setBounds(240, 260, 100, 14);
 
         jTextFieldTime.setBackground(new java.awt.Color(253, 227, 167));
         jTextFieldTime.setPreferredSize(new java.awt.Dimension(6, 25));
         jPanel2.add(jTextFieldTime);
-        jTextFieldTime.setBounds(340, 310, 110, 25);
+        jTextFieldTime.setBounds(350, 260, 110, 25);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setText("interruptible:");
         jPanel2.add(jLabel7);
-        jLabel7.setBounds(260, 350, 80, 14);
+        jLabel7.setBounds(260, 310, 80, 14);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel8.setText("week:");
         jPanel2.add(jLabel8);
-        jLabel8.setBounds(310, 390, 34, 14);
+        jLabel8.setBounds(310, 350, 34, 14);
 
         jTextFieldWeek.setBackground(new java.awt.Color(253, 227, 167));
         jTextFieldWeek.setPreferredSize(new java.awt.Dimension(6, 25));
         jPanel2.add(jTextFieldWeek);
-        jTextFieldWeek.setBounds(360, 390, 80, 25);
+        jTextFieldWeek.setBounds(350, 350, 80, 25);
 
         jRadioButton1.setBackground(new java.awt.Color(253, 227, 167));
         jRadioButton1.setText("YES");
         jPanel2.add(jRadioButton1);
-        jRadioButton1.setBounds(340, 350, 50, 23);
+        jRadioButton1.setBounds(350, 310, 50, 23);
 
         jRadioButton2.setBackground(new java.awt.Color(253, 227, 167));
         jRadioButton2.setText("NO");
         jPanel2.add(jRadioButton2);
-        jRadioButton2.setBounds(410, 350, 50, 23);
+        jRadioButton2.setBounds(410, 310, 50, 23);
 
-        jComboBox1.setBackground(new java.awt.Color(253, 227, 167));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Electrical", "Electronic", "Hydraulic", "Mechanical" }));
-        jPanel2.add(jComboBox1);
-        jComboBox1.setBounds(90, 400, 80, 20);
+        jComboBoxTyp.setBackground(new java.awt.Color(253, 227, 167));
+        jComboBoxTyp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Electrical", "Electronic", "Hydraulic", "Mechanical" }));
+        jPanel2.add(jComboBoxTyp);
+        jComboBoxTyp.setBounds(90, 360, 80, 20);
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        for(int i=0; i<p.getSiteList().size(); i++){
+            jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { p.getSiteList().get(i).getId().trim()+':'+ p.getSiteList().get(i).getArea()+'-'+ p.getSiteList().get(i).getFactory() }));
+        }
+        jPanel2.add(jComboBox2);
+        jComboBox2.setBounds(60, 310, 80, 20);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -386,46 +377,43 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         borderBlack();
     }//GEN-LAST:event_jLabelMinMouseExited
 
-    private void jButtonViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonViewActionPerformed
-        populateTable();
-    }//GEN-LAST:event_jButtonViewActionPerformed
-
     
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
-    int dialogButton =JOptionPane.YES_NO_OPTION;
+    if( jTable1.isRowSelected(row)){
+        int dialogButton =JOptionPane.YES_NO_OPTION;
     int dialogResult= JOptionPane.showConfirmDialog(this, "Delete this data", "Delete", dialogButton);
     if(dialogResult == 0){
         //dtm.removeRow(row);
         row= jTable1.getSelectedRow();
-        System.out.println(dtm.getValueAt(row, 0).toString());
         p.deleteActivity(dtm.getValueAt(row, 0).toString(), row);
         
         populateTable();
-        }clearField();      
+        }
+    }clearField();      
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
     
     private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
-        
+        if( jTable1.isRowSelected(row)){
         enabledField();
         String updateId = jTextFieldId.getText();
-        String updateSite = jTextFieldSite.getText();
-        String updateTypology = jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
+        //String updateSite = jComboBox2.getItemAt(jComboBox2.getSelectedIndex());
+        String updateTypology = jComboBoxTyp.getItemAt(jComboBoxTyp.getSelectedIndex());
         String updateDescription = jTextFieldDescription.getText();
-        int updateTime = Integer.parseInt(jTextFieldTime.getText());
+        int updateTime = Integer.parseInt(jTextFieldTime.getText().trim());
         boolean updateInterruptible= verifRadioButton();
-        int updateWeek = Integer.parseInt(jTextFieldWeek.getText());
+        int updateWeek = Integer.parseInt(jTextFieldWeek.getText().trim());
         
-     
-       /*
-        p.getListmaintance().get(row).setId(updateId);
-        p.getListmaintance().get(row).setSite(updateSite);
-        p.getListmaintance().get(row).setTypology(updateTypology);
-        p.getListmaintance().get(row).setActivityDescription(updateDescription);
-        p.getListmaintance().get(row).setIntervationTime(updateTime);
-        p.getListmaintance().get(row).setInterruptible(updateInterruptible);
-        p.getListmaintance().get(row).setWeek(updateWeek);
+        //row= jTable1.getSelectedRow();
+        p.getActivityList().get(row).setId(updateId);
+        //p.getActivityList().get(row).setSite(updateSite);
+        p.getActivityList().get(row).setTypology(updateTypology);
+        p.getActivityList().get(row).setActivityDescription(updateDescription);
+        p.getActivityList().get(row).setIntervationTime(updateTime);
+        p.getActivityList().get(row).setInterruptible(updateInterruptible);
+        p.getActivityList().get(row).setWeek(updateWeek);
         
+        p.updateActivity(row, updateId, updateTypology, updateDescription, updateTime, updateInterruptible, updateWeek);
         
         /*p.listmaintance.get(row).id= updateId;
         p.listmaintance.get(row).site = updateSite;
@@ -434,7 +422,8 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         p.listmaintance.get(row).intervationTime = updateTime;
         p.listmaintance.get(row).interruptible= updateInterruptible;
         p.listmaintance.get(row).week = updateWeek;*/
-      //  populateTable();
+        populateTable();
+        }
     }//GEN-LAST:event_jButtonUpdateActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -443,8 +432,9 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         col = jTable1.getColumnCount();
         System.out.println(row+ ','+ col);
         jTextFieldId.setText(dtm.getValueAt(row, 0).toString());
-        jTextFieldSite.setText(dtm.getValueAt(row, 1).toString());
-        jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
+        //jComboBox2.getItemAt(jComboBox2.getSelectedIndex());
+        //jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
+        jComboBoxTyp.setSelectedIndex(jComboBoxTyp.getSelectedIndex());
         jTextFieldDescription.setText(dtm.getValueAt(row, 3).toString());
         jTextFieldTime.setText(dtm.getValueAt(row, 4).toString());
         if (dtm.getValueAt(row, 5).equals(true)){
@@ -497,8 +487,8 @@ public class ViewActivityGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonDelete;
     private javax.swing.JButton jButtonUpdate;
-    private javax.swing.JButton jButtonView;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBoxTyp;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -517,7 +507,6 @@ public class ViewActivityGUI extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextFieldDescription;
     private javax.swing.JTextField jTextFieldId;
-    private javax.swing.JTextField jTextFieldSite;
     private javax.swing.JTextField jTextFieldTime;
     private javax.swing.JTextField jTextFieldWeek;
     // End of variables declaration//GEN-END:variables

@@ -7,6 +7,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.border.Border;
 import PrimoPackege.*;
+import SelectionGUI.SelectActivityGUI;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -66,6 +67,7 @@ public class FirstPagePlannerGUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButtonView = new javax.swing.JButton();
         jButtonCreate = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -157,7 +159,7 @@ public class FirstPagePlannerGUI extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButtonView);
-        jButtonView.setBounds(320, 130, 140, 40);
+        jButtonView.setBounds(370, 130, 140, 40);
 
         jButtonCreate.setBackground(new java.awt.Color(211, 84, 0));
         jButtonCreate.setFont(new java.awt.Font("Cooper Black", 0, 11)); // NOI18N
@@ -171,7 +173,19 @@ public class FirstPagePlannerGUI extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButtonCreate);
-        jButtonCreate.setBounds(60, 130, 140, 40);
+        jButtonCreate.setBounds(30, 130, 140, 40);
+
+        jButton1.setBackground(new java.awt.Color(211, 84, 0));
+        jButton1.setFont(new java.awt.Font("Cooper Black", 0, 11)); // NOI18N
+        jButton1.setText("Plan activity");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1);
+        jButton1.setBounds(210, 130, 120, 40);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -233,6 +247,15 @@ public class FirstPagePlannerGUI extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButtonViewActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        SelectActivityGUI select= new SelectActivityGUI();
+        select.setVisible(true);
+        select.pack();
+        select.setLocationRelativeTo(null);
+        select.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -269,6 +292,7 @@ public class FirstPagePlannerGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCreate;
     private javax.swing.JButton jButtonView;
     private javax.swing.JLabel jLabel1;

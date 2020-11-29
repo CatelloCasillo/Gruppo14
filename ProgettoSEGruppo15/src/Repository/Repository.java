@@ -218,10 +218,11 @@ public class Repository {
     
     public void deleteMaintenanceActivity(String activityID){
         StringBuilder temp = new StringBuilder();
+        System.out.println(activityID);
         temp.append("delete from MaintenanceActivity"
-                + "where activityID ");
-        temp.append("=");
-        temp.append("'").append(activityID).append("'").append(";");
+                + " where activityid = ");
+        temp.append(" '").append(activityID).append("' ;");
+        System.out.println(temp);
         
                 
         try {
@@ -231,6 +232,25 @@ public class Repository {
         }
     }
     
+    
+    public void updateMaintenanceActivity(String id,String typology, String description, int time, boolean inter, int week){
+        StringBuilder temp = new StringBuilder();
+        temp.append("update MaintenanceActivity"
+        + " set activityDescription = ");
+        temp.append(" '").append(description).append("',");
+        temp.append(" activityInterventionTime = ").append("  ").append(time).append(" ,");
+        temp.append(" activityTypology = ").append("' ").append(typology).append(" ',");
+        temp.append(" interruptibleActivity = ").append("  ").append(inter).append(" ,");
+        temp.append(" activityWeekNumber = ").append("  ").append(week).append(" ");
+        temp.append(" where activityid = ").append(" '").append(id).append(" ';");
+        
+         try {
+            stm.executeUpdate(temp.toString());
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
     
     public void viewMaintenanceActivityTable(){
             

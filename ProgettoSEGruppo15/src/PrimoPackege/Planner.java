@@ -147,6 +147,17 @@ public class Planner {
         activityList.remove(row);
     }
     
+    public void updateActivity(int row, String id, String typology,String description, int time, boolean inter, int week ){
+         
+        activityList.get(row).typology = typology;
+        activityList.get(row).activityDescription= description;
+        activityList.get(row).intervationTime = time;
+        activityList.get(row).interruptible= inter;
+        activityList.get(row).weekNumber = week;
+        
+        repository.updateMaintenanceActivity(id, typology, description, time, inter, week);
+    }
+    
     public MaintanceActivity getActivity() {
         return activity;
     }
@@ -167,4 +178,6 @@ public class Planner {
     public ArrayList<Site> getSiteList() {
         return siteList;
     }
+    
 }
+
