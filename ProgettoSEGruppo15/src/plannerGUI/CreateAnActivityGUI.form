@@ -469,7 +469,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="for(int i=0; i&lt;p.getSiteList().size(); i++){&#xa;jComboBox1.setModel(new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { p.getSiteList().get(i).getId()+&apos;:&apos;+ p.getSiteList().get(i).getArea()+&apos;-&apos;+ p.getSiteList().get(i).getFactory() }));&#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="for(int i=0; i&lt;p.getSiteList().size(); i++){&#xa;jComboBox1.setModel(new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { p.getSiteList().get(i).getId().trim()+&apos;:&apos;+ p.getSiteList().get(i).getArea()+&apos;-&apos;+ p.getSiteList().get(i).getFactory() }));&#xa;}"/>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
           <Constraints>

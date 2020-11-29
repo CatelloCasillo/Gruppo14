@@ -395,10 +395,12 @@ public class ViewActivityGUI extends javax.swing.JFrame {
     int dialogButton =JOptionPane.YES_NO_OPTION;
     int dialogResult= JOptionPane.showConfirmDialog(this, "Delete this data", "Delete", dialogButton);
     if(dialogResult == 0){
-        dtm.removeRow(row);
-       // p.getListmaintance().remove(row);
-       // p.listmaintance.remove(row);
-       // populateTable();
+        //dtm.removeRow(row);
+        row= jTable1.getSelectedRow();
+        System.out.println(dtm.getValueAt(row, 0).toString());
+        p.deleteActivity(dtm.getValueAt(row, 0).toString(), row);
+        
+        populateTable();
         }clearField();      
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 

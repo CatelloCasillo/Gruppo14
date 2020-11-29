@@ -322,7 +322,7 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         for(int i=0; i<p.getSiteList().size(); i++){
-            jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { p.getSiteList().get(i).getId()+':'+ p.getSiteList().get(i).getArea()+'-'+ p.getSiteList().get(i).getFactory() }));
+            jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { p.getSiteList().get(i).getId().trim()+':'+ p.getSiteList().get(i).getArea()+'-'+ p.getSiteList().get(i).getFactory() }));
         }
         jPanel2.add(jComboBox1);
         jComboBox1.setBounds(80, 60, 160, 20);
@@ -390,7 +390,7 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
     private void jButtonCreateeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreateeeActionPerformed
         if(verifData()){
             System.out.println((jComboBox1.getItemAt(jComboBox1.getSelectedIndex()))) ;
-          p.createActivity(jTextFieldId.getText(), p.findSiteInList( jComboBox1.getItemAt(jComboBox1.getSelectedIndex()) , p.getSiteList()) ,  jComboBoxTipo.getItemAt(jComboBoxTipo.getSelectedIndex()), jTextFieldDescription.getText(), Integer.parseInt(jTextFieldTime.getText()), verifRadioButton(), Integer.parseInt(jTextFieldWeek.getText()), jTextAreaWorkSpace.getText());
+          p.createActivity(jTextFieldId.getText(), p.findSiteInList(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()), p.getSiteList()) ,  jComboBoxTipo.getItemAt(jComboBoxTipo.getSelectedIndex()), jTextFieldDescription.getText(), Integer.parseInt(jTextFieldTime.getText()), verifRadioButton(), Integer.parseInt(jTextFieldWeek.getText()), jTextAreaWorkSpace.getText());
         
         JOptionPane.showMessageDialog(rootPane, "create successfully");
         clearField();

@@ -208,15 +208,30 @@ public class Repository {
         temp.append("'").append(activityWorkspaceNotes).append("',");
         temp.append("'").append(activityTypology).append("' ");
         temp.append(");");
-        System.out.println("activityID"+"\t"+"activityDescription"+"\t"+"activityInterventionTime"+"\t"+"interruptibleActivity"+
-            "\t"+"activityWeekNumber"+"\t"+"activityTypology");
-           viewMaintenanceActivityTable();
+        viewMaintenanceActivityTable();
         try {
             stm.executeUpdate(temp.toString());
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void deleteMaintenanceActivity(String activityID){
+        StringBuilder temp = new StringBuilder();
+        temp.append("delete from MaintenanceActivity"
+                + "where activityID ");
+        temp.append("=");
+        temp.append("'").append(activityID).append("'").append(";");
+        
+                
+        try {
+            stm.executeUpdate(temp.toString());
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
     public void viewMaintenanceActivityTable(){
             
         try {
@@ -224,17 +239,18 @@ public class Repository {
                     + "MaintenanceActivity ";
             ResultSet rst = stm.executeQuery(query);
             
-            System.out.println("activityID"+"\t"+"activityDescription"+"\t"+"activityInterventionTime"+"\t"+"interruptibleActivity"+
+            System.out.println("activityID"+"\t "+ "siteID"+"\t"+"activityDescription"+"\t"+"activityInterventionTime"+"\t"+"interruptibleActivity"+
             "\t"+"activityWeekNumber"+"\t"+"activityTypology");
             while (rst.next()) {
             String activityID = rst.getString("activityID");
+            String siteID = rst.getString("siteID");
             String activityDescription = rst.getString("activityDescription");
             int activityInterventionTime = rst.getInt("activityInterventionTime");
             boolean interruptibleActivity = rst.getBoolean("interruptibleActivity");
             int activityWeekNumber = rst.getInt("activityWeekNumber");
             String activityTypology = rst.getString("activityTypology");
             
-            System.out.println(activityID+"\t"+activityDescription+"\t"+activityInterventionTime+"\t"+interruptibleActivity+
+            System.out.println(activityID+"\t"+siteID+"\t"+activityDescription+"\t"+activityInterventionTime+"\t"+interruptibleActivity+
             "\t"+activityWeekNumber+"\t"+activityTypology);
             } 
         } catch (SQLException ex) {

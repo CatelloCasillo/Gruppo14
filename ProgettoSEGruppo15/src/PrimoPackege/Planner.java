@@ -40,6 +40,7 @@ public class Planner {
     public void createActivity(String id, Site site, String typology, String activityDescription, int intervationTime, boolean interruptible, int week, String workspacenotes ){
        MaintanceActivity a= new MaintanceActivity(id, site, typology, activityDescription, intervationTime, interruptible, week, workspacenotes);
        //activityList.add(a);
+       System.out.println(a.id+' '+ a.getSite().id.trim()+' '+ a.activityDescription+' '+ a.intervationTime+' '+ a.interruptible+ ' '+ a.weekNumber+' '+ a.workspacenotes+' '+ a.typology );
        repository.insertNewMaintenanceActivity(a.id, a.getSite().id, a.activityDescription, a.intervationTime, a.interruptible, a.weekNumber, a.workspacenotes, a.typology);
        activityList.add(a);
     }
@@ -91,16 +92,20 @@ public class Planner {
     
     }
     public Site findSiteInList(String idSite, ArrayList<Site> siteList) {
-        //String [] id= idSite.split(":");
-        String id= idSite.trim();
+        String [] id= idSite.split(":");
           for (Site s : siteList) {
               //System.out.println(id.concat(s.getId()));
-              if (s.getId().trim().equals(id)) {
+              if (s.getId().trim().equals(id[0].trim())) {
                   System.out.println(id);
                   return s;
               }
           }
           return null;
+    }
+    
+    public void deleteActivity(String idActivity, int row){
+        repository.deleteMaintenanceActivity(idActivity);
+        activityList.remove(row);
     }
     
     public MaintanceActivity getActivity() {
