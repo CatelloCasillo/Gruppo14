@@ -25,6 +25,10 @@ public class MaintanceActivity {
     String workspacenotes;
     String procedureID;
     String fileSMP;
+
+    public String getWorkspacenotes() {
+        return workspacenotes;
+    }
     
     //constructor used to create a new maintance activity
     public MaintanceActivity(String id, Site site, String typology, 
