@@ -75,6 +75,15 @@ public class Planner {
       }
     }
     
+    // restituisce la maintance activity del rispettivo id
+    public MaintanceActivity getMaintanceActivity (String idActivity){
+        for(MaintanceActivity m : activityList){
+            if(m.getId().equals(idActivity))
+                return m;
+        }
+      return null;
+        
+    }
     
     public void initSiteList(){
       this.siteList = new ArrayList<>();
