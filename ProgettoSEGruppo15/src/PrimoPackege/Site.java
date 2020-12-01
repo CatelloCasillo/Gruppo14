@@ -11,9 +11,9 @@ package PrimoPackege;
  * @author Enrico
  */
 public class Site {
-    String id;
-    String factory;
-    String area;
+    private String id;
+    private String factory;
+    private String area;
 
     public Site(String id, String factory, String area) {
         this.id = id;

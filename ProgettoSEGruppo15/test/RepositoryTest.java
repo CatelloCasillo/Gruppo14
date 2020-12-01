@@ -231,7 +231,7 @@ public class RepositoryTest {
         //siteID='test02' nella tabella di test
         //weekNumber deve essere compreso tra 1 e 52 inclusi
         repo.insertNewMaintenanceActivity("test99", "test02", "descriptionTest", 60, true, 10, "notes", "typology");
-        repo.updateMaintenanceActivity("test99", "changed typology", "changed description", 70, false, 11);
+        repo.updateMaintenanceActivity("test99","test02", "changed typology", "changed description", 70, false, 11);
         repo.deleteMaintenanceActivity("test99");
         
     }

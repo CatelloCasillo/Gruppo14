@@ -45,7 +45,7 @@ public class Repository {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    //da eliminare
     public Statement getStm() {
         return stm;
     }
@@ -243,11 +243,12 @@ public class Repository {
     }
     
     
-    public boolean updateMaintenanceActivity(String id,String typology, String description, int time, boolean inter, int week){
+    public boolean updateMaintenanceActivity(String id,String site,String typology, String description, int time, boolean inter, int week){
         StringBuilder temp = new StringBuilder();
         temp.append("update MaintenanceActivity"
         + " set activityDescription = ");
         temp.append(" '").append(description).append("',");
+        temp.append(" siteID = ").append(" '").append(site).append(" ',");
         temp.append(" activityInterventionTime = ").append("  ").append(time).append(" ,");
         temp.append(" activityTypology = ").append("' ").append(typology).append(" ',");
         temp.append(" interruptibleActivity = ").append("  ").append(inter).append(" ,");
@@ -303,8 +304,8 @@ public class Repository {
             return null;
         }
     }
-    public ArrayList<String> getCompetencesOfActivity(String activityID){
-        ArrayList<String> skillList = new ArrayList<>();
+    public ResultSet getCompetencesOfActivity(String activityID){
+      
         StringBuilder temp = new StringBuilder();
         temp.append("select c.competenceName from \n" +
                     "MaintenanceActivity as ma \n" +
@@ -312,11 +313,8 @@ public class Repository {
                     "join competence as c on (c.competenceID=cp.competenceID ) ");
         temp.append(" where ma.activityID= '").append(activityID).append("' ;");
          try {
-            ResultSet rst = stm.executeQuery(temp.toString());
-            while(rst.next()){
-                skillList.add(rst.getString(0));
-            }
-            return skillList;
+            return stm.executeQuery(temp.toString());
+           
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;

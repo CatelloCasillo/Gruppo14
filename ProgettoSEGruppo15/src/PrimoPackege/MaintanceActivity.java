@@ -15,22 +15,19 @@ import java.util.logging.Logger;
  */
 public class MaintanceActivity {
     
-    String id;
-    String typology;
-    String activityDescription;
-    boolean interruptible;
-    Site site;
-    int weekNumber;
-    int intervationTime;
-    String workspacenotes;
-    String procedureID;
-    String fileSMP;
+    private String id;
+    private String typology;
+    private String activityDescription;
+    private boolean interruptible;
+    private Site site;
+    private int weekNumber;
+    private int intervationTime;
+    private String workspacenotes;
+    private String procedureID;
+    private String fileSMP;
 
-    public String getWorkspacenotes() {
-        return workspacenotes;
-    }
     
-    //constructor used to create a new maintance activity
+    //costruttore usato per creare una nuova attivitià
     public MaintanceActivity(String id, Site site, String typology, 
             String activityDescription, int intervationTime, boolean interruptible, int weekNumber,
             String workspacenotes) {
@@ -59,6 +56,11 @@ public class MaintanceActivity {
         this.procedureID=procedureID;
     
     }
+
+    public void setSite(Site site) {
+        this.site = site;
+    }
+    
     
     public String getId() {
         return id;
@@ -86,6 +88,10 @@ public class MaintanceActivity {
 
     public int getWeekNumber() {
         return weekNumber;
+    }
+    
+    public String getWorkspacenotes() {
+        return workspacenotes;
     }
 
     public void setId(String id) {
