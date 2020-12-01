@@ -33,7 +33,6 @@ public class ActivityEWO extends javax.swing.JFrame {
         minimizeButton1 = new CommonComponents.MinimizeButton();
         closeButton1 = new CommonComponents.CloseButton();
         labelForWeekNumber3 = new CommonComponents.LabelForWeekNumber();
-        labelForWeekNumber5 = new CommonComponents.LabelForWeekNumber();
         labelLight2 = new CommonComponents.LabelLight();
         labelLight3 = new CommonComponents.LabelLight();
         labelLight4 = new CommonComponents.LabelLight();
@@ -48,11 +47,11 @@ public class ActivityEWO extends javax.swing.JFrame {
         activityInfoLabel1 = new CommonComponents.ActivityInfoLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea3 = new javax.swing.JTextArea();
+        dayWeek1 = new CommonComponents.DayWeek();
+        labelForWeekDay2 = new CommonComponents.LabelForWeekDay();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-
-        labelForWeekNumber5.setText("Monday");
 
         labelLight3.setText("Intervention description");
 
@@ -93,7 +92,10 @@ public class ActivityEWO extends javax.swing.JFrame {
                                 .addComponent(labelForWeekNumber3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(weekNumber1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(labelForWeekNumber5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelBase1Layout.createSequentialGroup()
+                                .addComponent(labelForWeekDay2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(dayWeek1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelBase1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -149,7 +151,9 @@ public class ActivityEWO extends javax.swing.JFrame {
                                     .addComponent(weekNumber1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(labelForWeekNumber3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(labelForWeekNumber5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(dayWeek1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelForWeekDay2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addGap(18, 18, 18)
                 .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelLight2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -222,6 +226,7 @@ public class ActivityEWO extends javax.swing.JFrame {
     private CommonComponents.ActivityInfoLabel activityInfoLabel1;
     private CommonComponents.ActivtyAssign activtyAssign1;
     private CommonComponents.CloseButton closeButton1;
+    private CommonComponents.DayWeek dayWeek1;
     private CommonComponents.ForwardButton forwardButton1;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -231,8 +236,8 @@ public class ActivityEWO extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;
+    private CommonComponents.LabelForWeekDay labelForWeekDay2;
     private CommonComponents.LabelForWeekNumber labelForWeekNumber3;
-    private CommonComponents.LabelForWeekNumber labelForWeekNumber5;
     private CommonComponents.LabelLight labelLight2;
     private CommonComponents.LabelLight labelLight3;
     private CommonComponents.LabelLight labelLight4;

@@ -49,7 +49,11 @@
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="weekNumber1" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="labelForWeekNumber5" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="labelForWeekDay2" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                  <Component id="dayWeek1" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
@@ -126,7 +130,10 @@
                                       <Component id="labelForWeekNumber3" alignment="1" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="labelForWeekNumber5" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="dayWeek1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelForWeekDay2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
@@ -165,11 +172,6 @@
         <Component class="CommonComponents.CloseButton" name="closeButton1">
         </Component>
         <Component class="CommonComponents.LabelForWeekNumber" name="labelForWeekNumber3">
-        </Component>
-        <Component class="CommonComponents.LabelForWeekNumber" name="labelForWeekNumber5">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Monday"/>
-          </Properties>
         </Component>
         <Component class="CommonComponents.LabelLight" name="labelLight2">
         </Component>
@@ -267,6 +269,10 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="CommonComponents.DayWeek" name="dayWeek1">
+        </Component>
+        <Component class="CommonComponents.LabelForWeekDay" name="labelForWeekDay2">
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>
