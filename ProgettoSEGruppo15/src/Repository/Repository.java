@@ -16,6 +16,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -44,7 +45,11 @@ public class Repository {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-   
+
+    public Statement getStm() {
+        return stm;
+    }
+    
     public ResultSet getInformationOfMaintenanceActivity(){
        
         try {
@@ -176,7 +181,7 @@ public class Repository {
         }
         
     }
-    public void insertNewMaintenanceActivity(String activityID,
+    public boolean insertNewMaintenanceActivity(String activityID,
                // String plannerID, String maintainerID, String procedureID,
                 String siteID,
                 String activityDescription,int activityInterventionTime,
@@ -208,32 +213,37 @@ public class Repository {
         temp.append("'").append(activityWorkspaceNotes).append("',");
         temp.append("'").append(activityTypology).append("' ");
         temp.append(");");
-        viewMaintenanceActivityTable();
+        
+        //viewMaintenanceActivityTable();
         try {
             stm.executeUpdate(temp.toString());
+            return true;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
     
-    public void deleteMaintenanceActivity(String activityID){
+    public boolean deleteMaintenanceActivity(String activityID){
         StringBuilder temp = new StringBuilder();
-        System.out.println(activityID);
+        //System.out.println(activityID);
         temp.append("delete from MaintenanceActivity"
                 + " where activityid = ");
         temp.append(" '").append(activityID).append("' ;");
-        System.out.println(temp);
+        //System.out.println(temp);
         
                 
         try {
             stm.executeUpdate(temp.toString());
+            return true;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
     
     
-    public void updateMaintenanceActivity(String id,String typology, String description, int time, boolean inter, int week){
+    public boolean updateMaintenanceActivity(String id,String typology, String description, int time, boolean inter, int week){
         StringBuilder temp = new StringBuilder();
         temp.append("update MaintenanceActivity"
         + " set activityDescription = ");
@@ -246,13 +256,15 @@ public class Repository {
         
          try {
             stm.executeUpdate(temp.toString());
+            return true;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
         
     }
     
-    public void viewMaintenanceActivityTable(){
+    public boolean viewMaintenanceActivityTable(){
             
         try {
             String query = "select* from "
@@ -273,8 +285,10 @@ public class Repository {
             System.out.println(activityID+"\t"+siteID+"\t"+activityDescription+"\t"+activityInterventionTime+"\t"+interruptibleActivity+
             "\t"+activityWeekNumber+"\t"+activityTypology);
             } 
+            return true;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
     public ResultSet getSiteTable(){
@@ -284,6 +298,25 @@ public class Repository {
             ResultSet rst = stm.executeQuery(query);
             return rst;
         
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    public ArrayList<String> getCompetencesOfActivity(String activityID){
+        ArrayList<String> skillList = new ArrayList<>();
+        StringBuilder temp = new StringBuilder();
+        temp.append("select c.competenceName from \n" +
+                    "MaintenanceActivity as ma \n" +
+                    "join competenceToProcedure as cp on (ma.procedureID=cp.procedureID )\n" +
+                    "join competence as c on (c.competenceID=cp.competenceID ) ");
+        temp.append(" where ma.activityID= '").append(activityID).append("' ;");
+         try {
+            ResultSet rst = stm.executeQuery(temp.toString());
+            while(rst.next()){
+                skillList.add(rst.getString(0));
+            }
+            return skillList;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
