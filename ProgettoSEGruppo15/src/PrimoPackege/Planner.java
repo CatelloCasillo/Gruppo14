@@ -37,12 +37,10 @@ public class Planner {
         this.initActivityList();
     }
     
-    //this method create a maintance activity 
+    //permette di creare un'attività, di aggiungerla alla lista e al database 
     public void createActivity(String id, Site site, String typology, String activityDescription, int intervationTime, boolean interruptible, int week, String workspacenotes ){
        MaintanceActivity a= new MaintanceActivity(id, site, typology, activityDescription, intervationTime, interruptible, week, workspacenotes);
-       //activityList.add(a);
-       System.out.println(a.id+' '+ a.getSite().id.trim()+' '+ a.activityDescription+' '+ a.intervationTime+' '+ a.interruptible+ ' '+ a.weekNumber+' '+ a.workspacenotes+' '+ a.typology );
-       repository.insertNewMaintenanceActivity(a.id, a.getSite().id, a.activityDescription, a.intervationTime, a.interruptible, a.weekNumber, a.workspacenotes, a.typology);
+       repository.insertNewMaintenanceActivity(a.getId(), a.getSite().getId(), a.getActivityDescription(), a.getIntervationTime(), a.isInterruptible(), a.getWeekNumber(), a.getWorkspacenotes(), a.getTypology());
        activityList.add(a);
     }
     
@@ -75,6 +73,7 @@ public class Planner {
       }
     }
     
+    
     // restituisce la maintance activity del rispettivo id
     public MaintanceActivity getMaintanceActivity (String idActivity){
         for(MaintanceActivity m : activityList){
@@ -82,7 +81,6 @@ public class Planner {
                 return m;
         }
       return null;
-        
     }
     
     public void initSiteList(){
@@ -101,12 +99,20 @@ public class Planner {
       }
     
     }
+    
+    // metodo che controlla se l'id dell'attività è già presente
+    public boolean idControl(String id){
+        for(MaintanceActivity m : activityList){
+            if(m.getId().equals(id)){
+                return true;
+            }
+    }    return false;
+    }
+    
     public Site findSiteInList(String idSite, ArrayList<Site> siteList) {
         String [] id= idSite.split(":");
           for (Site s : siteList) {
-              //System.out.println(id.concat(s.getId()));
               if (s.getId().trim().equals(id[0].trim())) {
-                  System.out.println(id);
                   return s;
               }
           }
@@ -151,33 +157,22 @@ public class Planner {
         return attrTable;
     }
     
+    //permette di cancellare un'attività dalla lista e dal database
     public void deleteActivity(String idActivity, int row){
         repository.deleteMaintenanceActivity(idActivity);
         activityList.remove(row);
     }
     
-    public void updateActivity(int row, String id, String typology,String description, int time, boolean inter, int week ){
-         
-        activityList.get(row).typology = typology;
-        activityList.get(row).activityDescription= description;
-        activityList.get(row).intervationTime = time;
-        activityList.get(row).interruptible= inter;
-        activityList.get(row).weekNumber = week;
-        
-        repository.updateMaintenanceActivity(id, typology, description, time, inter, week);
-    }
-    
-    public MaintanceActivity getActivity() {
-        return activity;
-    }
-
-
-    public void setActivity(MaintanceActivity activity) {
-        this.activity = activity;
-    }
-
-    public void setListmaintance(ArrayList<MaintanceActivity> listmaintance) {
-        this.activityList = listmaintance;
+    //permette di modificare un'attività dalla lista e dal database
+    public void updateActivity(int row,String id, String site, String typology,String description, int time, boolean inter, int week ){ 
+        Site s= this.findSiteInList(site, siteList);
+        activityList.get(row).setSite(s);
+        activityList.get(row).setTypology(typology);
+        activityList.get(row).setActivityDescription(description);
+        activityList.get(row).setIntervationTime(time);
+        activityList.get(row).setInterruptible(inter);
+        activityList.get(row).setWeek(week);
+        repository.updateMaintenanceActivity(id, s.getId() ,typology, description, time, inter, week);
     }
 
     public ArrayList<MaintanceActivity> getActivityList() {

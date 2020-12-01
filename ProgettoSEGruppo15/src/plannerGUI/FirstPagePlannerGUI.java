@@ -2,11 +2,7 @@ package plannerGUI;
 
 
 import PrimoPackege.Planner;
-import java.awt.Color;
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.border.Border;
-import PrimoPackege.*;
 import SelectionGUI.SelectActivityGUI;
 
 /*
@@ -37,18 +33,6 @@ public class FirstPagePlannerGUI extends javax.swing.JFrame {
         this.p = new Planner();
         this.setLocationRelativeTo(null);
       }
-    
-     public void borderWhite(){
-        Border label_border= BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white);
-        jLabelClose.setBorder(label_border);
-        jLabelClose.setForeground(Color.white);
-    }
-     
-     public void borderBlack(){
-        Border label_border= BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black);
-        jLabelClose.setBorder(label_border);
-        jLabelClose.setForeground(Color.black);
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -59,202 +43,128 @@ public class FirstPagePlannerGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
-        jLabelClose = new javax.swing.JLabel();
-        jLabelMin = new javax.swing.JLabel();
+        panelBase1 = new CommonComponents.PanelBase();
         jLwelcome = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        minimizeButton1 = new CommonComponents.MinimizeButton();
+        closeButton1 = new CommonComponents.CloseButton();
+        panelBase2 = new CommonComponents.PanelBase();
         jLabel1 = new javax.swing.JLabel();
-        jButtonView = new javax.swing.JButton();
-        jButtonCreate = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        operationButton1 = new CommonComponents.OperationButton();
+        operationButton2 = new CommonComponents.OperationButton();
+        operationButton3 = new CommonComponents.OperationButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-
-        jPanel3.setBackground(new java.awt.Color(248, 148, 6));
-        jPanel3.setMinimumSize(new java.awt.Dimension(436, 120));
-        jPanel3.setPreferredSize(new java.awt.Dimension(440, 320));
-
-        jLabelClose.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelClose.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelClose.setText("X");
-        jLabelClose.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabelClose.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabelClose.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabelCloseMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabelCloseMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabelCloseMouseExited(evt);
-            }
-        });
-
-        jLabelMin.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelMin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelMin.setText("-");
-        jLabelMin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabelMin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabelMin.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabelMinMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabelMinMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabelMinMouseExited(evt);
-            }
-        });
 
         jLwelcome.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 36)); // NOI18N
         jLwelcome.setForeground(new java.awt.Color(51, 0, 0));
         jLwelcome.setText("WELCOME PLANNER");
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelBase1Layout = new javax.swing.GroupLayout(panelBase1);
+        panelBase1.setLayout(panelBase1Layout);
+        panelBase1Layout.setHorizontalGroup(
+            panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBase1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabelMin, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelClose, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBase1Layout.createSequentialGroup()
                         .addComponent(jLwelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(81, 81, 81))))
+                        .addGap(122, 122, 122))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBase1Layout.createSequentialGroup()
+                        .addComponent(minimizeButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(closeButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelClose)
-                    .addComponent(jLabelMin))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        panelBase1Layout.setVerticalGroup(
+            panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBase1Layout.createSequentialGroup()
+                .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(minimizeButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(closeButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(jLwelcome)
-                .addGap(0, 47, Short.MAX_VALUE))
+                .addGap(32, 32, 32))
         );
 
-        jPanel1.setBackground(new java.awt.Color(245, 171, 53));
-        jPanel1.setPreferredSize(new java.awt.Dimension(436, 270));
-        jPanel1.setLayout(null);
+        panelBase2.setBackground(new java.awt.Color(245, 171, 53));
+        panelBase2.setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
         jLabel1.setText("What are you going to do?");
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(120, 60, 290, 23);
+        panelBase2.add(jLabel1);
+        jLabel1.setBounds(170, 100, 290, 23);
 
-        jButtonView.setBackground(new java.awt.Color(211, 84, 0));
-        jButtonView.setFont(new java.awt.Font("Cooper Black", 0, 11)); // NOI18N
-        jButtonView.setText("View activities");
-        jButtonView.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButtonView.addActionListener(new java.awt.event.ActionListener() {
+        operationButton1.setText("Create activity");
+        operationButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonViewActionPerformed(evt);
+                operationButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonView);
-        jButtonView.setBounds(370, 130, 140, 40);
+        panelBase2.add(operationButton1);
+        operationButton1.setBounds(50, 210, 120, 50);
 
-        jButtonCreate.setBackground(new java.awt.Color(211, 84, 0));
-        jButtonCreate.setFont(new java.awt.Font("Cooper Black", 0, 11)); // NOI18N
-        jButtonCreate.setText("Create an activity");
-        jButtonCreate.setBorder(null);
-        jButtonCreate.setBorderPainted(false);
-        jButtonCreate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButtonCreate.addActionListener(new java.awt.event.ActionListener() {
+        operationButton2.setText("Plan activity");
+        operationButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCreateActionPerformed(evt);
+                operationButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonCreate);
-        jButtonCreate.setBounds(30, 130, 140, 40);
+        panelBase2.add(operationButton2);
+        operationButton2.setBounds(260, 210, 110, 50);
 
-        jButton1.setBackground(new java.awt.Color(211, 84, 0));
-        jButton1.setFont(new java.awt.Font("Cooper Black", 0, 11)); // NOI18N
-        jButton1.setText("Plan activity");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        operationButton3.setText("View activity");
+        operationButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                operationButton3ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1);
-        jButton1.setBounds(210, 130, 120, 40);
+        panelBase2.add(operationButton3);
+        operationButton3.setBounds(460, 210, 100, 50);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
+            .addComponent(panelBase1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelBase2, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panelBase1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(120, 120, 120)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(122, 122, 122)
+                .addComponent(panelBase2, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabelMinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMinMouseClicked
-        this.setState(JFrame.ICONIFIED);
-    }//GEN-LAST:event_jLabelMinMouseClicked
-
-    private void jLabelCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCloseMouseClicked
-        System.exit(0);
-    }//GEN-LAST:event_jLabelCloseMouseClicked
-
-    private void jButtonCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreateActionPerformed
+    private void operationButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton1ActionPerformed
         CreateAnActivityGUI activity= new CreateAnActivityGUI(p);
         activity.setVisible(true);
         activity.pack();
         activity.setLocationRelativeTo(null);
         activity.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();
-    }//GEN-LAST:event_jButtonCreateActionPerformed
+    }//GEN-LAST:event_operationButton1ActionPerformed
 
-    private void jLabelMinMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMinMouseEntered
-        borderWhite();
-    }//GEN-LAST:event_jLabelMinMouseEntered
-
-    private void jLabelMinMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMinMouseExited
-        borderBlack();
-    }//GEN-LAST:event_jLabelMinMouseExited
-
-    private void jLabelCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCloseMouseEntered
-        borderWhite();
-    }//GEN-LAST:event_jLabelCloseMouseEntered
-
-    private void jLabelCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCloseMouseExited
-       borderBlack();
-    }//GEN-LAST:event_jLabelCloseMouseExited
-
-    private void jButtonViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonViewActionPerformed
-        ViewActivityGUI view= new ViewActivityGUI(p);
-        view.setVisible(true);
-        view.pack();
-        view.setLocationRelativeTo(null);
-        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
-    }//GEN-LAST:event_jButtonViewActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void operationButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton2ActionPerformed
         SelectActivityGUI select= new SelectActivityGUI();
         select.setVisible(true);
         select.pack();
         select.setLocationRelativeTo(null);
         select.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_operationButton2ActionPerformed
+
+    private void operationButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton3ActionPerformed
+        ViewActivityGUI view= new ViewActivityGUI(p);
+        view.setVisible(true);
+        view.pack();
+        view.setLocationRelativeTo(null);
+        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_operationButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -292,14 +202,14 @@ public class FirstPagePlannerGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButtonCreate;
-    private javax.swing.JButton jButtonView;
+    private CommonComponents.CloseButton closeButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabelClose;
-    private javax.swing.JLabel jLabelMin;
     private javax.swing.JLabel jLwelcome;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
+    private CommonComponents.MinimizeButton minimizeButton1;
+    private CommonComponents.OperationButton operationButton1;
+    private CommonComponents.OperationButton operationButton2;
+    private CommonComponents.OperationButton operationButton3;
+    private CommonComponents.PanelBase panelBase1;
+    private CommonComponents.PanelBase panelBase2;
     // End of variables declaration//GEN-END:variables
 }

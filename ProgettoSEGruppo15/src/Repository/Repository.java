@@ -233,11 +233,12 @@ public class Repository {
     }
     
     
-    public void updateMaintenanceActivity(String id,String typology, String description, int time, boolean inter, int week){
+    public void updateMaintenanceActivity(String id,String site,String typology, String description, int time, boolean inter, int week){
         StringBuilder temp = new StringBuilder();
         temp.append("update MaintenanceActivity"
         + " set activityDescription = ");
         temp.append(" '").append(description).append("',");
+        temp.append(" siteID = ").append(" '").append(site).append(" ',");
         temp.append(" activityInterventionTime = ").append("  ").append(time).append(" ,");
         temp.append(" activityTypology = ").append("' ").append(typology).append(" ',");
         temp.append(" interruptibleActivity = ").append("  ").append(inter).append(" ,");

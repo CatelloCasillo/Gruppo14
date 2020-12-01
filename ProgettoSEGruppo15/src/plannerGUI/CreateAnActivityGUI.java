@@ -5,6 +5,7 @@ import PrimoPackege.Planner;
 import plannerGUI.FirstPagePlannerGUI;
 import java.awt.Color;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.border.Border;
@@ -29,9 +30,10 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
     public CreateAnActivityGUI(Planner p) {
         this.p = p;
         initComponents();
-        
-       
         this.setLocationRelativeTo(null);
+        for(int i=0; i<p.getActivityList().size(); i++){
+        System.out.println(p.getActivityList().get(i).getSite().getId());
+        }
     }
 
     private CreateAnActivityGUI() {
@@ -39,56 +41,45 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
     
+    //pulisce i campi 
     public void clearField(){
-        jTextFieldId.setText("");
-        jComboBoxTipo.setSelectedIndex(0);
-        jTextFieldDescription.setText("");
-        jTextFieldTime.setText("");
-        jRadioButton1.setSelected(false);
-        jRadioButton2.setSelected(false);
-        jTextFieldMaterial.setText("");
-        jTextFieldWeek.setText("");
-        jTextAreaWorkSpace.setText("");
+        jTextFieldId1.setText("");
+        jComboBoxTipo1.setSelectedIndex(0);
+        jTextFieldDescription1.setText("");
+        jTextFieldTime1.setText("");
+        jRadioButton3.setSelected(false);
+        jRadioButton4.setSelected(false);
+        jTextFieldWeek1.setText("");
+        jTextAreaWorkSpace1.setText("");
     }
     
-    public boolean verifRadioButton(){
-        if(jRadioButton1.isSelected()){
-            return true;
-        }
-        return false;
-    }
-    
-    // verify if data are empty
+    // verifica dei dati inseriti
     public boolean verifData(){
-        if (jTextFieldId.getText().equals("")  
-                || jTextFieldDescription.getText().equals("") || jTextFieldTime.getText().equals("") 
-                || jTextFieldMaterial.getText().equals("") || jTextFieldWeek.getText().equals("") 
-                ||(jRadioButton1.isSelected() == false) &&(jRadioButton2.isSelected()== false)){
+        if (jTextFieldId1.getText().equals("")  
+                || jTextFieldDescription1.getText().equals("") || jTextFieldTime1.getText().equals("") 
+                || jTextFieldWeek1.getText().equals("") 
+                ||(jRadioButton3.isSelected() == false) &&(jRadioButton4.isSelected()== false)){
             JOptionPane.showMessageDialog(null, "One or more fields are empty");
             return false;
         }
-        if (jTextFieldId.getText().length()!=6 ){
+        if (jTextFieldId1.getText().length()!=6 ){
             JOptionPane.showMessageDialog(null, "ID must has 6 char");
             return false;
         }
-        else if (jRadioButton1.isSelected() && jRadioButton2.isSelected()){
+        if(Integer.parseInt(jTextFieldTime1.getText())<0 || Integer.parseInt(jTextFieldWeek1.getText())>52){
+            JOptionPane.showMessageDialog(null, "Week must be between 1 and 52");
+            return false;
+        }
+        if(p.idControl(jTextFieldId1.getText())== true){
+            JOptionPane.showMessageDialog(null, "ID already exists");
+            return false;
+        }
+        else if (jRadioButton3.isSelected() && jRadioButton4.isSelected()){
             JOptionPane.showMessageDialog(null, "You can choose only Yes or No");
             return false;
         }
         return true;
     }
-     public void borderWhite(){
-        Border label_border= BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white);
-        jLabelClose.setBorder(label_border);
-        jLabelClose.setForeground(Color.white);
-    }
-    
-    public void borderBlack(){
-        Border label_border= BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black);
-        jLabelClose.setBorder(label_border);
-        jLabelClose.setForeground(Color.black);
-    }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,304 +89,224 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        panelBase1 = new CommonComponents.PanelBase();
+        closeButton1 = new CommonComponents.CloseButton();
+        minimizeButton1 = new CommonComponents.MinimizeButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabelClose = new javax.swing.JLabel();
-        jLabelMin = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jTextFieldDescription = new javax.swing.JTextField();
-        jTextFieldId = new javax.swing.JTextField();
-        jTextFieldTime = new javax.swing.JTextField();
-        jTextFieldMaterial = new javax.swing.JTextField();
-        jTextFieldWeek = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jComboBoxTipo = new javax.swing.JComboBox<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextAreaWorkSpace = new javax.swing.JTextArea();
-        jButtonCancel = new javax.swing.JButton();
-        jButtonCreateee = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        panelBase2 = new CommonComponents.PanelBase();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jTextFieldDescription1 = new javax.swing.JTextField();
+        jTextFieldId1 = new javax.swing.JTextField();
+        jTextFieldTime1 = new javax.swing.JTextField();
+        jTextFieldWeek1 = new javax.swing.JTextField();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jRadioButton4 = new javax.swing.JRadioButton();
+        jComboBoxTipo1 = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextAreaWorkSpace1 = new javax.swing.JTextArea();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        operationButton1 = new CommonComponents.OperationButton();
+        operationButton2 = new CommonComponents.OperationButton();
+        operationButton3 = new CommonComponents.OperationButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        jPanel1.setBackground(new java.awt.Color(248, 148, 6));
-
         jLabel1.setFont(new java.awt.Font("Berlin Sans FB Demi", 0, 18)); // NOI18N
         jLabel1.setText("Create Activity");
 
-        jLabelClose.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelClose.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelClose.setText("X");
-        jLabelClose.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabelClose.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabelClose.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabelCloseMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabelCloseMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabelCloseMouseExited(evt);
-            }
-        });
-
-        jLabelMin.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelMin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelMin.setText("-");
-        jLabelMin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabelMin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabelMin.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabelMinMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabelMinMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabelMinMouseExited(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(93, 93, 93)
-                .addComponent(jLabelMin, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+        javax.swing.GroupLayout panelBase1Layout = new javax.swing.GroupLayout(panelBase1);
+        panelBase1.setLayout(panelBase1Layout);
+        panelBase1Layout.setHorizontalGroup(
+            panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBase1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(76, 76, 76)
+                .addComponent(minimizeButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelClose, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(closeButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panelBase1Layout.setVerticalGroup(
+            panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBase1Layout.createSequentialGroup()
+                .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(closeButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(minimizeButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(panelBase1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabelClose)
-                .addComponent(jLabelMin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(245, 171, 53));
-        jPanel2.setPreferredSize(new java.awt.Dimension(436, 270));
-        jPanel2.setLayout(null);
+        panelBase2.setBackground(new java.awt.Color(245, 171, 53));
+        panelBase2.setLayout(null);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel2.setText("site:");
-        jPanel2.add(jLabel2);
-        jLabel2.setBounds(30, 60, 30, 20);
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel6.setText("site:");
+        panelBase2.add(jLabel6);
+        jLabel6.setBounds(30, 60, 30, 20);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel3.setText("typology:");
-        jPanel2.add(jLabel3);
-        jLabel3.setBounds(30, 100, 60, 20);
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel12.setText("typology:");
+        panelBase2.add(jLabel12);
+        jLabel12.setBounds(30, 100, 60, 20);
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel4.setText("materials:");
-        jPanel2.add(jLabel4);
-        jLabel4.setBounds(30, 270, 80, 20);
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel14.setText("activity ID:");
+        panelBase2.add(jLabel14);
+        jLabel14.setBounds(30, 14, 70, 30);
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel5.setText("activity ID:");
-        jPanel2.add(jLabel5);
-        jLabel5.setBounds(30, 14, 70, 30);
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel15.setText("activity description:");
+        panelBase2.add(jLabel15);
+        jLabel15.setBounds(30, 140, 120, 20);
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel7.setText("activity description:");
-        jPanel2.add(jLabel7);
-        jLabel7.setBounds(30, 140, 120, 20);
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel16.setText("estimated intervention time:");
+        panelBase2.add(jLabel16);
+        jLabel16.setBounds(30, 174, 170, 30);
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel8.setText("estimated intervention time:");
-        jPanel2.add(jLabel8);
-        jLabel8.setBounds(30, 174, 170, 30);
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel17.setText("week:");
+        panelBase2.add(jLabel17);
+        jLabel17.setBounds(30, 280, 40, 20);
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel9.setText("week:");
-        jPanel2.add(jLabel9);
-        jLabel9.setBounds(30, 310, 40, 20);
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel18.setText("workspace notes:");
+        panelBase2.add(jLabel18);
+        jLabel18.setBounds(30, 330, 110, 30);
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel10.setText("workspace notes:");
-        jPanel2.add(jLabel10);
-        jLabel10.setBounds(30, 344, 100, 30);
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel19.setText("interruptible activity:");
+        panelBase2.add(jLabel19);
+        jLabel19.setBounds(30, 230, 130, 20);
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel11.setText("interruptible activity:");
-        jPanel2.add(jLabel11);
-        jLabel11.setBounds(30, 230, 130, 20);
+        jTextFieldDescription1.setBackground(new java.awt.Color(253, 227, 167));
+        panelBase2.add(jTextFieldDescription1);
+        jTextFieldDescription1.setBounds(150, 140, 220, 30);
 
-        jTextFieldDescription.setBackground(new java.awt.Color(253, 227, 167));
-        jPanel2.add(jTextFieldDescription);
-        jTextFieldDescription.setBounds(150, 140, 220, 30);
+        jTextFieldId1.setBackground(new java.awt.Color(253, 227, 167));
+        jTextFieldId1.setPreferredSize(new java.awt.Dimension(6, 25));
+        panelBase2.add(jTextFieldId1);
+        jTextFieldId1.setBounds(100, 20, 100, 30);
 
-        jTextFieldId.setBackground(new java.awt.Color(253, 227, 167));
-        jTextFieldId.setPreferredSize(new java.awt.Dimension(6, 25));
-        jPanel2.add(jTextFieldId);
-        jTextFieldId.setBounds(100, 20, 100, 30);
+        jTextFieldTime1.setBackground(new java.awt.Color(253, 227, 167));
+        panelBase2.add(jTextFieldTime1);
+        jTextFieldTime1.setBounds(200, 180, 110, 30);
 
-        jTextFieldTime.setBackground(new java.awt.Color(253, 227, 167));
-        jPanel2.add(jTextFieldTime);
-        jTextFieldTime.setBounds(200, 180, 110, 30);
+        jTextFieldWeek1.setBackground(new java.awt.Color(253, 227, 167));
+        panelBase2.add(jTextFieldWeek1);
+        jTextFieldWeek1.setBounds(70, 280, 110, 30);
 
-        jTextFieldMaterial.setBackground(new java.awt.Color(253, 227, 167));
-        jPanel2.add(jTextFieldMaterial);
-        jTextFieldMaterial.setBounds(100, 270, 150, 30);
+        jRadioButton3.setBackground(new java.awt.Color(253, 227, 167));
+        jRadioButton3.setText("YES");
+        panelBase2.add(jRadioButton3);
+        jRadioButton3.setBounds(160, 230, 50, 23);
 
-        jTextFieldWeek.setBackground(new java.awt.Color(253, 227, 167));
-        jPanel2.add(jTextFieldWeek);
-        jTextFieldWeek.setBounds(70, 310, 110, 30);
+        jRadioButton4.setBackground(new java.awt.Color(253, 227, 167));
+        jRadioButton4.setText("NO");
+        panelBase2.add(jRadioButton4);
+        jRadioButton4.setBounds(230, 230, 50, 23);
 
-        jRadioButton1.setBackground(new java.awt.Color(253, 227, 167));
-        jRadioButton1.setText("YES");
-        jPanel2.add(jRadioButton1);
-        jRadioButton1.setBounds(160, 230, 50, 23);
+        jComboBoxTipo1.setBackground(new java.awt.Color(253, 227, 167));
+        jComboBoxTipo1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Electrical", "Electronic", "Hydraulic", "Mechanical" }));
+        panelBase2.add(jComboBoxTipo1);
+        jComboBoxTipo1.setBounds(90, 100, 100, 20);
 
-        jRadioButton2.setBackground(new java.awt.Color(253, 227, 167));
-        jRadioButton2.setText("NO");
-        jPanel2.add(jRadioButton2);
-        jRadioButton2.setBounds(230, 230, 50, 23);
+        jTextAreaWorkSpace1.setBackground(new java.awt.Color(253, 227, 167));
+        jTextAreaWorkSpace1.setColumns(20);
+        jTextAreaWorkSpace1.setRows(5);
+        jScrollPane2.setViewportView(jTextAreaWorkSpace1);
 
-        jComboBoxTipo.setBackground(new java.awt.Color(253, 227, 167));
-        jComboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Electrical", "Electronic", "Hydraulic", "Mechanical" }));
-        jPanel2.add(jComboBoxTipo);
-        jComboBoxTipo.setBounds(90, 100, 100, 20);
+        panelBase2.add(jScrollPane2);
+        jScrollPane2.setBounds(150, 320, 220, 90);
 
-        jTextAreaWorkSpace.setBackground(new java.awt.Color(253, 227, 167));
-        jTextAreaWorkSpace.setColumns(20);
-        jTextAreaWorkSpace.setRows(5);
-        jScrollPane1.setViewportView(jTextAreaWorkSpace);
-
-        jPanel2.add(jScrollPane1);
-        jScrollPane1.setBounds(140, 350, 220, 90);
-
-        jButtonCancel.setBackground(new java.awt.Color(211, 84, 0));
-        jButtonCancel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButtonCancel.setText("Cancel");
-        jButtonCancel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButtonCancel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButtonCancelMouseClicked(evt);
-            }
-        });
-        jPanel2.add(jButtonCancel);
-        jButtonCancel.setBounds(40, 470, 90, 30);
-
-        jButtonCreateee.setBackground(new java.awt.Color(211, 84, 0));
-        jButtonCreateee.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButtonCreateee.setText("Create");
-        jButtonCreateee.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButtonCreateee.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCreateeeActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButtonCreateee);
-        jButtonCreateee.setBounds(290, 470, 90, 30);
-
-        jButton1.setBackground(new java.awt.Color(211, 84, 0));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton1.setText("view activity");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton1);
-        jButton1.setBounds(160, 470, 110, 30);
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         for(int i=0; i<p.getSiteList().size(); i++){
-            jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { p.getSiteList().get(i).getId().trim()+':'+ p.getSiteList().get(i).getArea()+'-'+ p.getSiteList().get(i).getFactory() }));
-        }
-        jPanel2.add(jComboBox1);
-        jComboBox1.setBounds(80, 60, 160, 20);
+
+            jComboBox2.addItem(p.getSiteList().get(i).getId().trim()+':'+ p.getSiteList().get(i).getArea()+'-'+ p.getSiteList().get(i).getFactory());
+
+        };
+        panelBase2.add(jComboBox2);
+        jComboBox2.setBounds(80, 60, 160, 20);
+
+        operationButton1.setText("Cancel");
+        operationButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                operationButton1ActionPerformed(evt);
+            }
+        });
+        panelBase2.add(operationButton1);
+        operationButton1.setBounds(20, 510, 90, 40);
+
+        operationButton2.setText("View activity");
+        operationButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                operationButton2ActionPerformed(evt);
+            }
+        });
+        panelBase2.add(operationButton2);
+        operationButton2.setBounds(140, 510, 110, 40);
+
+        operationButton3.setText("Create");
+        operationButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                operationButton3ActionPerformed(evt);
+            }
+        });
+        panelBase2.add(operationButton3);
+        operationButton3.setBounds(280, 510, 90, 40);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelBase1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelBase2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelBase1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(panelBase2, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jLabelCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCloseMouseClicked
-        System.exit(0);
-    }//GEN-LAST:event_jLabelCloseMouseClicked
-
-    private void jLabelMinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMinMouseClicked
-        this.setState(JFrame.ICONIFIED);
-    }//GEN-LAST:event_jLabelMinMouseClicked
-
-    private void jLabelMinMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMinMouseEntered
-        borderWhite();
-    }//GEN-LAST:event_jLabelMinMouseEntered
-
-    private void jLabelMinMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMinMouseExited
-        borderBlack();
-    }//GEN-LAST:event_jLabelMinMouseExited
-
-    private void jLabelCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCloseMouseEntered
-        borderWhite();
-    }//GEN-LAST:event_jLabelCloseMouseEntered
-
-    private void jLabelCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCloseMouseExited
-        borderBlack();
-    }//GEN-LAST:event_jLabelCloseMouseExited
    
-    private void jButtonCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonCancelMouseClicked
+    private void operationButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton1ActionPerformed
         FirstPagePlannerGUI planner= new FirstPagePlannerGUI(p);
         planner.setVisible(true);
         planner.pack();
         planner.setLocationRelativeTo(null);
         planner.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();
-    }//GEN-LAST:event_jButtonCancelMouseClicked
+    }//GEN-LAST:event_operationButton1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void operationButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton3ActionPerformed
+        if(verifData()){
+          p.createActivity(jTextFieldId1.getText(), p.findSiteInList(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()), p.getSiteList()) ,  jComboBoxTipo1.getItemAt(jComboBoxTipo1.getSelectedIndex()), jTextFieldDescription1.getText(), Integer.parseInt(jTextFieldTime1.getText()), jRadioButton3.isSelected(), Integer.parseInt(jTextFieldWeek1.getText()), jTextAreaWorkSpace1.getText());
+        JOptionPane.showMessageDialog(rootPane, "create successfully");
+        clearField();}
+    }//GEN-LAST:event_operationButton3ActionPerformed
+
+    private void operationButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton2ActionPerformed
         ViewActivityGUI view= new ViewActivityGUI(p);
         view.setVisible(true);
         view.pack();
         view.setLocationRelativeTo(null);
         view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButtonCreateeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreateeeActionPerformed
-        if(verifData()){
-            System.out.println((jComboBox1.getItemAt(jComboBox1.getSelectedIndex()))) ;
-          p.createActivity(jTextFieldId.getText(), p.findSiteInList(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()), p.getSiteList()) ,  jComboBoxTipo.getItemAt(jComboBoxTipo.getSelectedIndex()), jTextFieldDescription.getText(), Integer.parseInt(jTextFieldTime.getText()), verifRadioButton(), Integer.parseInt(jTextFieldWeek.getText()), jTextAreaWorkSpace.getText());
-        
-        JOptionPane.showMessageDialog(rootPane, "create successfully");
-        clearField();
-        }
-    }//GEN-LAST:event_jButtonCreateeeActionPerformed
+    }//GEN-LAST:event_operationButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -434,33 +345,31 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButtonCancel;
-    private javax.swing.JButton jButtonCreateee;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBoxTipo;
+    private CommonComponents.CloseButton closeButton1;
+    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBoxTipo1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLabelClose;
-    private javax.swing.JLabel jLabelMin;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextAreaWorkSpace;
-    private javax.swing.JTextField jTextFieldDescription;
-    private javax.swing.JTextField jTextFieldId;
-    private javax.swing.JTextField jTextFieldMaterial;
-    private javax.swing.JTextField jTextFieldTime;
-    private javax.swing.JTextField jTextFieldWeek;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton jRadioButton4;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextAreaWorkSpace1;
+    private javax.swing.JTextField jTextFieldDescription1;
+    private javax.swing.JTextField jTextFieldId1;
+    private javax.swing.JTextField jTextFieldTime1;
+    private javax.swing.JTextField jTextFieldWeek1;
+    private CommonComponents.MinimizeButton minimizeButton1;
+    private CommonComponents.OperationButton operationButton1;
+    private CommonComponents.OperationButton operationButton2;
+    private CommonComponents.OperationButton operationButton3;
+    private CommonComponents.PanelBase panelBase1;
+    private CommonComponents.PanelBase panelBase2;
     // End of variables declaration//GEN-END:variables
 }
