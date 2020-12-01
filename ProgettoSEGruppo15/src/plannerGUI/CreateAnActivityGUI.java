@@ -254,7 +254,7 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
             }
         });
         panelBase2.add(operationButton2);
-        operationButton2.setBounds(140, 510, 110, 40);
+        operationButton2.setBounds(140, 510, 100, 40);
 
         operationButton3.setText("Create");
         operationButton3.addActionListener(new java.awt.event.ActionListener() {

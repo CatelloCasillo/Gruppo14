@@ -21,6 +21,7 @@ public class PanelBase extends JPanel {
 
     private void initComponent() {
         this.setBackground(new java.awt.Color(248, 148, 6));
+        
     }
     
 }
