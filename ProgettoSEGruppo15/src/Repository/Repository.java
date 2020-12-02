@@ -21,11 +21,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Repository {
-    String url;
-    String user;
-    String pwd;
-    Connection conn;
-    Statement stm;
+    private String url;
+    private String user;
+    private String pwd;
+    private Connection conn;
+    private Statement stm;
+    
     public Repository() {
         this.url = "jdbc:postgresql://localhost/Progetto_SE_gruppo14";
         this.user = "utente_progetto_se";
@@ -33,23 +34,22 @@ public class Repository {
         this.setRepositoryConnection(url,user,pwd);
     }
     
-    public void setRepositoryConnection(String url,String user, String pwd){
+    public boolean setRepositoryConnection(String url,String user, String pwd){
          try {
             Class.forName("org.postgresql.Driver");
             this.conn = DriverManager.getConnection(url, user, pwd);
             this.stm = this.conn.createStatement();
             //System.out.println("Connessione Database effettuata");
+            return true;
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
-    //da eliminare
-    public Statement getStm() {
-        return stm;
-    }
-    
+  
     public ResultSet getInformationOfMaintenanceActivity(){
        
         try {
@@ -312,7 +312,7 @@ public class Repository {
                     "join competenceToProcedure as cp on (ma.procedureID=cp.procedureID )\n" +
                     "join competence as c on (c.competenceID=cp.competenceID ) ");
         temp.append(" where ma.activityID= '").append(activityID).append("' ;");
-         try {
+        try {
             return stm.executeQuery(temp.toString());
            
         } catch (SQLException ex) {
