@@ -25,9 +25,9 @@ public class WeekNumber extends JLabel{
         this.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         this.setOpaque(true);
         this.setPreferredSize(new Dimension(37,37));
-        this.setText(""+getCurrentWeekNumenber());
+        this.setText(""+getCurrentWeekNumber());
     }
-    private int getCurrentWeekNumenber(){
+    private int getCurrentWeekNumber(){
         Calendar calendar=new GregorianCalendar();
         Date currentDate = new Date();
         calendar.setTime(currentDate);

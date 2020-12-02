@@ -26,16 +26,16 @@ import org.postgresql.util.PSQLException;
  * @author Catello
  */
 //Testing che presuppongo il datbase vuoto.
-public class NewEmptyJUnitTest {
+public class PlannerTest {
     private Connection conn;
     private Statement stm;
     
-    public NewEmptyJUnitTest(){
+    public PlannerTest(){
         try {
             this.conn = DriverManager.getConnection("jdbc:postgresql://localhost/Progetto_SE_gruppo14", "utente_progetto_se", "password");
             this.stm = this.conn.createStatement();
         } catch (SQLException ex) {
-            Logger.getLogger(NewEmptyJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlannerTest.class.getName()).log(Level.SEVERE, null, ex);
         } 
     }
     @After
@@ -48,7 +48,7 @@ public class NewEmptyJUnitTest {
                                 "delete from Site;");
             
         } catch (SQLException ex) {
-            Logger.getLogger(NewEmptyJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlannerTest.class.getName()).log(Level.SEVERE, null, ex);
         } 
     }
     public void insertNewMaintenanceActivity() throws SQLException{

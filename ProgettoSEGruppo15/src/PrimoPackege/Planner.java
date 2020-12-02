@@ -208,9 +208,9 @@ public class Planner {
     public ArrayList<String> getCompetencesList(String activityId){
         ResultSet rst = repository.getCompetencesOfActivity(activityId);
         ArrayList<String> skillList = new ArrayList<>();
-        try {
+        try {  
           while(rst.next()){
-            skillList.add(rst.getString(1));
+          skillList.add(rst.getString(1));
           }
           return skillList;
         } catch (SQLException ex) {

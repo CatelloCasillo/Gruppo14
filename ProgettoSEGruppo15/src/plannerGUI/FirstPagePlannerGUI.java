@@ -149,7 +149,7 @@ public class FirstPagePlannerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_operationButton1ActionPerformed
 
     private void operationButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton2ActionPerformed
-        SelectActivityGUI select= new SelectActivityGUI();
+        SelectActivityGUI select= new SelectActivityGUI(p);
         select.setVisible(true);
         select.pack();
         select.setLocationRelativeTo(null);

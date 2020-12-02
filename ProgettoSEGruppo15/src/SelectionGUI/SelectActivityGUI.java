@@ -137,7 +137,12 @@ public class SelectActivityGUI extends javax.swing.JFrame {
     /**
      * Creates new form SelectActivityGUI
      */
-    public SelectActivityGUI() {
+    public SelectActivityGUI(Planner p) {
+        planner=p;
+        initComponents();
+        this.setLocationRelativeTo(null);
+    }
+    private SelectActivityGUI() {
         planner=new Planner();
         initComponents();
         this.setLocationRelativeTo(null);
@@ -206,7 +211,7 @@ public class SelectActivityGUI extends javax.swing.JFrame {
         jTable1.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
         jTable1.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
         jTable1.setDefaultRenderer(JButton.class,new JButtonRenderer());
-        jTable1.setDefaultEditor(JButton.class,new JButtonEditor());
+        jTable1.setDefaultEditor(JButton.class,new JButtonEditor(planner,this));
         jTable1.setFocusable(false);
         jTable1.setGridColor(new java.awt.Color(255, 255, 255));
         int[] columnsWidth = {

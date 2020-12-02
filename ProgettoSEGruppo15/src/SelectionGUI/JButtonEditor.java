@@ -1,11 +1,14 @@
 package SelectionGUI;
 
+import PrimoPackege.Planner;
+import VerifyGUI.VerifyActivityGUI;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import static java.lang.Integer.parseInt;
 import java.util.EventObject;
 import javax.swing.AbstractCellEditor;
 import javax.swing.BorderFactory;
@@ -32,7 +35,11 @@ public class JButtonEditor extends AbstractCellEditor implements TableCellEditor
     private JButton button;
     private Object editorValue;
     private JTable table;
-    public JButtonEditor() {
+    private Planner planner;
+    private JFrame frame;
+    public JButtonEditor(Planner p, JFrame frame) {
+        this.frame=frame;
+        this.planner=p;
         this.button = new JButton("Select");
         button = new JButton();
         button.setActionCommand("edit");
@@ -58,8 +65,16 @@ public class JButtonEditor extends AbstractCellEditor implements TableCellEditor
         button.setBackground(new Color(80,80,80));
         button.setForeground(Color.white);
         int row= table.getSelectedRow();
-        int column = 0;
-        JOptionPane.showMessageDialog(new JFrame(), "Id attività selezionata: "+table.getModel().getValueAt(row, column).toString(), "Errore", JOptionPane.ERROR_MESSAGE);
+        String id=table.getModel().getValueAt(row, 0).toString();
+        String site= table.getModel().getValueAt(row, 1).toString();
+        String typology = table.getModel().getValueAt(row, 2).toString();
+        int time=parseInt(table.getModel().getValueAt(row, 3).toString().trim());
+        VerifyActivityGUI verify= new VerifyActivityGUI(planner, id.trim(), time, site,typology);
+        verify.setVisible(true);
+        verify.pack();
+        verify.setLocationRelativeTo(null);
+        verify.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.dispose();
     }
     
 }

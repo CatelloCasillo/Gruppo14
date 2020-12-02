@@ -3,6 +3,7 @@ package plannerGUI;
 
 import PrimoPackege.*;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -118,6 +119,7 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         jComboBox2 = new javax.swing.JComboBox<>();
         operationButton1 = new CommonComponents.OperationButton();
         operationButton2 = new CommonComponents.OperationButton();
+        operationButton3 = new CommonComponents.OperationButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -271,6 +273,15 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         panelBase2.add(operationButton2);
         operationButton2.setBounds(370, 475, 120, 30);
 
+        operationButton3.setText("back to homepage");
+        operationButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                operationButton3ActionPerformed(evt);
+            }
+        });
+        panelBase2.add(operationButton3);
+        operationButton3.setBounds(190, 475, 130, 30);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -354,6 +365,15 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_operationButton2ActionPerformed
 
+    private void operationButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton3ActionPerformed
+        FirstPagePlannerGUI welcome= new FirstPagePlannerGUI(p);
+        welcome.setVisible(true);
+        welcome.pack();
+        welcome.setLocationRelativeTo(null);
+        welcome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_operationButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -412,6 +432,7 @@ public class ViewActivityGUI extends javax.swing.JFrame {
     private CommonComponents.MinimizeButton minimizeButton1;
     private CommonComponents.OperationButton operationButton1;
     private CommonComponents.OperationButton operationButton2;
+    private CommonComponents.OperationButton operationButton3;
     private CommonComponents.PanelBase panelBase1;
     private CommonComponents.PanelBase panelBase2;
     // End of variables declaration//GEN-END:variables
