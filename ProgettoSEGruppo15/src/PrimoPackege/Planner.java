@@ -44,7 +44,7 @@ public class Planner {
        activityList.add(a);
     }
     
-    public void initActivityList(){
+    private void initActivityList(){
         this.activityList = new ArrayList<>();
         try {
             ResultSet rst = repository.getInformationOfMaintenanceActivity();
@@ -83,7 +83,7 @@ public class Planner {
       return null;
     }
     
-    public void initSiteList(){
+    private void initSiteList(){
       this.siteList = new ArrayList<>();
       try {
         ResultSet rst = repository.getSiteTable();
@@ -182,6 +182,19 @@ public class Planner {
     public ArrayList<Site> getSiteList() {
         return siteList;
     }
-    
+    public ArrayList<String> getCompetencesList(String activityId){
+        ResultSet rst = repository.getCompetencesOfActivity(activityId);
+        ArrayList<String> skillList = new ArrayList<>();
+        try {
+          while(rst.next()){
+            skillList.add(rst.getString(0));
+          }
+          return skillList;
+        } catch (SQLException ex) {
+          Logger.getLogger(Planner.class.getName()).log(Level.SEVERE, null, ex);
+          return skillList;
+        }
+           
+    }
 }
 
