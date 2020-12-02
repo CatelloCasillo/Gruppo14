@@ -3,6 +3,7 @@ package PrimoPackege;
 
 import PrimoPackege.MaintanceActivity;
 import Repository.Repository;
+import static java.lang.Integer.parseInt;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -38,10 +39,13 @@ public class Planner {
     }
     
     //permette di creare un'attività, di aggiungerla alla lista e al database 
-    public void createActivity(String id, Site site, String typology, String activityDescription, int intervationTime, boolean interruptible, int week, String workspacenotes ){
+    public boolean createActivity(String id, Site site, String typology, String activityDescription, int intervationTime, boolean interruptible, int week, String workspacenotes ){
        MaintanceActivity a= new MaintanceActivity(id, site, typology, activityDescription, intervationTime, interruptible, week, workspacenotes);
-       repository.insertNewMaintenanceActivity(a.getId(), a.getSite().getId(), a.getActivityDescription(), a.getIntervationTime(), a.isInterruptible(), a.getWeekNumber(), a.getWorkspacenotes(), a.getTypology());
-       activityList.add(a);
+       if(repository.insertNewMaintenanceActivity(a.getId(), a.getSite().getId(), a.getActivityDescription(), a.getIntervationTime(), a.isInterruptible(), a.getWeekNumber(), a.getWorkspacenotes(), a.getTypology())){
+            activityList.add(a);
+            return true;
+       }
+       return false;
     }
     
     private void initActivityList(){
@@ -134,45 +138,64 @@ public class Planner {
         }
         return actMin;
     }
+    private int getNumberActivityInWeek(int weekNumber){
+        int numAct=0;
+        for (int i=0; i<this.activityList.size(); i++){
+            MaintanceActivity act= this.activityList.get(i);
+            if(act.getWeekNumber() == weekNumber)
+                numAct++;
+        }
+        return numAct;
+    }
+    
     //metodo che converte la lista delle attività di manutenzione in una matrice di oggetti
     //per permettere al planner di scegliere l'attività vuole assegnare. Le righe sono inserite
     //in ordine crescente di numero di settimana
     
-    public Object[][] getSelectionableAttribute(){
-        int numRighe=this.activityList.size();
+    public Object[][] getSelectionableAttribute(String currentWeek){
+        int currentWeekNumber=parseInt(currentWeek.trim());
+        int numRighe=this.getNumberActivityInWeek(currentWeekNumber);
+        System.out.println(numRighe);
         final int numAttr=4;
-        ArrayList<MaintanceActivity> appoggio = (ArrayList<MaintanceActivity>)this.activityList.clone();
         Object attrTable[][]= new Object[numRighe][];
-        for (int i=0; i<numRighe; i++){
-            MaintanceActivity act= getActivityWithMinimumWeek(appoggio);
-            String id= act.getId();
-            Site site= act.getSite();
-            String area= site.getArea();
-            String factory =site.getFactory();
-            String type= act.getTypology();
-            String time= ""+act.getIntervationTime();
-            attrTable[i]=new Object[]{id,area+" "+factory,type,time,new JButton("Select")};
-            appoggio.remove(act);
+        int j=0;
+        for (int i=0; i<this.activityList.size(); i++){
+            MaintanceActivity act= this.activityList.get(i);
+            if(act.getWeekNumber() == currentWeekNumber){
+                String id= act.getId();
+                Site site= act.getSite();
+                String area= site.getArea();
+                String factory =site.getFactory();
+                String type= act.getTypology();
+                String time= ""+act.getIntervationTime();
+                attrTable[j++]=new Object[]{id,area+" "+factory,type,time,new JButton("Select")};
+            }
         }
         return attrTable;
     }
     
     //permette di cancellare un'attività dalla lista e dal database
-    public void deleteActivity(String idActivity, int row){
-        repository.deleteMaintenanceActivity(idActivity);
-        activityList.remove(row);
+    public boolean deleteActivity(String idActivity, int row){
+        if(repository.deleteMaintenanceActivity(idActivity)){
+            activityList.remove(row);
+            return true;
+        }
+        return false;
     }
     
     //permette di modificare un'attività dalla lista e dal database
-    public void updateActivity(int row,String id, String site, String typology,String description, int time, boolean inter, int week ){ 
+    public boolean updateActivity(int row,String id, String site, String typology,String description, int time, boolean inter, int week ){ 
         Site s= this.findSiteInList(site, siteList);
-        activityList.get(row).setSite(s);
-        activityList.get(row).setTypology(typology);
-        activityList.get(row).setActivityDescription(description);
-        activityList.get(row).setIntervationTime(time);
-        activityList.get(row).setInterruptible(inter);
-        activityList.get(row).setWeek(week);
-        repository.updateMaintenanceActivity(id, s.getId() ,typology, description, time, inter, week);
+        if(s != null && repository.updateMaintenanceActivity(id, s.getId() ,typology, description, time, inter, week)){
+            activityList.get(row).setSite(s);
+            activityList.get(row).setTypology(typology);
+            activityList.get(row).setActivityDescription(description);
+            activityList.get(row).setIntervationTime(time);
+            activityList.get(row).setInterruptible(inter);
+            activityList.get(row).setWeek(week);
+            return true;
+        }
+        return false;
     }
 
     public ArrayList<MaintanceActivity> getActivityList() {
@@ -187,7 +210,7 @@ public class Planner {
         ArrayList<String> skillList = new ArrayList<>();
         try {
           while(rst.next()){
-            skillList.add(rst.getString(0));
+            skillList.add(rst.getString(1));
           }
           return skillList;
         } catch (SQLException ex) {

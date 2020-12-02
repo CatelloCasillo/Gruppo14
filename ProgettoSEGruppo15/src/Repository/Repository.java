@@ -234,8 +234,9 @@ public class Repository {
         
                 
         try {
-            stm.executeUpdate(temp.toString());
-            return true;
+            if(stm.executeUpdate(temp.toString())!=0)
+                return true;
+            return false;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -312,6 +313,7 @@ public class Repository {
                     "join competenceToProcedure as cp on (ma.procedureID=cp.procedureID )\n" +
                     "join competence as c on (c.competenceID=cp.competenceID ) ");
         temp.append(" where ma.activityID= '").append(activityID).append("' ;");
+        System.out.println(temp.toString());    
          try {
             return stm.executeQuery(temp.toString());
            

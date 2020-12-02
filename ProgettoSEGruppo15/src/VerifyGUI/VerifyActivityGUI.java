@@ -48,7 +48,7 @@ public class VerifyActivityGUI extends javax.swing.JFrame {
     }
 
     private VerifyActivityGUI() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        initComponents();
     }
 
     /**
