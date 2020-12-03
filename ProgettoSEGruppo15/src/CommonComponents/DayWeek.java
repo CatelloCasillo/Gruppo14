@@ -32,6 +32,6 @@ public class DayWeek extends JLabel {
        Calendar calendar=new GregorianCalendar();
         Date currentDate = new Date();
         calendar.setTime(currentDate);
-        return calendar.get(calendar.DAY_OF_YEAR);
+        return calendar.get(calendar.DAY_OF_MONTH);
     }
 }

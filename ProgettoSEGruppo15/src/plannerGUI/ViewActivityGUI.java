@@ -28,14 +28,20 @@ public class ViewActivityGUI extends javax.swing.JFrame {
     public ViewActivityGUI(Planner p) {
         this.p= p;
         initComponents();
-        dtm=  new DefaultTableModel(header, 0);
+        dtm=  new DefaultTableModel(header, 0){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; 
+            }    
+        }
+                ;
         jTable1.setModel(dtm);
         this.setLocationRelativeTo(null);
         disabledField();
         populateTable();
     }
 
-    private ViewActivityGUI() {
+    private ViewActivityGUI(){
         initComponents();
         dtm=  new DefaultTableModel(header, 0);
         jTable1.setModel(dtm);
