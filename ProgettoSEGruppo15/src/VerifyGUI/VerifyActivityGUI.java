@@ -1,6 +1,7 @@
 package VerifyGUI;
 
 
+import MantainerSelection.MaintainerSelectionGUI;
 import PrimoPackege.Planner;
 import SelectionGUI.SelectActivityGUI;
 import java.awt.Color;
@@ -111,6 +112,12 @@ public class VerifyActivityGUI extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(jList1);
 
+        forwardButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                forwardButton1ActionPerformed(evt);
+            }
+        });
+
         operationButton1.setText("Back to selection");
         operationButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -216,6 +223,15 @@ public class VerifyActivityGUI extends javax.swing.JFrame {
        selection.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        this.dispose();
     }//GEN-LAST:event_operationButton1ActionPerformed
+
+    private void forwardButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forwardButton1ActionPerformed
+       MaintainerSelectionGUI maintainerSelection= new MaintainerSelectionGUI(p,id,this.activityInfoLabel1.getText(),this.jTextAreaWork.getText());
+       maintainerSelection.setVisible(true);
+       maintainerSelection.pack();
+       maintainerSelection.setLocationRelativeTo(null);
+       maintainerSelection.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       this.dispose();
+    }//GEN-LAST:event_forwardButton1ActionPerformed
 
     /**
      * @param args the command line arguments

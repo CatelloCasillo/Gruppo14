@@ -211,6 +211,9 @@
           </SubComponents>
         </Container>
         <Component class="CommonComponents.ForwardButton" name="forwardButton1">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="forwardButton1ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="CommonComponents.OperationButton" name="operationButton1">
           <Properties>

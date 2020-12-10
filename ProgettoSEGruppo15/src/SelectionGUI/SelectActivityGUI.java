@@ -1,5 +1,6 @@
 package SelectionGUI;
 
+import CommonComponents.CommonTableElements.DefaultHeaderRenderer;
 import PrimoPackege.Planner;
 import java.awt.Color;
 import java.awt.Component;
@@ -83,6 +84,7 @@ public class SelectActivityGUI extends javax.swing.JFrame {
             data[row][col] = value;
             fireTableCellUpdated(row, col); //To change body of generated methods, choose Tools | Templates.
         }
+        
 
         @Override
         public boolean isCellEditable(int row, int col) {
@@ -108,31 +110,7 @@ public class SelectActivityGUI extends javax.swing.JFrame {
         }
     }
     //Creazione di un header renderer per tutte le altre colonne che non sono l'ultima
-    public class DefaultHeaderRenderer extends JLabel implements TableCellRenderer {
- 
-        public DefaultHeaderRenderer() {
-            setOpaque(true);
-            setBackground(new Color(245,171,53));
-            Border b = BorderFactory.createCompoundBorder();
-            b = BorderFactory.createCompoundBorder(b, BorderFactory.createMatteBorder(1,0,0,0,Color.WHITE));
-            b = BorderFactory.createCompoundBorder(b, BorderFactory.createMatteBorder(0,1,0,0,Color.WHITE));
-            b = BorderFactory.createCompoundBorder(b, BorderFactory.createMatteBorder(0,0,2,0,Color.WHITE));
-            b = BorderFactory.createCompoundBorder(b, BorderFactory.createMatteBorder(0,0,0,1,Color.WHITE));
-            setBorder(b);
-            Dimension d=this.getPreferredSize();
-            d.height=40;
-            this.setPreferredSize(d);
-            this.setHorizontalAlignment(SwingConstants.CENTER);
-        }
-     
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                boolean isSelected, boolean hasFocus, int row, int column) {
-            setText(value.toString());
-            return this;
-        }
- 
-    }
+   
     
     /**
      * Creates new form SelectActivityGUI
