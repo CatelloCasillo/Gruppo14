@@ -249,7 +249,9 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         jRadioButton2.setBounds(410, 310, 50, 23);
 
         jComboBoxTyp.setBackground(new java.awt.Color(253, 227, 167));
-        jComboBoxTyp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Electrical", "Electronic", "Hydraulic", "Mechanical" }));
+        for(int i=0; i<p.getTypology().size(); i++){
+            jComboBoxTyp.addItem(p.getTypology().get(i));
+        }
         panelBase2.add(jComboBoxTyp);
         jComboBoxTyp.setBounds(90, 360, 80, 20);
 
@@ -359,13 +361,13 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         boolean updateInterruptible= jRadioButton1.isSelected();
         int updateWeek = Integer.parseInt(jTextFieldWeek.getText().trim());
         
-        
+        /*
         p.getActivityList().get(row).setTypology(updateTypology);
         p.getActivityList().get(row).setActivityDescription(updateDescription);
         p.getActivityList().get(row).setIntervationTime(updateTime);
         p.getActivityList().get(row).setInterruptible(updateInterruptible);
         p.getActivityList().get(row).setWeek(updateWeek);
-        
+        */
         p.updateActivity(row, jTextFieldId.getText(), updateSite, updateTypology, updateDescription, updateTime, updateInterruptible, updateWeek);
         populateTable();
         }

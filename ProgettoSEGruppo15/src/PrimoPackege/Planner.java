@@ -3,6 +3,12 @@ package PrimoPackege;
 
 import PrimoPackege.MaintanceActivity;
 import Repository.Repository;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import static java.lang.Integer.parseInt;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,6 +34,7 @@ public class Planner {
   Repository repository;
   ArrayList<MaintanceActivity> activityList;
   ArrayList<Site> siteList;
+  File f [];
   
  
 
@@ -36,12 +43,13 @@ public class Planner {
          //inizializzazione delle strutture dati che contengono i dati presi dal DB
         this.initSiteList();
         this.initActivityList();
+        this.f = new File("C:\\Users\\User\\Tickets").listFiles();
     }
     
     //permette di creare un'attività, di aggiungerla alla lista e al database 
     public boolean createActivity(String id, Site site, String typology, String activityDescription, int intervationTime, boolean interruptible, int week, String workspacenotes ){
-       MaintanceActivity a= new MaintanceActivity(id, site, typology, activityDescription, intervationTime, interruptible, week, workspacenotes);
-       if(repository.insertNewMaintenanceActivity(a.getId(), a.getSite().getId(), a.getActivityDescription(), a.getIntervationTime(), a.isInterruptible(), a.getWeekNumber(), a.getWorkspacenotes(), a.getTypology())){
+       MaintanceActivity a= new PlannedActivity(id, site, typology, activityDescription, intervationTime, interruptible, week, workspacenotes);
+       if(repository.insertNewMaintenanceActivity(a.getId(), a.getSite().getId(), a.getActivityDescription(), a.getIntervationTime(), a.isInterruptible(), a.getWeekNumber(), a.getWorkspacenotes(), a.getTypology(), a.getCategory().toString())){
             activityList.add(a);
             return true;
        }
@@ -69,7 +77,7 @@ public class Planner {
                 String typology = repository.getActivityTypology(rst);
                 String activityDescription = repository.getActivityDescription(rst);
                 boolean interruptible = repository.isInterruptibleActivity(rst);
-                MaintanceActivity mainActivity= new MaintanceActivity(id, site, typology, activityDescription, intervationTimeNumber, interruptible, weekNumber, procedureID, fileSMP);
+                MaintanceActivity mainActivity= new PlannedActivity(id, site, typology, activityDescription, intervationTimeNumber, interruptible, weekNumber, procedureID, fileSMP);
                 this.activityList.add(mainActivity);
            } 
         } catch (SQLException ex) {
@@ -102,6 +110,21 @@ public class Planner {
           Logger.getLogger(Planner.class.getName()).log(Level.SEVERE, null, ex);
       }
     
+    }
+    
+    public ArrayList<String> getTypology(){
+        ArrayList<String> a = new ArrayList<>();
+        try {
+            ResultSet rst = repository.getTypologyTable();
+            while (rst.next()) {
+            String typology = repository.getActivityTypology(rst);
+            a.add(typology);
+            //System.out.println(typology);
+            }return a;
+        }catch (SQLException ex) {
+          Logger.getLogger(Planner.class.getName()).log(Level.SEVERE, null, ex);
+          return null;
+      }
     }
     
     // metodo che controlla se l'id dell'attività è già presente
@@ -217,7 +240,45 @@ public class Planner {
           Logger.getLogger(Planner.class.getName()).log(Level.SEVERE, null, ex);
           return skillList;
         }
-           
+     }
+    
+    public ArrayList<String> getCompetenceTypology(String typology){
+        ResultSet rst= repository.getCompetenceOfTypology(typology);
+        ArrayList<String> competenceTypology= new ArrayList<>();
+        try {  
+          while(rst.next()){
+            competenceTypology.add(rst.getString(1));  
+          }
+          return competenceTypology;
+        }catch (SQLException ex) {
+          Logger.getLogger(Planner.class.getName()).log(Level.SEVERE, null, ex);
+        return null;
+        }
+    }
+
+    public File[] getF() {
+        return f;
+    }
+   
+    public String[] getStringInFile(int i) {
+        BufferedReader b;
+        String s[];
+        Reader r; 
+      try {
+          r= new FileReader(f[i]);
+          b=new BufferedReader(r);
+          String f=b.readLine();
+          if(f == null){
+              return null;
+          }
+          else{
+              s= f.split(", ");
+          }
+      } catch (IOException ex) {
+          Logger.getLogger(Planner.class.getName()).log(Level.SEVERE, null, ex);
+          return null;
+      }
+        return s;
     }
 }
 

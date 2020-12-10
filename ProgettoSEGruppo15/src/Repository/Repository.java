@@ -188,15 +188,20 @@ public class Repository {
                 boolean interruptibleActivity,
                 //String activityMaterials,
                 int activityWeekNumber,
-                String activityWorkspaceNotes,String activityTypology){
- 
+                String activityWorkspaceNotes,String activityTypology, String p){
+        boolean c;
+        if("PLANNED".equals(p)){
+                  c=true; 
+                }else{
+            c= false;
+        }
         StringBuilder temp = new StringBuilder();
         temp.append("insert into MaintenanceActivity(activityID, "
                 //+ "plannerID,maintainerID,procedureID,"
                 +"siteID,"
                 + "activityDescription,activityInterventionTime,"
                 + "interruptibleActivity,activityWeekNumber,"
-                + "activityWorkspaceNotes,activityTypology )");
+                + "activityWorkspaceNotes,activityTypology,plannedactivity )");
         temp.append("values(");
         temp.append("'").append(activityID).append("',");
         
@@ -211,7 +216,8 @@ public class Repository {
         //temp.append("' ").append(activityMaterials).append("' ,");
         temp.append(" ").append(activityWeekNumber).append(" ,");
         temp.append("'").append(activityWorkspaceNotes).append("',");
-        temp.append("'").append(activityTypology).append("' ");
+        temp.append("'").append(activityTypology).append("' ,");
+        temp.append(" ").append(c).append(" ");
         temp.append(");");
         
         //viewMaintenanceActivityTable();
@@ -251,7 +257,7 @@ public class Repository {
         temp.append(" '").append(description).append("',");
         temp.append(" siteID = ").append(" '").append(site).append(" ',");
         temp.append(" activityInterventionTime = ").append("  ").append(time).append(" ,");
-        temp.append(" activityTypology = ").append("' ").append(typology).append(" ',");
+        temp.append(" activityTypology = ").append("'").append(typology).append("',");
         temp.append(" interruptibleActivity = ").append("  ").append(inter).append(" ,");
         temp.append(" activityWeekNumber = ").append("  ").append(week).append(" ");
         temp.append(" where activityid = ").append(" '").append(id).append(" ';");
@@ -305,6 +311,19 @@ public class Repository {
             return null;
         }
     }
+    
+    public ResultSet getTypologyTable(){
+         try {
+            String query = "select* from Typology ";
+                   
+            ResultSet rst = stm.executeQuery(query);
+            return rst;
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
     public ResultSet getCompetencesOfActivity(String activityID){
       
         StringBuilder temp = new StringBuilder();
@@ -321,4 +340,20 @@ public class Repository {
             return null;
         }
     }
+    
+    public ResultSet getCompetenceOfTypology(String typology){
+         StringBuilder temp = new StringBuilder();
+         temp.append("select c.competenceName from \n" +
+           "TypologyToCompetence as tc \n" +
+           "join competence as c on (c.competenceID=tc.competenceID ) ");
+           temp.append(" where tc.activityTypology=  '").append(typology).append("' ;");
+           try {
+            return stm.executeQuery(temp.toString());
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
 }
+

@@ -218,7 +218,10 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
         jRadioButton4.setBounds(230, 230, 50, 23);
 
         jComboBoxTipo1.setBackground(new java.awt.Color(253, 227, 167));
-        jComboBoxTipo1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Electrical", "Electronic", "Hydraulic", "Mechanical" }));
+        for(int i=0; i<p.getTypology().size(); i++){
+
+            jComboBoxTipo1.addItem(p.getTypology().get(i).trim());
+        }
         panelBase2.add(jComboBoxTipo1);
         jComboBoxTipo1.setBounds(90, 100, 100, 20);
 
