@@ -192,7 +192,6 @@ public class SelectActivityGUI extends javax.swing.JFrame {
         jScrollPane1.getViewport().setBackground(new Color(245,171,53));
         jScrollPane1.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         jScrollPane1.setBackground(new java.awt.Color(245, 171, 53));
-        jScrollPane1.setBorder(null);
         jScrollPane1.setMaximumSize(new java.awt.Dimension(400, 300));
         jScrollPane1.setPreferredSize(new java.awt.Dimension(400, 300));
 
