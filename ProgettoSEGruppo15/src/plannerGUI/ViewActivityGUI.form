@@ -356,16 +356,9 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="a7" green="e3" red="fd" type="rgb"/>
             </Property>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Electrical"/>
-                <StringItem index="1" value="Electronic"/>
-                <StringItem index="2" value="Hydraulic"/>
-                <StringItem index="3" value="Mechanical"/>
-              </StringArray>
-            </Property>
           </Properties>
           <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="for(int i=0; i&lt;p.getTypology().size(); i++){&#xa;jComboBoxTyp.addItem(p.getTypology().get(i));&#xa;}"/>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
           <Constraints>

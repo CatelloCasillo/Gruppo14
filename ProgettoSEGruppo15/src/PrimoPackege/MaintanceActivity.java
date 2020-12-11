@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  *
  * @author Gabriella
  */
-public class MaintanceActivity {
+public abstract class MaintanceActivity {
     
     private String id;
     private String typology;
@@ -25,6 +25,7 @@ public class MaintanceActivity {
     private String workspacenotes;
     private String procedureID;
     private String fileSMP;
+    public enum Category{PLANNED, EWO};
 
     
     //costruttore usato per creare una nuova attivitià
@@ -152,11 +153,45 @@ public class MaintanceActivity {
             return false;
         }
         final MaintanceActivity other = (MaintanceActivity) obj;
-        if (!this.id.equals(other.id)) {
+        if (this.interruptible != other.interruptible) {
+            return false;
+        }
+        if (this.weekNumber != other.weekNumber) {
+            return false;
+        }
+        if (this.intervationTime != other.intervationTime) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.typology, other.typology)) {
+            return false;
+        }
+        if (!Objects.equals(this.activityDescription, other.activityDescription)) {
+            return false;
+        }
+        if (!Objects.equals(this.workspacenotes, other.workspacenotes)) {
+            return false;
+        }
+        if (!Objects.equals(this.procedureID, other.procedureID)) {
+            return false;
+        }
+        if (!Objects.equals(this.fileSMP, other.fileSMP)) {
+            return false;
+        }
+        if (!Objects.equals(this.site, other.site)) {
+            return false;
+        }
+        if(!Objects.equals(this.getCategory(), other.getCategory())){
             return false;
         }
         return true;
     }
     
+    
+
+    
+    public abstract Category getCategory(); 
     
 }
