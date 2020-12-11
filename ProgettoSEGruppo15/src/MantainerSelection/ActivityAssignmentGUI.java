@@ -32,7 +32,7 @@ import javax.swing.table.TableColumn;
 public class ActivityAssignmentGUI extends javax.swing.JFrame {
     private String selectedActvity;
     private Planner planner;
-    private String maintainerName;
+    public String maintainerName;
     /**
      * Creates new form AssignActivityGUI
      */
