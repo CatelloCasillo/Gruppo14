@@ -1,6 +1,7 @@
 package plannerGUI;
 
 
+import Navigator.Navigator;
 import PrimoPackege.Planner;
 import javax.swing.JFrame;
 import SelectionGUI.SelectActivityGUI;
@@ -140,30 +141,36 @@ public class FirstPagePlannerGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void operationButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton1ActionPerformed
-        CreateAnActivityGUI activity= new CreateAnActivityGUI(p);
+        Navigator nav=Navigator.getInstance(p);
+        nav.changeToCreateActivityWindow(this);
+        /*CreateAnActivityGUI activity= new CreateAnActivityGUI(p);
         activity.setVisible(true);
         activity.pack();
         activity.setLocationRelativeTo(null);
         activity.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
+        this.dispose();*/
     }//GEN-LAST:event_operationButton1ActionPerformed
 
     private void operationButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton2ActionPerformed
-        SelectActivityGUI select= new SelectActivityGUI(p);
+        Navigator nav=Navigator.getInstance(p);
+        nav.changeToSelectActivityWindow(this);
+        /*SelectActivityGUI select= new SelectActivityGUI(p);
         select.setVisible(true);
         select.pack();
         select.setLocationRelativeTo(null);
         select.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
+        this.dispose();*/
     }//GEN-LAST:event_operationButton2ActionPerformed
 
     private void operationButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton3ActionPerformed
-        ViewActivityGUI view= new ViewActivityGUI(p);
+        Navigator nav=Navigator.getInstance(p);
+        nav.changeToViewActivityWindow(this);
+        /*ViewActivityGUI view= new ViewActivityGUI(p);
         view.setVisible(true);
         view.pack();
         view.setLocationRelativeTo(null);
         view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
+        this.dispose();*/
     }//GEN-LAST:event_operationButton3ActionPerformed
 
     /**

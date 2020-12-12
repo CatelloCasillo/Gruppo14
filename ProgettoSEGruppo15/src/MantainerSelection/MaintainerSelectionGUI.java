@@ -11,6 +11,7 @@ import CommonComponents.CommonTableElements.MaintenerColumnRenderer;
 import CommonComponents.CommonTableElements.NoEditableTableModel;
 import static CommonComponents.CommonTableElements.RenderingUtility.colorPicker;
 import CommonComponents.CommonTableElements.SkillColumnRenderer;
+import Navigator.Navigator;
 import PrimoPackege.Planner;
 import java.awt.Color;
 import java.awt.Component;
@@ -39,8 +40,7 @@ import javax.swing.table.TableModel;
 public class MaintainerSelectionGUI extends javax.swing.JFrame {
     private Planner p;
     private String selectedActivityId;
-    private String notes;
-    private String activityInformation;
+    
 
    
    
@@ -65,14 +65,12 @@ public class MaintainerSelectionGUI extends javax.swing.JFrame {
     /**
      * Creates new form MaintainerSelectionGUI
      */
-    public MaintainerSelectionGUI(Planner planner,String selectedActivityId, String activityInformation, String notes) {
+    public MaintainerSelectionGUI(Planner planner,String selectedActivityId, String activityInformation) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.p=planner;
-        this.notes=notes;
         this.jList2.setModel(new AbstractActvityListModel(p,selectedActivityId));
         this.selectedActivityId=selectedActivityId;
-        this.activityInformation=activityInformation;
         this.activityInfoLabel1.setText(activityInformation);
     }
 
@@ -237,21 +235,23 @@ public class MaintainerSelectionGUI extends javax.swing.JFrame {
         if(col>1){
             TableModel model=jTable1.getModel();
             String mantainerName = model.getValueAt(row, 0).toString();
+            String skillCompliance = model.getValueAt(row, 1).toString();
             LocalDate currentDate = LocalDate.now();
             int weekDay = currentDate.getDayOfWeek().getValue();
             LocalDate mondayDate = currentDate.minusDays(weekDay);
             LocalDate selectionDate = mondayDate.plusDays(col-1);
             String selectedWeekDay = selectionDate.getDayOfWeek().toString();
-            String info = this.activityInfoLabel1.getText();
             String percentage = model.getValueAt(row, col).toString();
             String[] s= percentage.split("%");
             Color c= colorPicker(parseInt(s[0]));
-            ActivityAssignmentGUI verify= new ActivityAssignmentGUI(p, mantainerName,selectedWeekDay, info ,notes, selectionDate,selectedActivityId,c, percentage );
+            Navigator nav=Navigator.getInstance(p);
+            nav.changeToActivityAssignmentWindow(this, mantainerName,skillCompliance,selectedWeekDay, selectionDate,c, percentage );
+            /*ActivityAssignmentGUI verify= new ActivityAssignmentGUI(p, mantainerName,selectedWeekDay, info ,"", selectionDate,selectedActivityId,c, percentage );
             verify.setVisible(true);
             verify.pack();
             verify.setLocationRelativeTo(null);
             verify.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            this.dispose();
+            this.dispose();*/
             //JOptionPane.showMessageDialog(new JFrame(), selectionDate.getDayOfWeek(), "Errore", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jTable1MouseClicked

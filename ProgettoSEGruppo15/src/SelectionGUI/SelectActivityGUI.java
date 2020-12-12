@@ -1,6 +1,7 @@
 package SelectionGUI;
 
 import CommonComponents.CommonTableElements.DefaultHeaderRenderer;
+import Navigator.Navigator;
 import PrimoPackege.Planner;
 import java.awt.Color;
 import java.awt.Component;
@@ -273,12 +274,14 @@ public class SelectActivityGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     // Chiusura di questa inferfaccia e apertura di FirtstPagePlannerGUI alla pressione del bottone corrispondente
     private void operationButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton1ActionPerformed
-        FirstPagePlannerGUI welcome= new FirstPagePlannerGUI(planner);
+        Navigator nav=Navigator.getInstance(planner);
+        nav.changeToWelcomeWindow(this);
+        /*FirstPagePlannerGUI welcome= new FirstPagePlannerGUI(planner);
         welcome.setVisible(true);
         welcome.pack();
         welcome.setLocationRelativeTo(null);
         welcome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
+        this.dispose();*/
     }//GEN-LAST:event_operationButton1ActionPerformed
 
     /**

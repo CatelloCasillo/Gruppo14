@@ -1,5 +1,6 @@
 package SelectionGUI;
 
+import Navigator.Navigator;
 import PrimoPackege.Planner;
 import VerifyGUI.VerifyActivityGUI;
 import java.awt.Color;
@@ -66,15 +67,17 @@ public class JButtonEditor extends AbstractCellEditor implements TableCellEditor
         button.setForeground(Color.white);
         int row= table.getSelectedRow();
         String id=table.getModel().getValueAt(row, 0).toString();
-        String site= table.getModel().getValueAt(row, 1).toString();
+        Navigator nav=Navigator.getInstance(planner);
+        nav.changeToVerifyActivityWindow(frame, id);
+        /*String site= table.getModel().getValueAt(row, 1).toString();
         String typology = table.getModel().getValueAt(row, 2).toString();
         int time=parseInt(table.getModel().getValueAt(row, 3).toString().trim());
-        VerifyActivityGUI verify= new VerifyActivityGUI(planner, id.trim(), time, site,typology);
+        /*VerifyActivityGUI verify= new VerifyActivityGUI(planner, id.trim(), time, site,typology);
         verify.setVisible(true);
         verify.pack();
         verify.setLocationRelativeTo(null);
         verify.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.dispose();
+        frame.dispose();*/
     }
     
 }

@@ -10,6 +10,7 @@ import CommonComponents.CommonTableElements.MaintenerColumnRenderer;
 import CommonComponents.CommonTableElements.NoEditableTableModel;
 import static CommonComponents.CommonTableElements.RenderingUtility.colorPicker;
 import CommonComponents.CommonTableElements.SkillColumnRenderer;
+import Navigator.Navigator;
 import PrimoPackege.Planner;
 import java.awt.Color;
 import java.awt.Component;
@@ -32,6 +33,7 @@ import javax.swing.table.TableColumn;
 public class ActivityAssignmentGUI extends javax.swing.JFrame {
     private String selectedActvity;
     private Planner planner;
+    private String skillCompliance;   
     private String maintainerName;
     /**
      * Creates new form AssignActivityGUI
@@ -57,10 +59,11 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
         }
     }
     
-    public ActivityAssignmentGUI(Planner p, String maintenerName, String selectedDayWeek,String activityInfo, String notes,LocalDate selectedDate, String selectedActvity, Color percentageColor, String percentage) {
+    public ActivityAssignmentGUI(Planner p, String maintenerName,String skillCompliance,String selectedDayWeek,String activityInfo, String notes,LocalDate selectedDate, String selectedActvity, Color percentageColor, String percentage) {
         this.selectedActvity=selectedActvity;
         this.planner=p;
         this.maintainerName=maintenerName;
+        this.skillCompliance=skillCompliance;
         initComponents();
         this.setLocationRelativeTo(null);
         jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
@@ -70,6 +73,7 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
                 System.out.println(Arrays.toString(selectedColumns));
             }
         });
+        
         this.jTextPane1.setText(notes);
         this.dayWeek1.setDayWeek(selectedDate);
         this.activityInfoLabel1.setText(activityInfo);
@@ -116,7 +120,7 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
 
         jTable1.setModel(new NoEditableTableModel(
             new Object [][] {
-                {ActivityAssignmentGUI.this.maintainerName, "3/5", "60 min", "50 min", "30 min", "55 min", "0 min", "35 min","10 min","15 min","25 min"}
+                {ActivityAssignmentGUI.this.maintainerName, this.skillCompliance, "60 min", "50 min", "30 min", "55 min", "0 min", "35 min","10 min","15 min","25 min"}
             },
             new String [] {
 
@@ -330,12 +334,14 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_forwardButton2ActionPerformed
 
     private void operationButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton1ActionPerformed
-        MaintainerSelectionGUI maintainerSelection= new MaintainerSelectionGUI(planner,selectedActvity,this.activityInfoLabel1.getText(),this.jTextPane1.getText());
+        Navigator nav=Navigator.getInstance(planner);
+        nav.changeToMaintainerSelectionWindow(this);
+        /*MaintainerSelectionGUI maintainerSelection= new MaintainerSelectionGUI(planner,selectedActvity,this.activityInfoLabel1.getText(),this.jTextPane1.getText());
         maintainerSelection.setVisible(true);
         maintainerSelection.pack();
         maintainerSelection.setLocationRelativeTo(null);
         maintainerSelection.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
+        this.dispose();*/
     }//GEN-LAST:event_operationButton1ActionPerformed
 
     /**

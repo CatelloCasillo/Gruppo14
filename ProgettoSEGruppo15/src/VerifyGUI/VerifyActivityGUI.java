@@ -2,6 +2,7 @@ package VerifyGUI;
 
 
 import MantainerSelection.MaintainerSelectionGUI;
+import Navigator.Navigator;
 import PrimoPackege.Planner;
 import SelectionGUI.SelectActivityGUI;
 import java.awt.Color;
@@ -25,25 +26,20 @@ public class VerifyActivityGUI extends javax.swing.JFrame {
     Planner p;
     String id;
     String activityDescription;
-    String site;
-    String typology;
-    int intervationTime;
+    
     String workspacenotes;
 
     /**
      * Creates new form VerifyActivityGUI
      
      */
-    public VerifyActivityGUI(Planner p, String id,int intervationTime,String site, String typology) {
+    public VerifyActivityGUI(Planner p, String id, String activityInfo) {
         this.p=p;
-        
         this.id=id;
-        this.intervationTime=intervationTime;
-        this.site=site;
         initComponents();
         jTextAreaWork.setText(p.getMaintanceActivity(id).getWorkspacenotes());
         jTextAreaIntervention1.setText(p.getMaintanceActivity(id).getActivityDescription());  
-        this.activityInfoLabel1.setText(id+" - "+site+" - "+typology+" - "+intervationTime+"'");
+        this.activityInfoLabel1.setText(activityInfo);
         
     }
 
@@ -216,21 +212,25 @@ public class VerifyActivityGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void operationButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton1ActionPerformed
-       SelectActivityGUI selection= new SelectActivityGUI(p);
+       Navigator nav=Navigator.getInstance(p);
+       nav.changeToSelectActivityWindow(this);
+       /*SelectActivityGUI selection= new SelectActivityGUI(p);
        selection.setVisible(true);
        selection.pack();
        selection.setLocationRelativeTo(null);
        selection.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       this.dispose();
+       this.dispose();*/
     }//GEN-LAST:event_operationButton1ActionPerformed
 
     private void forwardButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forwardButton1ActionPerformed
-       MaintainerSelectionGUI maintainerSelection= new MaintainerSelectionGUI(p,id,this.activityInfoLabel1.getText(),this.jTextAreaWork.getText());
+       Navigator nav=Navigator.getInstance(p);
+       nav.changeToMaintainerSelectionWindow(this);
+       /*MaintainerSelectionGUI maintainerSelection= new MaintainerSelectionGUI(p,id,this.activityInfoLabel1.getText(),this.jTextAreaWork.getText());
        maintainerSelection.setVisible(true);
        maintainerSelection.pack();
        maintainerSelection.setLocationRelativeTo(null);
        maintainerSelection.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       this.dispose();
+       this.dispose();*/
     }//GEN-LAST:event_forwardButton1ActionPerformed
 
     /**
