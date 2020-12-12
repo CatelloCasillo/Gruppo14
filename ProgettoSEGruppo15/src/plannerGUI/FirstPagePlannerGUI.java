@@ -53,6 +53,7 @@ public class FirstPagePlannerGUI extends javax.swing.JFrame {
         operationButton1 = new CommonComponents.OperationButton();
         operationButton2 = new CommonComponents.OperationButton();
         operationButton3 = new CommonComponents.OperationButton();
+        operationButton4 = new CommonComponents.OperationButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -102,7 +103,7 @@ public class FirstPagePlannerGUI extends javax.swing.JFrame {
             }
         });
         panelBase2.add(operationButton1);
-        operationButton1.setBounds(50, 210, 120, 50);
+        operationButton1.setBounds(40, 210, 120, 50);
 
         operationButton2.setText("Plan activity");
         operationButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -111,7 +112,7 @@ public class FirstPagePlannerGUI extends javax.swing.JFrame {
             }
         });
         panelBase2.add(operationButton2);
-        operationButton2.setBounds(260, 210, 110, 50);
+        operationButton2.setBounds(250, 210, 110, 50);
 
         operationButton3.setText("View activity");
         operationButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -121,6 +122,16 @@ public class FirstPagePlannerGUI extends javax.swing.JFrame {
         });
         panelBase2.add(operationButton3);
         operationButton3.setBounds(460, 210, 100, 50);
+
+        operationButton4.setBackground(new java.awt.Color(255, 0, 0));
+        operationButton4.setText("verify Tickets");
+        operationButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                operationButton4ActionPerformed(evt);
+            }
+        });
+        panelBase2.add(operationButton4);
+        operationButton4.setBounds(500, 300, 90, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -173,6 +184,15 @@ public class FirstPagePlannerGUI extends javax.swing.JFrame {
         this.dispose();*/
     }//GEN-LAST:event_operationButton3ActionPerformed
 
+    private void operationButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton4ActionPerformed
+        TicketList view= new TicketList(p);
+        view.setVisible(true);
+        view.pack();
+        view.setLocationRelativeTo(null);
+        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_operationButton4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -216,6 +236,7 @@ public class FirstPagePlannerGUI extends javax.swing.JFrame {
     private CommonComponents.OperationButton operationButton1;
     private CommonComponents.OperationButton operationButton2;
     private CommonComponents.OperationButton operationButton3;
+    private CommonComponents.OperationButton operationButton4;
     private CommonComponents.PanelBase panelBase1;
     private CommonComponents.PanelBase panelBase2;
     // End of variables declaration//GEN-END:variables
