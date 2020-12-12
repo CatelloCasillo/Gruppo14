@@ -20,45 +20,22 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Repository {
-    private String url;
-    private String user;
-    private String pwd;
-    private Connection conn;
-    private Statement stm;
-    
-    public Repository() {
-        this.url = "jdbc:postgresql://localhost/Progetto_SE_gruppo14";
-        this.user = "utente_progetto_se";
-        this.pwd = "password";
-        this.setRepositoryConnection(url,user,pwd);
+public class Repository extends RepositoryBase{
+
+    public Repository(){
+        super();
     }
-    
-    public boolean setRepositoryConnection(String url,String user, String pwd){
-         try {
-            Class.forName("org.postgresql.Driver");
-            this.conn = DriverManager.getConnection(url, user, pwd);
-            this.stm = this.conn.createStatement();
-            //System.out.println("Connessione Database effettuata");
-            return true;
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
-    }
-  
-    public ResultSet getInformationOfMaintenanceActivity(){
-       
+
+    public ResultSet getInformationOfMaintenanceActivity() {
         try {
+            connect();
             String query = "select* from "
                     + "MaintenanceActivity as ma "
                     + "left join Procedure as p on (ma.procedureID=p.procedureID )"
                     + "join Site as s on (ma.siteID=s.siteID )"
-                    + "order by ma.activityID;";
+                    + "order by ma.activityWeekNumber;";
             ResultSet rst = stm.executeQuery(query);
+            closeConnection();
             return rst;
        
         } catch (SQLException ex) {
@@ -69,7 +46,10 @@ public class Repository {
     }
     public String getActivityID(ResultSet rst){
         try {
-            return rst.getString("activityID");
+            connect();
+            String s = rst.getString("activityID");
+            closeConnection();
+            return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -78,7 +58,10 @@ public class Repository {
     }
     public String getActivityDescription(ResultSet rst){
         try {
-            return rst.getString("activityDescription");
+            connect();
+            String s = rst.getString("activityDescription");
+            closeConnection();
+            return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -87,7 +70,11 @@ public class Repository {
     }
     public int getActivityInterventionTime(ResultSet rst){
         try {
-            return rst.getInt("activityInterventionTime");
+            connect();
+            int i=  rst.getInt("activityInterventionTime");
+            closeConnection();
+            return i;
+            
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return 0;
@@ -96,7 +83,10 @@ public class Repository {
     }
     public boolean isInterruptibleActivity(ResultSet rst){
         try {
-            return rst.getBoolean("interruptibleActivity");
+            connect();
+            boolean b = rst.getBoolean("interruptibleActivity");
+            closeConnection();
+            return b;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -105,7 +95,10 @@ public class Repository {
     }
     public int getActivityWeekNumber(ResultSet rst){
         try {
-            return rst.getInt("activityWeekNumber");
+            connect();
+            int i = rst.getInt("activityWeekNumber");
+            closeConnection();
+            return i;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return 0;
@@ -113,7 +106,10 @@ public class Repository {
     }
     public String getActivityTypology(ResultSet rst){
         try {
-            return rst.getString("activityTypology");
+            connect();
+            String s = rst.getString("activityTypology");
+            closeConnection();
+            return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -121,7 +117,10 @@ public class Repository {
     }
     public String getSiteID(ResultSet rst){
         try {
-            return rst.getString("siteID");
+            connect();
+            String s = rst.getString("siteID");
+            closeConnection();
+            return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -129,7 +128,10 @@ public class Repository {
     }
     public String getFactorySite(ResultSet rst){
         try {
-            return rst.getString("FactorySite");
+            connect();
+            String s = rst.getString("FactorySite");
+            closeConnection();
+            return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -138,7 +140,10 @@ public class Repository {
     }
     public String getAreaSite(ResultSet rst){
         try {
-            return rst.getString("AreaSite");
+            connect();
+            String s = rst.getString("AreaSite");
+            closeConnection();
+            return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -147,7 +152,10 @@ public class Repository {
     }
     public String getProcedureID(ResultSet rst){
         try {
-            return rst.getString("ProcedureID");
+            connect();
+            String s = rst.getString("ProcedureID");
+            closeConnection();
+            return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -156,7 +164,10 @@ public class Repository {
     }
     public String getProcedureName(ResultSet rst){
         try {
-            return rst.getString("ProcedureName");
+            connect();
+            String s = rst.getString("ProcedureName");
+            closeConnection();
+            return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -165,7 +176,10 @@ public class Repository {
     }
     public String getProcedureDescription(ResultSet rst){
         try {
-            return rst.getString("ProcedureDescription");
+            connect();
+            String s = rst.getString("ProcedureDescription");
+            closeConnection();
+            return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -174,7 +188,10 @@ public class Repository {
     }
       public String getFileSMP(ResultSet rst){
         try {
-            return rst.getString("FileSMP");
+            connect();
+            String s= rst.getString("FileSMP");
+            closeConnection();
+            return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -223,7 +240,9 @@ public class Repository {
         
         //viewMaintenanceActivityTable();
         try {
+            connect();
             stm.executeUpdate(temp.toString());
+            closeConnection();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
@@ -241,8 +260,12 @@ public class Repository {
         
                 
         try {
-            if(stm.executeUpdate(temp.toString())!=0)
+            connect();
+            if(stm.executeUpdate(temp.toString())!=0){
+                closeConnection();
                 return true;
+            }
+            closeConnection();
             return false;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
@@ -264,7 +287,9 @@ public class Repository {
         temp.append(" where activityid = ").append(" '").append(id).append(" ';");
         
          try {
+            connect();
             stm.executeUpdate(temp.toString());
+            closeConnection();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
@@ -276,6 +301,7 @@ public class Repository {
     public boolean viewMaintenanceActivityTable(){
             
         try {
+            connect();
             String query = "select* from "
                     + "MaintenanceActivity ";
             ResultSet rst = stm.executeQuery(query);
@@ -294,6 +320,7 @@ public class Repository {
             System.out.println(activityID+"\t"+siteID+"\t"+activityDescription+"\t"+activityInterventionTime+"\t"+interruptibleActivity+
             "\t"+activityWeekNumber+"\t"+activityTypology);
             } 
+            closeConnection();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
@@ -302,9 +329,11 @@ public class Repository {
     }
     public ResultSet getSiteTable(){
          try {
+            connect();
             String query = "select* from Site ";
                    
             ResultSet rst = stm.executeQuery(query);
+            closeConnection();
             return rst;
         
         } catch (SQLException ex) {
@@ -315,10 +344,14 @@ public class Repository {
     
     public ResultSet getTypologyTable(){
          try {
+            connect();
             String query = "select* from Typology ";
                    
+            
             ResultSet rst = stm.executeQuery(query);
+            closeConnection();
             return rst;
+            
         
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
@@ -334,7 +367,11 @@ public class Repository {
                     "join competence as c on (c.competenceID=cp.competenceID ) ");
         temp.append(" where ma.activityID= '").append(activityID).append("' ;");
         try {
-            return stm.executeQuery(temp.toString());
+            connect();
+        
+            ResultSet rst = stm.executeQuery(temp.toString());
+            closeConnection();
+            return rst;
            
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
@@ -345,9 +382,11 @@ public class Repository {
    
   public ResultSet getMaintainerTable(){
          try {
+            connect();
             String query = "select maintainerId, maintainerName from Maintainer; ";
                    
             ResultSet rst = stm.executeQuery(query);
+            closeConnection();
             return rst;
         
         } catch (SQLException ex) {
@@ -373,7 +412,10 @@ public class Repository {
 	temp.append(" order by m.maintainerID; ");
         
         try {
-            return stm.executeQuery(temp.toString());
+            connect();
+            ResultSet rst = stm.executeQuery(temp.toString());
+            closeConnection();
+            return rst;
             
            
         } catch (SQLException ex) {
@@ -396,7 +438,10 @@ public class Repository {
                     " from MaintainerAvailabilityCurrentWeek as ma\n" +
                     " where ma.day= '").append(day).append("' and ma.maintainerID= '").append(mainteinerID).append("';");
         try {
-           return stm.executeQuery(temp.toString());
+           connect();
+           ResultSet rst = stm.executeQuery(temp.toString());
+           closeConnection();
+           return rst;
            
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
@@ -409,7 +454,10 @@ public class Repository {
                     " from MaintainerAvailabilityCurrentWeek as ma\n" +
                     " where ma.maintainerID= '").append(mainteinerID).append("';");
         try {
-            return stm.executeQuery(temp.toString());
+            connect();
+            ResultSet rst = stm.executeQuery(temp.toString());
+            closeConnection();
+            return rst;
            
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
@@ -432,7 +480,9 @@ public class Repository {
         temp.append(" where maintainerID = '").append(maintainerID).append("' and day= '").append(day).append("' ;");
         
          try {
+            connect();
             stm.executeUpdate(temp.toString());
+            closeConnection();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
@@ -455,7 +505,9 @@ public class Repository {
         temp.append(" where maintainerID = '").append(maintainerID).append("' and day= '").append(day).append("' ;");
         
          try {
+            connect();
             stm.executeUpdate(temp.toString());
+            closeConnection();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
@@ -471,7 +523,10 @@ public class Repository {
                     "join competence as c on (c.competenceID=cm.competenceID )\n" +
                     "where cm.MaintainerID = '").append(maintainerID).append("' ;");
         try {
-            return stm.executeQuery(temp.toString());
+            connect();
+            ResultSet rst = stm.executeQuery(temp.toString());
+            closeConnection();
+            return rst;
            
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
@@ -480,7 +535,11 @@ public class Repository {
     }
     public String getCompetenceID(ResultSet rst){
         try {
-            return rst.getString("CompetenceID");
+            connect();
+            String s = rst.getString("CompetenceID");
+            closeConnection();
+            return s;
+            
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -488,7 +547,10 @@ public class Repository {
     }
     public String getCompetenceName(ResultSet rst){
         try {
-            return rst.getString("CompetenceName");
+            connect();
+            String s = rst.getString("CompetenceName");
+            closeConnection();
+            return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -497,7 +559,10 @@ public class Repository {
     
     public String getMaintainerID(ResultSet rst){
         try {
-            return rst.getString("MaintainerID");
+            connect();
+            String s = rst.getString("MaintainerID");
+            closeConnection();
+            return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -505,7 +570,10 @@ public class Repository {
     }
     public String getMaintainerName(ResultSet rst){
         try {
-            return rst.getString("MaintainerName");
+            connect();
+            String s = rst.getString("MaintainerName");
+            closeConnection();
+            return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -513,7 +581,10 @@ public class Repository {
     }
     public String getTimeSlot1(ResultSet rst){
         try {
-            return rst.getString("TimeSlot1");
+            connect();
+            String s = rst.getString("TimeSlot1");
+            closeConnection();
+            return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -521,7 +592,10 @@ public class Repository {
     }
     public String getTimeSlot2(ResultSet rst){
         try {
-            return rst.getString("TimeSlot2");
+            connect();
+            String s = rst.getString("TimeSlot2");
+            closeConnection();
+            return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -529,7 +603,10 @@ public class Repository {
     }
     public String getTimeSlot3(ResultSet rst){
         try {
-            return rst.getString("TimeSlot3");
+            connect();
+            String s = rst.getString("TimeSlot3");
+            closeConnection();
+            return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -537,7 +614,10 @@ public class Repository {
     }
     public String getTimeSlot4(ResultSet rst){
         try {
-            return rst.getString("TimeSlot4");
+            connect();
+            String s = rst.getString("TimeSlot4");
+            closeConnection();
+            return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -545,7 +625,10 @@ public class Repository {
     }
     public String getTimeSlot5(ResultSet rst){
         try {
-            return rst.getString("TimeSlot5");
+            connect();
+            String s = rst.getString("TimeSlot5");
+            closeConnection();
+            return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -553,7 +636,10 @@ public class Repository {
     }
     public String getTimeSlot6(ResultSet rst){
         try {
-            return rst.getString("TimeSlot6");
+            connect();
+            String s = rst.getString("TimeSlot6");
+            closeConnection();
+            return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -561,7 +647,10 @@ public class Repository {
     }
     public String getTimeSlot7(ResultSet rst){
         try {
-            return rst.getString("TimeSlot7");
+            connect();
+            String s = rst.getString("TimeSlot7");
+            closeConnection();
+            return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -569,7 +658,10 @@ public class Repository {
     }
     public String getTimeSlot8(ResultSet rst){
         try {
-            return rst.getString("TimeSlot8");
+            connect();
+            String s = rst.getString("TimeSlot8");
+            closeConnection();
+            return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -577,7 +669,10 @@ public class Repository {
     }
     public String getDay(ResultSet rst){
         try {
-            return rst.getString("day");
+            connect();
+            String s = rst.getString("day");
+            closeConnection();
+            return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -612,6 +707,7 @@ public class Repository {
         temp.append("insert into Maintainer\n" +
                         "values ('").append(id).append("' , '").append(name).append("' , '").append(password).append("' );");
         try {
+            connect();
             //SQL transaction
             conn.setAutoCommit(false);
             stm.executeUpdate(temp.toString());
@@ -620,6 +716,7 @@ public class Repository {
             }
             conn.commit();
             conn.setAutoCommit(true);
+            closeConnection();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
@@ -633,7 +730,9 @@ public class Repository {
                     " TimeSlot1,TimeSlot2,TimeSlot3,TimeSlot4,TimeSlot5,TimeSlot6,TimeSlot7,TimeSlot8)\n" +
                     " values('").append(maintainerID).append("','").append(day).append("',").append("60,60,60,60,60,60,60,60);");
         try {
+            
             stm.executeUpdate(temp.toString());
+            
             return true;
            
         } catch (SQLException ex) {
@@ -670,12 +769,14 @@ public class Repository {
         temp2.append(SlotAssigned8).append(" ");
         temp2.append(" );");
          try {
+            connect();
             //SQL transaction
             conn.setAutoCommit(false);
             stm.executeUpdate(temp1.toString());
             stm.executeUpdate(temp2.toString());
             conn.commit();
             conn.setAutoCommit(true);
+            closeConnection();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
@@ -690,11 +791,30 @@ public class Repository {
            "join competence as c on (c.competenceID=tc.competenceID ) ");
            temp.append(" where tc.activityTypology=  '").append(typology).append("' ;");
            try {
-            return stm.executeQuery(temp.toString());
+            connect();
+            ResultSet rst = stm.executeQuery(temp.toString());
+            closeConnection();
+            return rst;
            
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
+        }
+    }
+    public boolean updateWorkspceNotes(String activityID, String activityWorkspaceNotes){
+        StringBuilder temp1 = new StringBuilder();
+        temp1.append("update MaintenanceActivity"
+        + " set activityWorkspaceNotes = ");
+        temp1.append(" '").append(activityWorkspaceNotes).append("'");
+        temp1.append(" where activityid = ").append(" '").append(activityID).append(" ';");
+        try {
+            connect();
+            stm.executeUpdate(temp1.toString());
+            closeConnection();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
 }

@@ -24,6 +24,7 @@ public class DemoAdminIsertNewMaintainer {
        r.insertNewMaintainer("mant02", "pippo", "1234");
        r.insertNewMaintainer("mant03", "paperino", "1234");
        r.insertNewMaintainer("mant04", "topolino", "1234");
+       r.insertNewMaintainer("mant05", "pietro", "1234");
     }
    
 }
