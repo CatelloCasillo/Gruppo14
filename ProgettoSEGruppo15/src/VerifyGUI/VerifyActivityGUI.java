@@ -1,6 +1,5 @@
 package VerifyGUI;
 
-
 import MantainerSelection.MaintainerSelectionGUI;
 import Navigator.Navigator;
 import PrimoPackege.Planner;
@@ -223,6 +222,7 @@ public class VerifyActivityGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_operationButton1ActionPerformed
 
     private void forwardButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forwardButton1ActionPerformed
+       p.updateNotes(id, this.jTextAreaWork.getText());
        Navigator nav=Navigator.getInstance(p);
        nav.changeToMaintainerSelectionWindow(this);
        /*MaintainerSelectionGUI maintainerSelection= new MaintainerSelectionGUI(p,id,this.activityInfoLabel1.getText(),this.jTextAreaWork.getText());

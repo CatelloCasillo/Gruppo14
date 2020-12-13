@@ -106,7 +106,7 @@ public class EwoAssignmentGUI extends javax.swing.JFrame {
 
         maintainerDailyTable1.setModel(new NoEditableTableModel(
             new Object [][] {
-                { a.maintainerName, "3/5", "60 min", "50 min", "30 min", "55 min", "0 min", "35 min","10 min","15 min","25 min"}
+                { "Lello", "3/5", "60 min", "50 min", "30 min", "55 min", "0 min", "35 min","10 min","15 min","25 min"}
             },
             new String [] {
 
