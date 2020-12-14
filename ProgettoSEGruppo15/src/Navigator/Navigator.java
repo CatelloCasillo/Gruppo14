@@ -7,6 +7,7 @@ package Navigator;
 
 import MantainerSelection.ActivityAssignmentGUI;
 import MantainerSelection.MaintainerSelectionGUI;
+import PrimoPackege.Maintainer;
 import PrimoPackege.MaintanceActivity;
 import PrimoPackege.Planner;
 import SelectionGUI.SelectActivityGUI;
@@ -72,8 +73,10 @@ public class Navigator {
         MaintainerSelectionGUI maintainerSelection= new MaintainerSelectionGUI(p,selectedActivity.getId(),selectedActivityInfo);
         changeInterface(maintainerSelection,currentWindow);
     }
-    public void changeToActivityAssignmentWindow(JFrame currentWindow, String mantainerName, String skillCompliance, String selectedWeekDay,LocalDate selectedDate,Color percentageColor, String percentage){
-        ActivityAssignmentGUI assignment= new ActivityAssignmentGUI(p, mantainerName, skillCompliance, selectedWeekDay, selectedActivityInfo ,this.selectedActivity.getWorkspacenotes(), selectedDate,this.selectedActivity.getId(),percentageColor, percentage );
+    public void changeToActivityAssignmentWindow(JFrame currentWindow, String mantainerName, String skillCompliance, String selectedWeekDay,LocalDate selectedDate,Color percentageColor, String percentage, int selectedRow){
+        Maintainer m = p.getSelectedMaintainer(selectedRow);
+        String selectedDayOfWeek=selectedWeekDay.substring(0, 1)+selectedWeekDay.substring(1).toLowerCase();
+        ActivityAssignmentGUI assignment= new ActivityAssignmentGUI(p, mantainerName, skillCompliance, selectedDayOfWeek, selectedActivityInfo ,this.selectedActivity.getWorkspacenotes(), selectedDate,this.selectedActivity.getId(),percentageColor, percentage,m.getId(), this.selectedActivity.getIntervationTime() );
         changeInterface(assignment,currentWindow);
     }
     

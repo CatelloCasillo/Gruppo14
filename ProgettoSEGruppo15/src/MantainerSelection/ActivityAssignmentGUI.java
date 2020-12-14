@@ -14,12 +14,17 @@ import Navigator.Navigator;
 import PrimoPackege.Planner;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Panel;
 import static java.lang.Integer.parseInt;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -32,9 +37,15 @@ import javax.swing.table.TableColumn;
  */
 public class ActivityAssignmentGUI extends javax.swing.JFrame {
     private String selectedActvity;
+    private int intervetionTime;
+    private String selectedMaintainer;
     private Planner planner;
     private String skillCompliance;   
     private String maintainerName;
+    private boolean cleaned;
+    private String selectedDayOfWeek;
+    private ArrayList<Integer> numericSlots;
+    
     /**
      * Creates new form AssignActivityGUI
      */
@@ -59,19 +70,35 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
         }
     }
     
-    public ActivityAssignmentGUI(Planner p, String maintenerName,String skillCompliance,String selectedDayWeek,String activityInfo, String notes,LocalDate selectedDate, String selectedActvity, Color percentageColor, String percentage) {
+    public ActivityAssignmentGUI(Planner p, String maintenerName,String skillCompliance,String selectedDayWeek,String activityInfo, String notes,LocalDate selectedDate, String selectedActvity, Color percentageColor, String percentage, String selectedMaintainerId, int estimatedActivityTime) {
         this.selectedActvity=selectedActvity;
+        this.numericSlots=new ArrayList<>();
         this.planner=p;
+        this.selectedDayOfWeek=selectedDayWeek;
+        this.cleaned = false;
+        this.intervetionTime=estimatedActivityTime;
         this.maintainerName=maintenerName;
         this.skillCompliance=skillCompliance;
+        this.selectedMaintainer = selectedMaintainerId;
         initComponents();
         this.setLocationRelativeTo(null);
         jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             @Override
-            public void valueChanged(ListSelectionEvent lse) {
-                int[] selectedColumns=jTable1.getSelectedColumns();
-                System.out.println(Arrays.toString(selectedColumns));
-            }
+            public void valueChanged(ListSelectionEvent e) {
+        ListSelectionModel lsm = (ListSelectionModel)e.getSource();
+        int [] selectedIndex={};
+        String output=new String();
+        if((!e.getValueIsAdjusting()) && (!ActivityAssignmentGUI.this.cleaned)){
+                selectedIndex = ActivityAssignmentGUI.this.jTable1.getSelectedColumns();
+                for(int index : selectedIndex)
+                    output+=index+", ";
+                //System.out.println(output);
+        }
+        if(ActivityAssignmentGUI.this.cleaned)
+            ActivityAssignmentGUI.this.cleaned=false;
+                
+        }
+        
         });
         
         this.jTextPane1.setText(notes);
@@ -118,9 +145,14 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
         jScrollPane1.getViewport().setBackground(new Color(248,148,6));
         jScrollPane1.setBorder(null);
 
+        Object [] slots=planner.getMaintainerDailyAvailability(this.selectedMaintainer, this.selectedDayOfWeek);
+        for (Object slot :slots){
+            String [] s=slot.toString().trim().split(" ");
+            this.numericSlots.add(parseInt(s[0]));
+        }
         jTable1.setModel(new NoEditableTableModel(
             new Object [][] {
-                {ActivityAssignmentGUI.this.maintainerName, this.skillCompliance, "60 min", "50 min", "30 min", "55 min", "0 min", "35 min","10 min","15 min","25 min"}
+                {ActivityAssignmentGUI.this.maintainerName, this.skillCompliance, slots[0], slots[1],slots[2], slots[3], slots[4], slots[5],slots[6],slots[7]}
             },
             new String [] {
 
@@ -130,7 +162,7 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
                 "<html><div style = 'text-align: center'>Availab.<br><span style = 'font-size: 65%'>9:00 - 10:00</span></div></html>\"",
                 "<html><div style = 'text-align: center'>Availab.<br><span style = 'font-size: 65%'>10:00 - 11:00</span></div></html>\"",
                 "<html><div style = 'text-align: center'>Availab.<br><span style = 'font-size: 65%'>11:00 - 12:00</span></div></html>\"",
-                "<html><div style = 'text-align: center'>Availab.<br><span style = 'font-size: 65%'>12:00 - 13:00</span></div></html>\"",
+
                 "<html><div style = 'text-align: center'>Availab.<br><span style = 'font-size: 65%'>13:00 - 14:00</span></div></html>\"",
                 "<html><div style = 'text-align: center'>Availab.<br><span style = 'font-size: 65%'>14:00 - 15:00</span></div></html>\"",
                 "<html><div style = 'text-align: center'>Availab.<br><span style = 'font-size: 65%'>15:00 - 16:00</span></div></html>\"",
@@ -138,7 +170,6 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
             }
         ));
         jTable1.setColumnSelectionAllowed(true);
-        jTable1.setRowSelectionAllowed(false);
         jTable1.setSelectionBackground(new java.awt.Color(153, 0, 153));
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jTable1.getTableHeader().setDefaultRenderer(new DefaultHeaderRenderer());
@@ -147,7 +178,7 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
         firstColumn.setCellRenderer(new MaintenerColumnRenderer());
         TableColumn secondColumn = jTable1.getColumnModel().getColumn(1);
         secondColumn.setCellRenderer(new SkillColumnRenderer());
-        for(int i=2;i<11;i++){
+        for(int i=2;i<10;i++){
             TableColumn column=jTable1.getColumnModel().getColumn(i);
             column.setCellRenderer(new OtherColumnRenderer());
         }
@@ -326,11 +357,62 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void forwardButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forwardButton1ActionPerformed
-        // TODO add your handling code here:
+        //String [] fraction= content.split(" ");
+        int [] selectedIndex={};
+        String output=new String();
+        selectedIndex =this.jTable1.getSelectedColumns();
+        int remainigTime=0;
+        int [] actFractTime = {0, 0, 0, 0, 0, 0, 0, 0};
+        boolean validSelection=false;
+        JPanel panel=new JPanel();
+        panel.setOpaque(true);
+        panel.setBackground(new Color(248,148,6));
+        for(int index : selectedIndex){
+            if(index>1){
+                remainigTime+=this.numericSlots.get(index-2);
+                validSelection=true;
+            }  
+        }
+        if(!validSelection){
+            JOptionPane.showMessageDialog(panel,  "Devi selezionare le caselle coi minuti","Selezione non valida", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if(remainigTime < this.intervetionTime){
+            JOptionPane.showMessageDialog(panel,  "Non c'è abbastanza tempo rimanente","Selezione non valida", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int timeToAssing=this.intervetionTime;
+        for(int index: selectedIndex){
+            if(numericSlots.get(index-2)>=timeToAssing){
+            this.numericSlots.set(index-2,numericSlots.get(index-2) - timeToAssing);
+            actFractTime[index-2]=timeToAssing;
+            System.out.println(this.numericSlots);
+            for(int j=0;j<8;j++)
+                System.out.print(actFractTime[j]+", ");
+            break;
+            }
+            else{
+                timeToAssing-=this.numericSlots.get(index-2);
+                this.numericSlots.set(index-2, 0);
+                actFractTime[index-2]=60;
+            }
+        }
+        boolean okOp1=planner.updateMaintainerAvailability(this.selectedMaintainer, this.selectedDayOfWeek, this.numericSlots);
+        boolean okOp2=planner.assignActivityFraction(this.selectedActvity, this.selectedMaintainer, this.selectedDayOfWeek, parseInt(this.weekNumber1.getText().trim()), actFractTime);
+        if(okOp1 && okOp2){
+        planner.updateActivityToMaintainer(this.selectedActvity, this.selectedMaintainer);
+        JOptionPane.showMessageDialog(panel,  "Tornerai a pianificare le attività","Modifica effettuata", JOptionPane.INFORMATION_MESSAGE);
+        Navigator nav = Navigator.getInstance(planner);
+        nav.changeToSelectActivityWindow(this);
+        }
+        else
+             JOptionPane.showMessageDialog(panel,  "Operazione sul repository non riusciuta","Errore", JOptionPane.ERROR_MESSAGE);
+        
     }//GEN-LAST:event_forwardButton1ActionPerformed
 
     private void forwardButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forwardButton2ActionPerformed
-        this.jTable1.clearSelection();
+        this.cleaned=true;
+        this.jTable1.getSelectionModel().clearSelection();
     }//GEN-LAST:event_forwardButton2ActionPerformed
 
     private void operationButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton1ActionPerformed

@@ -66,11 +66,11 @@ public class MaintainerSelectionGUI extends javax.swing.JFrame {
      * Creates new form MaintainerSelectionGUI
      */
     public MaintainerSelectionGUI(Planner planner,String selectedActivityId, String activityInformation) {
+        this.p=planner;
+        this.selectedActivityId=selectedActivityId;
         initComponents();
         this.setLocationRelativeTo(null);
-        this.p=planner;
         this.jList2.setModel(new AbstractActvityListModel(p,selectedActivityId));
-        this.selectedActivityId=selectedActivityId;
         this.activityInfoLabel1.setText(activityInformation);
     }
 
@@ -97,6 +97,7 @@ public class MaintainerSelectionGUI extends javax.swing.JFrame {
         activityInfoLabel1 = new CommonComponents.ActivityInfoLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList<>();
+        operationButton1 = new CommonComponents.OperationButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -107,7 +108,7 @@ public class MaintainerSelectionGUI extends javax.swing.JFrame {
 
         jTable1.setBackground(new java.awt.Color(248, 148, 6));
         jTable1.setModel(new NoEditableTableModel(
-            new Object [][] {
+            /*new Object [][] {
                 {"Pippo", "3/5", "80%", "100%", "50%", "20%", "0%", "90%", "75%"},
                 {"Paperino", "2/5", "80%", "100%", "50%", "20%", "0%", "90%", "75%"},
                 {"Sembronio", "1/5", "80%", "100%", "50%", "20%", "0%", "90%", "75%"},
@@ -115,7 +116,8 @@ public class MaintainerSelectionGUI extends javax.swing.JFrame {
                 {"Frodo", "5/5", "80%", "100%", "50%", "20%", "0%", "90%", "75%"},
                 {"Mitrandir", "0/5", "80%", "100%", "50%", "20%", "0%", "90%", "75%"},
 
-            },
+            },*/
+            p.getMaintainerWeekCalendar(selectedActivityId),
             new String [] {
                 "Maintainer",
                 "Skills",
@@ -161,6 +163,14 @@ public class MaintainerSelectionGUI extends javax.swing.JFrame {
         jList2.setPreferredSize(new java.awt.Dimension(33, 170));
         jScrollPane4.setViewportView(jList2);
 
+        operationButton1.setText("Return to Activity Selecion");
+        operationButton1.setFont(new java.awt.Font("Cooper Black", 0, 14)); // NOI18N
+        operationButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                operationButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelBase1Layout = new javax.swing.GroupLayout(panelBase1);
         panelBase1.setLayout(panelBase1Layout);
         panelBase1Layout.setHorizontalGroup(
@@ -188,9 +198,14 @@ public class MaintainerSelectionGUI extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBase1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(minimizeButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(closeButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBase1Layout.createSequentialGroup()
+                        .addComponent(minimizeButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(closeButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBase1Layout.createSequentialGroup()
+                        .addComponent(operationButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(134, 134, 134))))
         );
         panelBase1Layout.setVerticalGroup(
             panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,7 +227,9 @@ public class MaintainerSelectionGUI extends javax.swing.JFrame {
                 .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(operationButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                .addGap(5, 5, 5))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -245,7 +262,7 @@ public class MaintainerSelectionGUI extends javax.swing.JFrame {
             String[] s= percentage.split("%");
             Color c= colorPicker(parseInt(s[0]));
             Navigator nav=Navigator.getInstance(p);
-            nav.changeToActivityAssignmentWindow(this, mantainerName,skillCompliance,selectedWeekDay, selectionDate,c, percentage );
+            nav.changeToActivityAssignmentWindow(this, mantainerName,skillCompliance,selectedWeekDay, selectionDate,c, percentage, row);
             /*ActivityAssignmentGUI verify= new ActivityAssignmentGUI(p, mantainerName,selectedWeekDay, info ,"", selectionDate,selectedActivityId,c, percentage );
             verify.setVisible(true);
             verify.pack();
@@ -255,6 +272,11 @@ public class MaintainerSelectionGUI extends javax.swing.JFrame {
             //JOptionPane.showMessageDialog(new JFrame(), selectionDate.getDayOfWeek(), "Errore", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void operationButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton1ActionPerformed
+        Navigator nav=Navigator.getInstance(p);
+        nav.changeToSelectActivityWindow(this);
+    }//GEN-LAST:event_operationButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -303,6 +325,7 @@ public class MaintainerSelectionGUI extends javax.swing.JFrame {
     private CommonComponents.LabelLight labelLight1;
     private CommonComponents.LabelLight labelLight2;
     private CommonComponents.MinimizeButton minimizeButton1;
+    private CommonComponents.OperationButton operationButton1;
     private CommonComponents.PanelBase panelBase1;
     private CommonComponents.WeekNumber weekNumber1;
     // End of variables declaration//GEN-END:variables
