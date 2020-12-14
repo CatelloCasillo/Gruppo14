@@ -34,7 +34,6 @@ public class Planner {
   Repository repository;
   ArrayList<MaintanceActivity> activityList;
   ArrayList<Site> siteList;
-  File f [];
   
  
 
@@ -43,7 +42,6 @@ public class Planner {
          //inizializzazione delle strutture dati che contengono i dati presi dal DB
         this.initSiteList();
         this.initActivityList();
-        this.f = new File("C:\\Users\\User\\Tickets").listFiles();
     }
     
     //permette di creare un'attività, di aggiungerla alla lista e al database 
@@ -256,23 +254,19 @@ public class Planner {
         }
     }
 
-    public File[] getF() {
-        return f;
-    }
-   
-    public String[] getStringInFile(int i) {
+    public String[] getStringInFile(File f) {
         BufferedReader b;
         String s[];
         Reader r; 
       try {
-          r= new FileReader(f[i]);
+          r= new FileReader(f);
           b=new BufferedReader(r);
-          String f=b.readLine();
+          String c=b.readLine();
           if(f == null){
               return null;
           }
           else{
-              s= f.split(", ");
+              s= c.split(", ");
           }
       } catch (IOException ex) {
           Logger.getLogger(Planner.class.getName()).log(Level.SEVERE, null, ex);

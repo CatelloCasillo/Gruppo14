@@ -5,6 +5,7 @@
  */
 package plannerGUI;
 
+import Navigator.Navigator;
 import PrimoPackege.Planner;
 import java.awt.Color;
 import java.awt.Component;
@@ -29,10 +30,11 @@ import javax.swing.filechooser.FileSystemView;
  */
 public class TicketList extends javax.swing.JFrame{
     
-    private Planner p = new Planner();
+    private Planner p;
     private int COLUMNS = 1;
     private Dimension size;
     private String [] s;
+    private File[] f;
 
 
      private class MyCellRenderer extends JLabel implements ListCellRenderer {
@@ -74,8 +76,9 @@ public class TicketList extends javax.swing.JFrame{
         this.setLocationRelativeTo(null);
         //leggi();
     }
-    public TicketList(Planner p) {
+    public TicketList(Planner p, File[] f) {
         this.p=p;
+        this.f= f;
         initComponents();
         this.setLocationRelativeTo(null);
         //leggi();
@@ -93,7 +96,7 @@ public class TicketList extends javax.swing.JFrame{
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        list = new JList(p.getF()){
+        list = new JList(f){
             //new JList(new File("C:\\Users\\User\\Tickets").listFiles()){
 
                 //   private static final long serialVersionUID = 1L;
@@ -201,7 +204,7 @@ public class TicketList extends javax.swing.JFrame{
    
     private void listMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listMouseClicked
             s=null;
-            s= p.getStringInFile(list.getSelectedIndex());
+            s= p.getStringInFile(f[list.getSelectedIndex()]);
              if(s==null ){
                 JOptionPane.showMessageDialog(rootPane, "il Ticket è vuoto!");
             }
@@ -212,12 +215,15 @@ public class TicketList extends javax.swing.JFrame{
                 JOptionPane.showMessageDialog(rootPane, "Devi selezionare un Ticket!");
         }
         else{
+        Navigator nav=Navigator.getInstance(p);
+        nav.changeToActivityEWO(this,s[0], s[1], s[2], s[3]);    
+        /*     
         ActivityEWO a= new ActivityEWO(p, s[0], s[1], s[2], s[3]);
         a.setVisible(true);
         a.pack();
         a.setLocationRelativeTo(null);
         a.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
+        this.dispose();*/
         }
     }//GEN-LAST:event_operationButton1ActionPerformed
 

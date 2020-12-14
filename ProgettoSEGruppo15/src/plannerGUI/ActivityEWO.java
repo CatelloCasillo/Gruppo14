@@ -5,6 +5,7 @@
  */
 package plannerGUI;
 
+import Navigator.Navigator;
 import PrimoPackege.Planner;
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -13,7 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
-
+//import EWOassignment.EwoAssignmentGUI;
+import java.util.ArrayList;
 /**
  *
  * @author User
@@ -250,37 +252,48 @@ public class ActivityEWO extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void operationButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton1ActionPerformed
-        TicketList planner= new TicketList(p);
+        Navigator nav=Navigator.getInstance(p);
+        nav.changeToTicketList(this);
+        
+        /*        TicketList planner= new TicketList(p);
         planner.setVisible(true);
         planner.pack();
         planner.setLocationRelativeTo(null);
         planner.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
+        this.dispose();*/
     }//GEN-LAST:event_operationButton1ActionPerformed
 
     private void jList1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseEntered
         Robot r;
-                            try {
-                                r = new Robot();
-                                r.keyPress(KeyEvent.VK_CONTROL);                              
-                            } catch (AWTException ex) {                               
-                            }                           
-                            System.out.println("enter");
-                            
+        try {
+            r = new Robot();
+            r.keyPress(KeyEvent.VK_CONTROL);                              
+        }catch (AWTException ex) {                               
+        }                           
+
     }//GEN-LAST:event_jList1MouseEntered
 
     private void jList1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseExited
         Robot r;
-                            try {
-                                r = new Robot();
-                                r.keyRelease(KeyEvent.VK_CONTROL);
-                            } catch (AWTException ex) {
-                                }
+        try {
+            r = new Robot();
+            r.keyRelease(KeyEvent.VK_CONTROL);
+        }catch (AWTException ex) {
+            }
     }//GEN-LAST:event_jList1MouseExited
 
     private void forwardButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forwardButton1ActionPerformed
-        System.out.println(jList1.getSelectedValuesList());
+        //System.out.println(jList1.getSelectedValuesList());
+        /*
+        EwoAssignmentGUI c= new EwoAssignmentGUI(p, site, id, typology, workspacenote, jList1.getSelectedValuesList());
+        c.setVisible(true);
+        c.pack();
+        c.setLocationRelativeTo(null);
+        c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
+        this.dispose();
+                //System.out.println(jList1.getSelectedValuesList());
+        */
         
     }//GEN-LAST:event_forwardButton1ActionPerformed
 

@@ -1,6 +1,7 @@
 package plannerGUI;
 
 
+import Navigator.Navigator;
 import PrimoPackege.Planner;
 import plannerGUI.FirstPagePlannerGUI;
 import java.awt.Color;
@@ -287,12 +288,14 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
    
     private void operationButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton1ActionPerformed
-        FirstPagePlannerGUI planner= new FirstPagePlannerGUI(p);
+        Navigator nav=Navigator.getInstance(p);
+        nav.changeToWelcomeWindow(this);
+        /*FirstPagePlannerGUI planner= new FirstPagePlannerGUI(p);
         planner.setVisible(true);
         planner.pack();
         planner.setLocationRelativeTo(null);
         planner.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
+        this.dispose();*/
     }//GEN-LAST:event_operationButton1ActionPerformed
 
     private void operationButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton3ActionPerformed
@@ -303,12 +306,14 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_operationButton3ActionPerformed
 
     private void operationButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton2ActionPerformed
-        ViewActivityGUI view= new ViewActivityGUI(p);
+       Navigator nav=Navigator.getInstance(p);
+        nav.changeToViewActivityWindow(this);
+        /* ViewActivityGUI view= new ViewActivityGUI(p);
         view.setVisible(true);
         view.pack();
         view.setLocationRelativeTo(null);
         view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
+        this.dispose();*/
     }//GEN-LAST:event_operationButton2ActionPerformed
 
     /**

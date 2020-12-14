@@ -1,6 +1,7 @@
 package plannerGUI;
 
 
+import Navigator.Navigator;
 import PrimoPackege.*;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -22,6 +23,7 @@ public class ViewActivityGUI extends javax.swing.JFrame {
     String header[]= new String []{"ID", "site", "typology", "activityDescription", "intervationTime", "interruptible", "week"};
     DefaultTableModel dtm;
     int row, col;
+    int k;
     
 
     /** Creates new form ViewActivityGUI */
@@ -342,8 +344,8 @@ public class ViewActivityGUI extends javax.swing.JFrame {
     private void operationButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton1ActionPerformed
         if( jTable1.isRowSelected(row)){
         int dialogButton =JOptionPane.YES_NO_OPTION;
-    int dialogResult= JOptionPane.showConfirmDialog(this, "Delete this data", "Delete", dialogButton);
-    if(dialogResult == 0){
+        int dialogResult= JOptionPane.showConfirmDialog(this, "Delete this data", "Delete", dialogButton);
+        if(dialogResult == 0){
         row= jTable1.getSelectedRow();
         p.deleteActivity(dtm.getValueAt(row, 0).toString(), row);
         populateTable();
@@ -352,7 +354,7 @@ public class ViewActivityGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_operationButton1ActionPerformed
 
     private void operationButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton2ActionPerformed
-        if( jTable1.isRowSelected(row)){
+        //if( jTable1.isRowSelected(row)){
         enabledField();
         String updateSite= jComboBox2.getItemAt(jComboBox2.getSelectedIndex());
         String updateTypology = jComboBoxTyp.getItemAt(jComboBoxTyp.getSelectedIndex());
@@ -370,16 +372,18 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         */
         p.updateActivity(row, jTextFieldId.getText(), updateSite, updateTypology, updateDescription, updateTime, updateInterruptible, updateWeek);
         populateTable();
-        }
+        
     }//GEN-LAST:event_operationButton2ActionPerformed
 
     private void operationButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton3ActionPerformed
-        FirstPagePlannerGUI welcome= new FirstPagePlannerGUI(p);
+        Navigator nav=Navigator.getInstance(p);
+        nav.changeToWelcomeWindow(this);
+        /*       FirstPagePlannerGUI welcome= new FirstPagePlannerGUI(p);
         welcome.setVisible(true);
         welcome.pack();
         welcome.setLocationRelativeTo(null);
         welcome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
+        this.dispose();*/
     }//GEN-LAST:event_operationButton3ActionPerformed
 
     /**
