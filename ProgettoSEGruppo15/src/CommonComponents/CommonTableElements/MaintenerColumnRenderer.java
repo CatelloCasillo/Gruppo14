@@ -27,6 +27,9 @@ public class MaintenerColumnRenderer extends DefaultTableCellRenderer{
                 else
                     cell.setBackground(new Color(255, 240, 255));
             }
+            if(isSelected){
+                cell.setBackground(Color.BLACK);
+            }
             return cell;
         }
         

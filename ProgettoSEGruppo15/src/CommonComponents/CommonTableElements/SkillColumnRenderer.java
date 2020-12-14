@@ -40,6 +40,10 @@ public class SkillColumnRenderer extends DefaultTableCellRenderer{
                     cell.setBackground(color);
                     cell.setHorizontalAlignment(SwingConstants.CENTER);
                 }
+                
+            }
+            if(isSelected){
+                cell.setBackground(Color.BLACK);
             }
             return cell;
         }

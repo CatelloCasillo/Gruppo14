@@ -39,7 +39,9 @@ public class Maintainer {
         for(int time : timeSlots){
             TotalFreeMinutes+=time;
         }
+        
         int percentage = ((TotalFreeMinutes*100)/TotalWorkInDay);
+        //System.out.println(TotalFreeMinutes+" - "+percentage);
         return percentage+"%";
     }
     public Object[] getSlotsAvailability(String day){

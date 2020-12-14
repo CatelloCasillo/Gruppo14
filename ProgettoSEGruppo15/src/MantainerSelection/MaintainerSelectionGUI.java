@@ -57,6 +57,9 @@ public class MaintainerSelectionGUI extends javax.swing.JFrame {
                 cell.setBackground(color);
                 cell.setHorizontalAlignment(SwingConstants.CENTER);
             }
+            if(isSelected){
+                cell.setBackground(Color.BLACK);
+            }
             return cell;
         }
     }

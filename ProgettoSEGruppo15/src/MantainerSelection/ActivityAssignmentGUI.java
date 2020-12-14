@@ -107,6 +107,7 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
         this.labelForWeekDay1.setText(selectedDayWeek);
         this.jLabel1.setBackground(percentageColor);
         this.jLabel1.setText(percentage);
+        this.labelLight2.setText("AVAILABILY OF "+this.maintainerName.toUpperCase());
     }
 
     /**
