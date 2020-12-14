@@ -188,7 +188,6 @@ public class Planner {
         for (int i=0; i<this.activityList.size();i++){
             PlannedActivity act= (PlannedActivity)this.activityList.get(i);
             if(act.getWeekNumber() == currentWeekNumber && act.getMaintainerID() == null){
-                
                 String id= act.getId();
                 Site site= act.getSite();
                 String area= site.getArea();
@@ -199,11 +198,11 @@ public class Planner {
                 empty=false;
             }
         }
-        for(int k=0;k<2;k++){
+        /*for(int k=0;k<2;k++){
             for(int q=0;q<5;q++)
                 System.out.print(attrTable[k][q].toString()+", ");
             System.out.println("");
-        }
+        }*/
         if(!empty)
         return attrTable;
         else{

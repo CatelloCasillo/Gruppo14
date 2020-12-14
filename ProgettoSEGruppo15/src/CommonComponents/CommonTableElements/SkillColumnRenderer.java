@@ -28,8 +28,14 @@ public class SkillColumnRenderer extends DefaultTableCellRenderer{
                 if(cellContent != null){
                 String content = cellContent.toString().trim();
                     String [] fraction= content.split("/");
-                    int percentage = (parseInt(fraction[0])*100)/parseInt(fraction[1]);
-                    Color color = colorPicker(percentage);
+                    Color color;
+                    if(!fraction[1].equals("0")){
+                        int percentage = (parseInt(fraction[0])*100)/parseInt(fraction[1]);
+                        color = colorPicker(percentage);
+                    }
+                    else{
+                        color = new Color(0,153,0);
+                    }
                     cell.setOpaque(true);
                     cell.setBackground(color);
                     cell.setHorizontalAlignment(SwingConstants.CENTER);
