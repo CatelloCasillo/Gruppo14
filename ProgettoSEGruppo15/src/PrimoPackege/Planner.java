@@ -34,13 +34,9 @@ public class Planner {
   Repository repository;
   ArrayList<MaintanceActivity> activityList;
   ArrayList<Site> siteList;
-<<<<<<< HEAD
-=======
-  File f [];
-  ArrayList<Maintainer> maintainers;
->>>>>>> origin/main
-  
- 
+  ArrayList<Maintainer> maintainers; 
+
+
 
     public Planner() {
         this.repository= new Repository();
