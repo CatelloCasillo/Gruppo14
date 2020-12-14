@@ -52,6 +52,18 @@ public class Repository extends RepositoryBase{
         }
        
     }
+    public String getMaintainerID(ResultSet rst){
+        try {
+            connect();
+            String s = rst.getString("maintainerID");
+            closeConnection();
+            return s;
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+       
+    }
     public String getActivityDescription(ResultSet rst){
         try {
             connect();
@@ -357,7 +369,7 @@ public class Repository extends RepositoryBase{
     public ResultSet getCompetencesOfActivity(String activityID){
       
         StringBuilder temp = new StringBuilder();
-        temp.append("select c.competenceName from \n" +
+        temp.append("select c.competenceID,c.competenceName from \n" +
                     "MaintenanceActivity as ma \n" +
                     "join competenceToProcedure as cp on (ma.procedureID=cp.procedureID )\n" +
                     "join competence as c on (c.competenceID=cp.competenceID ) ");
@@ -390,6 +402,24 @@ public class Repository extends RepositoryBase{
             return null;
         }
     }
+  
+  public ResultSet getMaintainer(String id){
+         try {
+            connect();
+            String query = "select maintainerId, maintainerName from Maintainer where maintainerId='"+id+"';";
+                   
+            ResultSet rst = stm.executeQuery(query);
+            closeConnection();
+            return rst;
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+  
+    
+  
     public ResultSet getAllMaintainersCurrentWeekDayAvailability(String day){
         //check day string
         String days[] = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
@@ -444,6 +474,21 @@ public class Repository extends RepositoryBase{
             return null;
         }
     }
+    
+    public int[] getTimeslots(ResultSet rst){
+        String base= "timeslot";
+        int timeVector[]=new int[8];
+        try {
+        rst.next();
+        for(int i=1;i<=8;i++)   
+                timeVector[i-1]=rst.getInt(""+base+i);
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return new int[8];
+        }
+        return timeVector;
+    }
+    
     public ResultSet getWeekAvailability(String mainteinerID){
         StringBuilder temp = new StringBuilder();
         temp.append("select ma.maintainerID,ma.day,ma.TimeSlot1,ma.TimeSlot2,ma.TimeSlot3,ma.TimeSlot4,ma.TimeSlot5,ma.TimeSlot6,ma.TimeSlot7,ma.TimeSlot8\n" +
@@ -520,7 +565,7 @@ public class Repository extends RepositoryBase{
     public ResultSet getCompetencesOfMaintainer(String maintainerID){
       
         StringBuilder temp = new StringBuilder();
-        temp.append("select c. competenceID , c.competenceName from \n" +
+        temp.append("select c.competenceID , c.competenceName from \n" +
                     "competenceToMaintainer as cm \n" +
                     "join competence as c on (c.competenceID=cm.competenceID )\n" +
                     "where cm.MaintainerID = '").append(maintainerID).append("' ;");
@@ -559,7 +604,7 @@ public class Repository extends RepositoryBase{
         }
     }
     
-    public String getMaintainerID(ResultSet rst){
+    public String getActivityMaintainerID(ResultSet rst){
         try {
             connect();
             String s = rst.getString("MaintainerID");

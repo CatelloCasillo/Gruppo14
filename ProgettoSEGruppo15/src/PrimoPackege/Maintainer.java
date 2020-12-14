@@ -5,6 +5,9 @@
  */
 package PrimoPackege;
 
+import Repository.Repository;
+import java.sql.ResultSet;
+
 /**
  *
  * @author Enrico
@@ -12,10 +15,12 @@ package PrimoPackege;
 public class Maintainer {
     private String id;
     private String name;
+    private Repository rep;
 
     public Maintainer(String id, String name) {
         this.id = id;
         this.name = name;
+        this.rep=new Repository();
     }
 
     public String getId() {
@@ -26,5 +31,27 @@ public class Maintainer {
         return name;
     }
     
+    public String getDayAvailability(String day){
+        ResultSet rst= rep.getDayAvailability(id, day);
+        int TotalFreeMinutes=0;
+        final int TotalWorkInDay= 60*8;
+        int [] timeSlots = rep.getTimeslots(rst);
+        for(int time : timeSlots){
+            TotalFreeMinutes+=time;
+        }
+        int percentage = ((TotalFreeMinutes*100)/TotalWorkInDay);
+        return percentage+"%";
+    }
+    public Object[] getSlotsAvailability(String day){
+        System.out.println(day);
+        ResultSet rst= rep.getDayAvailability(id, day);
+        final int slotsNumber = 8;
+        int [] timeSlots = rep.getTimeslots(rst);
+        Object[] formattedSlots = new Object[slotsNumber];
+        for(int i=0; i<slotsNumber; i++){
+            formattedSlots[i] = timeSlots[i]+" min";
+        }
+        return formattedSlots;
+    }
     
 }

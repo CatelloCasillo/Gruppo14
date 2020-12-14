@@ -41,6 +41,7 @@ public abstract class MaintanceActivity {
         this.weekNumber = weekNumber;
         this.workspacenotes= workspacenotes;
         
+        
     }
 
     public MaintanceActivity(String id, Site site, String typology, 
@@ -188,6 +189,11 @@ public abstract class MaintanceActivity {
         }
         return true;
     }
+
+    public void setWorkspacenotes(String workspacenotes) {
+        this.workspacenotes = workspacenotes;
+    }
+    
     
     
 
