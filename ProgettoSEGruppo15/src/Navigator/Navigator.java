@@ -13,10 +13,13 @@ import PrimoPackege.Planner;
 import SelectionGUI.SelectActivityGUI;
 import VerifyGUI.VerifyActivityGUI;
 import java.awt.Color;
+import java.io.File;
 import java.time.LocalDate;
 import javax.swing.JFrame;
+import plannerGUI.ActivityEWO;
 import plannerGUI.CreateAnActivityGUI;
 import plannerGUI.FirstPagePlannerGUI;
+import plannerGUI.TicketList;
 import plannerGUI.ViewActivityGUI;
 
 /**
@@ -28,6 +31,7 @@ public class Navigator {
     private Planner p;
     private MaintanceActivity selectedActivity;
     private String selectedActivityInfo;
+    private File f [];
     
     public synchronized static Navigator getInstance(Planner p) {
         if (instance == null) {
@@ -38,6 +42,7 @@ public class Navigator {
 
     private Navigator(Planner p) {
         this.p = p;
+        this.f = new File("src\\Tickets").listFiles();
     }
     
     
@@ -74,6 +79,17 @@ public class Navigator {
         ActivityAssignmentGUI assignment= new ActivityAssignmentGUI(p, mantainerName, skillCompliance, selectedDayOfWeek, selectedActivityInfo ,this.selectedActivity.getWorkspacenotes(), selectedDate,this.selectedActivity.getId(),percentageColor, percentage,m.getId(), this.selectedActivity.getIntervationTime() );
         changeInterface(assignment,currentWindow);
     }
+    
+    public void changeToActivityEWO(JFrame currentWindow, String s0, String s1, String s2, String s3){
+        ActivityEWO a= new ActivityEWO(p, s0, s1, s2, s3);
+        changeInterface(a, currentWindow);
+    }
+    
+    public void changeToTicketList(JFrame currentWindow){
+        TicketList ticket= new TicketList(p, f);
+        changeInterface(ticket, currentWindow);
+    }
+    
     
     private void changeInterface(JFrame nextWindow, JFrame currentWindow){
         nextWindow.setVisible(true);

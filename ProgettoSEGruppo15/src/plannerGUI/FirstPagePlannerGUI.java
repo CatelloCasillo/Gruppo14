@@ -185,12 +185,14 @@ public class FirstPagePlannerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_operationButton3ActionPerformed
 
     private void operationButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton4ActionPerformed
-        TicketList view= new TicketList(p);
+       Navigator nav=Navigator.getInstance(p);
+       nav.changeToTicketList(this);
+        /* TicketList view= new TicketList(p);
         view.setVisible(true);
         view.pack();
         view.setLocationRelativeTo(null);
         view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
+        this.dispose();*/
     }//GEN-LAST:event_operationButton4ActionPerformed
 
     /**

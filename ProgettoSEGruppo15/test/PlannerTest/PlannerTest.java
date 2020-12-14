@@ -9,6 +9,7 @@ package PlannerTest;
 import PrimoPackege.Planner;
 import PrimoPackege.Site;
 import Repository.Repository;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -134,6 +135,18 @@ public class PlannerTest {
         assertTrue(p.getActivityList().size()==1 && p.getSiteList().size()==1);
     }
     @Test
+    public void testGetStringInFileWithErrorPath(){
+        Planner p= new Planner();
+        //String []c= p.getStringInFile(new File("\\src\\Tickets"));
+        assertNull(p.getStringInFile(new File("\\src\\Ticke")));
+    }
+    public void testGetStringInFileWithNoErrorPath(){
+        Planner p= new Planner();
+        //String []c= p.getStringInFile(new File("\\src\\Tickets"));
+        assertTrue((p.getStringInFile(new File("\\src\\Tickets"))).length >0);
+    }
+    
+    @Test
     public void testInsertActivityWithData() throws SQLException{
         this.insertSite();
         this.insertCompetence();
@@ -144,6 +157,8 @@ public class PlannerTest {
         String id=this.selectActivityId();
         assertTrue(p.getActivityList().size()==1 && id.equals("act005"));
     }
+    
+    
     @Test
     public void testUpdateActivityWithData() throws SQLException{
         this.insertSite();
