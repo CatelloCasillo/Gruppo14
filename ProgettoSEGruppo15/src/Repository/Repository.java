@@ -206,6 +206,28 @@ public class Repository extends RepositoryBase{
         }
         
     }
+      public String getWorkSpacenotes(ResultSet rst){
+          try {
+            connect();
+            String s= rst.getString("activityWorkspaceNotes");
+            closeConnection();
+            return s;
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+      }
+      public String getPlannedActivity(ResultSet rst){
+          try {
+            connect();
+            String s= rst.getString("PlannedActivity");
+            closeConnection();
+            return s;
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+      }
     public boolean insertNewMaintenanceActivity(String activityID,
                // String plannerID, String maintainerID, String procedureID,
                 String siteID,
@@ -213,14 +235,8 @@ public class Repository extends RepositoryBase{
                 boolean interruptibleActivity,
                 //String activityMaterials,
                 int activityWeekNumber,
-                String activityWorkspaceNotes,String activityTypology, String p){
+                String activityWorkspaceNotes,String activityTypology, String typeactivity){
         // c parameter is used to set the parameter "planned" in activity table in database
-        boolean c;
-        if("PLANNED".equals(p)){
-            c=true; 
-        }else{
-            c= false;
-        }
         StringBuilder temp = new StringBuilder();
         temp.append("insert into MaintenanceActivity(activityID, "
                 //+ "plannerID,maintainerID,procedureID,"
@@ -243,7 +259,7 @@ public class Repository extends RepositoryBase{
         temp.append(" ").append(activityWeekNumber).append(" ,");
         temp.append("'").append(activityWorkspaceNotes).append("',");
         temp.append("'").append(activityTypology).append("' ,");
-        temp.append(" ").append(c).append(" ");
+        temp.append(" '").append(typeactivity).append("' ");
         temp.append(");");
         
         //viewMaintenanceActivityTable();

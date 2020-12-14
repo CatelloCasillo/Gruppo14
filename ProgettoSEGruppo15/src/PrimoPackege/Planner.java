@@ -2,10 +2,10 @@ package PrimoPackege;
 
 
 import PrimoPackege.MaintanceActivity;
+import PrimoPackege.MaintanceActivityFactory.Category;
 import Repository.Repository;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -46,9 +46,9 @@ public class Planner {
     }
     
     //permette di creare un'attività, di aggiungerla alla lista e al database 
-    public boolean createActivity(String id, Site site, String typology, String activityDescription, int intervationTime, boolean interruptible, int week, String workspacenotes ){
-       MaintanceActivity a= new PlannedActivity(id, site, typology, activityDescription, intervationTime, interruptible, week, workspacenotes);
-       if(repository.insertNewMaintenanceActivity(a.getId(), a.getSite().getId(), a.getActivityDescription(), a.getIntervationTime(), a.isInterruptible(), a.getWeekNumber(), a.getWorkspacenotes(), a.getTypology(), a.getCategory().toString())){
+    public boolean createActivity(Category category, String id, Site site, String typology, String activityDescription, int intervationTime, boolean interruptible, int week, String workspacenotes,String  procedureID,String fileSMP, String maintainerID){
+       MaintanceActivity a= MaintanceActivityFactory.make(category, id, site, typology, activityDescription, intervationTime, interruptible, week, procedureID, fileSMP, maintainerID, workspacenotes);
+       if(repository.insertNewMaintenanceActivity(a.getId(), a.getSite().getId(), a.getActivityDescription(), a.getIntervationTime(), a.isInterruptible(), a.getWeekNumber(), a.getWorkspacenotes(), a.getTypology(),category.toString())){
             activityList.add(a);
             return true;
        }
@@ -57,6 +57,7 @@ public class Planner {
     
     private void initActivityList(){
         this.activityList = new ArrayList<>();
+        MaintanceActivityFactory.Category categoria;
         try {
             ResultSet rst = repository.getInformationOfMaintenanceActivity();
             while (rst.next()) {
@@ -70,14 +71,20 @@ public class Planner {
                 
                 String procedureID = repository.getProcedureID(rst);
                 String fileSMP = repository.getFileSMP(rst);
-                
+                String workspace= repository.getWorkSpacenotes(rst);
                 int weekNumber = repository.getActivityWeekNumber(rst);
                 int intervationTimeNumber = repository.getActivityInterventionTime(rst);
                 String typology = repository.getActivityTypology(rst);
                 String activityDescription = repository.getActivityDescription(rst);
                 boolean interruptible = repository.isInterruptibleActivity(rst);
                 String maintainerID=repository.getActivityMaintainerID(rst);
-                MaintanceActivity mainActivity= new PlannedActivity(id, site, typology, activityDescription, intervationTimeNumber, interruptible, weekNumber, procedureID, fileSMP, maintainerID);
+                String category= repository.getPlannedActivity(rst).toUpperCase();
+                if(category.equals("PLANNED")){
+                    categoria= MaintanceActivityFactory.Category.PLANNED;
+                }else {
+                     categoria= MaintanceActivityFactory.Category.EWO;
+                }
+                MaintanceActivity mainActivity= MaintanceActivityFactory.make(categoria, id, site, typology, activityDescription, intervationTimeNumber, interruptible, weekNumber, procedureID, fileSMP, maintainerID, workspace);
                 this.activityList.add(mainActivity);
            } 
         } catch (SQLException ex) {
@@ -164,7 +171,7 @@ public class Planner {
     private int getNumberActivityInWeek(int weekNumber){
         int numAct=0;
         for (int i=0; i<this.activityList.size(); i++){
-            PlannedActivity act=(PlannedActivity) this.activityList.get(i);
+            MaintanceActivity act= this.activityList.get(i);
             if(act.getWeekNumber() == weekNumber && act.getMaintainerID() == null)
                 numAct++;
         }
@@ -184,7 +191,7 @@ public class Planner {
         int j=0;
         boolean empty=true;
         for (int i=0; i<this.activityList.size();i++){
-            PlannedActivity act= (PlannedActivity)this.activityList.get(i);
+            MaintanceActivity act= this.activityList.get(i);
             if(act.getWeekNumber() == currentWeekNumber && act.getMaintainerID() == null){
                 
                 String id= act.getId();
@@ -197,11 +204,11 @@ public class Planner {
                 empty=false;
             }
         }
-        for(int k=0;k<2;k++){
-            for(int q=0;q<5;q++)
-                System.out.print(attrTable[k][q].toString()+", ");
-            System.out.println("");
-        }
+     //   for(int k=0;k<2;k++){
+       //     for(int q=0;q<5;q++)
+//                System.out.print(attrTable[k][q].toString()+", ");
+         //   System.out.println("");
+        //}
         if(!empty)
         return attrTable;
         else{
@@ -378,7 +385,7 @@ public class Planner {
         return false;
     }
     public void updateActivityToMaintainer(String activityId, String maintainerId){
-        PlannedActivity act =(PlannedActivity)this.getMaintanceActivity(activityId);
+        MaintanceActivity act =this.getMaintanceActivity(activityId);
         act.setMaintainerID(maintainerId);
     }
 }

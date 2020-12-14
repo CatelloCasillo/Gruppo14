@@ -6,6 +6,7 @@
 package plannerGUI;
 
 import Navigator.Navigator;
+import PrimoPackege.MaintanceActivityFactory;
 import PrimoPackege.Planner;
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -23,7 +24,8 @@ import java.util.ArrayList;
 public class ActivityEWO extends javax.swing.JFrame {
     Planner p;
     String id;
-    String site; 
+    String site;
+    String siteID;
     String typology; 
     String workspacenote;
     /**
@@ -34,15 +36,15 @@ public class ActivityEWO extends javax.swing.JFrame {
      * @param typology
      * @param workspacenote
      */
-    public ActivityEWO(Planner p, String id, String site, String typology, String workspacenote) {
+    public ActivityEWO(Planner p, String id,String siteID, String typology, String workspacenote) {
         this.p= p;
         this.id= id;
-        this.site= site;
+        this.siteID= siteID;
         this.typology= typology;
         this.workspacenote= workspacenote;        
         initComponents();
         this.setLocationRelativeTo(null);
-        activityInfoLabel1.setText(id+" - "+site+" - "+typology);
+        activityInfoLabel1.setText(id+" - "+(p.findSiteInList((siteID),p.getSiteList()).getArea().toString())+" "+ (p.findSiteInList((siteID),p.getSiteList()).getFactory().toString()) +" - "+typology);
         jTextArea1.setText(workspacenote);
     }
      public ActivityEWO() {
@@ -283,6 +285,8 @@ public class ActivityEWO extends javax.swing.JFrame {
     }//GEN-LAST:event_jList1MouseExited
 
     private void forwardButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forwardButton1ActionPerformed
+        p.createActivity(MaintanceActivityFactory.Category.EWO, id, p.findSiteInList((siteID),p.getSiteList()), typology, jTextArea2.getText(), Integer.parseInt(jTextArea3.getText()), false, Integer.parseInt(weekNumber1.getText()),  workspacenote, null, null, null);
+
         //System.out.println(jList1.getSelectedValuesList());
         /*
         EwoAssignmentGUI c= new EwoAssignmentGUI(p, site, id, typology, workspacenote, jList1.getSelectedValuesList());

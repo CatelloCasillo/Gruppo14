@@ -2,6 +2,7 @@ package plannerGUI;
 
 
 import Navigator.Navigator;
+import static PrimoPackege.MaintanceActivityFactory.Category.PLANNED;
 import PrimoPackege.Planner;
 import plannerGUI.FirstPagePlannerGUI;
 import java.awt.Color;
@@ -300,7 +301,7 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
 
     private void operationButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton3ActionPerformed
         if(verifData()){
-          p.createActivity(jTextFieldId1.getText(), p.findSiteInList(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()), p.getSiteList()) ,  jComboBoxTipo1.getItemAt(jComboBoxTipo1.getSelectedIndex()), jTextFieldDescription1.getText(), Integer.parseInt(jTextFieldTime1.getText()), jRadioButton3.isSelected(), Integer.parseInt(jTextFieldWeek1.getText()), jTextAreaWorkSpace1.getText());
+          p.createActivity(PLANNED, jTextFieldId1.getText(), p.findSiteInList(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()), p.getSiteList()) ,  jComboBoxTipo1.getItemAt(jComboBoxTipo1.getSelectedIndex()), jTextFieldDescription1.getText(), Integer.parseInt(jTextFieldTime1.getText()), jRadioButton3.isSelected(), Integer.parseInt(jTextFieldWeek1.getText()), jTextAreaWorkSpace1.getText(), null,null, null);
         JOptionPane.showMessageDialog(rootPane, "create successfully");
         clearField();}
     }//GEN-LAST:event_operationButton3ActionPerformed

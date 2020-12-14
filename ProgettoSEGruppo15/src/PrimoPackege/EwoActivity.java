@@ -7,17 +7,11 @@ package PrimoPackege;
 
 /**
  *
- * @author Gabriella
+ * @author User
  */
 public class EwoActivity extends MaintanceActivity {
     
-    public EwoActivity(String id, Site site, String typology, String activityDescription, int intervationTime, boolean interruptible, int weekNumber, String workspacenotes) {
-        super(id, site, typology, activityDescription, intervationTime, interruptible, weekNumber, workspacenotes); 
-    }
-    
-    public Category getCategory(){
-        return Category.EWO;
-    }
-    
-    
+    public EwoActivity(String id, Site site, String typology, String activityDescription, int intervationTime, boolean interruptible, int weekNumber,String procedureID, String fileSMP, String MaintainerID, String workspacenotes) {
+        super(id, site, typology, activityDescription, intervationTime, interruptible, weekNumber,procedureID,fileSMP,MaintainerID, workspacenotes); 
+}
 }

@@ -36,7 +36,7 @@ public class VerifyActivityGUI extends javax.swing.JFrame {
     Planner p;
     String id;
     String activityDescription;
-    File myfile;
+    //File myfile;
     Image icon= new ImageIcon("src\\image\\cartella.jpg").getImage();
     
     String workspacenotes;
@@ -267,13 +267,23 @@ public class VerifyActivityGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_forwardButton1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
-        myfile = new File(("src\\FileSmp").concat("\\").concat(p.getMaintanceActivity(id).getFileSMP().concat(".pdf")));
+
         try {
+            File myfile = new File(("src\\FileSmp").concat("\\").concat(p.getMaintanceActivity(id).getFileSMP().concat(".pdf")));
+            if(myfile== (null)){
+                JOptionPane.showMessageDialog(rootPane, "There are no pdf associated!", "Error Message", JOptionPane.ERROR_MESSAGE);
+            
+            }
+            else{
             Desktop.getDesktop().open(myfile);
+            }
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "There are no pdf associated!");
+            JOptionPane.showMessageDialog(rootPane, "There are no pdf associated!", "Error Message", JOptionPane.ERROR_MESSAGE);
+        } catch(NullPointerException ex){
+            JOptionPane.showMessageDialog(rootPane, "There are no pdf", "Error Message", JOptionPane.ERROR_MESSAGE);
+        
         }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

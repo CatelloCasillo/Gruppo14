@@ -83,6 +83,13 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         jTextFieldWeek.setText("");
     }
     
+    private boolean activityAssigned(){
+        for(int i=0; i<p.getActivityList().size(); i++){
+           if(p.getActivityList().get(i).getMaintainerID()!=null){
+               return true;
+           }
+        }return false;
+    }
     
     private void populateTable(){
         dtm.setRowCount(0);
@@ -90,6 +97,9 @@ public class ViewActivityGUI extends javax.swing.JFrame {
            Object[] objs = {p.getActivityList().get(i).getId(),p.getActivityList().get(i).getSite().getId().trim()+':' + p.getActivityList().get(i).getSite().getArea()+ '-'+ p.getActivityList().get(i).getSite().getFactory()  , p.getActivityList().get(i).getTypology(),
                p.getActivityList().get(i).getActivityDescription(), p.getActivityList().get(i).getIntervationTime(), p.getActivityList().get(i).isInterruptible(),
                p.getActivityList().get(i).getWeekNumber()} ;
+           if(p.getActivityList().get(i).getMaintainerID()!=null){
+               disabledField();
+           }
            dtm.addRow(objs);
     }
     }
@@ -355,6 +365,10 @@ public class ViewActivityGUI extends javax.swing.JFrame {
 
     private void operationButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton2ActionPerformed
         //if( jTable1.isRowSelected(row)){
+        if(activityAssigned()){
+            disabledField();
+        }
+        else{
         enabledField();
         String updateSite= jComboBox2.getItemAt(jComboBox2.getSelectedIndex());
         String updateTypology = jComboBoxTyp.getItemAt(jComboBoxTyp.getSelectedIndex());
@@ -372,7 +386,7 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         */
         p.updateActivity(row, jTextFieldId.getText(), updateSite, updateTypology, updateDescription, updateTime, updateInterruptible, updateWeek);
         populateTable();
-        
+        }
     }//GEN-LAST:event_operationButton2ActionPerformed
 
     private void operationButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton3ActionPerformed
