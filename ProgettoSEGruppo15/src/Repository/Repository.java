@@ -11,12 +11,8 @@ package Repository;
  * @author Enrico
  */
 
-import java.sql.Statement;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -206,11 +202,11 @@ public class Repository extends RepositoryBase{
                 //String activityMaterials,
                 int activityWeekNumber,
                 String activityWorkspaceNotes,String activityTypology, String p){
-        // c parameter is used to set the parameter "planned" in activity tale in database
+        // c parameter is used to set the parameter "planned" in activity table in database
         boolean c;
         if("PLANNED".equals(p)){
-                  c=true; 
-                }else{
+            c=true; 
+        }else{
             c= false;
         }
         StringBuilder temp = new StringBuilder();
@@ -406,9 +402,9 @@ public class Repository extends RepositoryBase{
       
         StringBuilder temp = new StringBuilder();
         temp.append("select m.maintainerID,ma.TimeSlot1,ma.TimeSlot2,ma.TimeSlot3,ma.TimeSlot4,ma.TimeSlot5,ma.TimeSlot6,ma.TimeSlot7,ma.TimeSlot8\n" +
-                    " from MaintainerAvailability as ma\n" +
+                    " from MaintainerAvailabilityCurrentWeek as ma\n" +
                     " full join Maintainer as m on (m.maintainerID=ma.maintainerID )\n" +
-                    " where (ma.day='").append(day).append("' ");
+                    " where ma.day='").append(day).append("' ");
 	temp.append(" order by m.maintainerID; ");
         
         try {
@@ -434,7 +430,7 @@ public class Repository extends RepositoryBase{
         }
       
         StringBuilder temp = new StringBuilder();
-        temp.append("sselect ma.maintainerID,ma.day,ma.TimeSlot1,ma.TimeSlot2,ma.TimeSlot3,ma.TimeSlot4,ma.TimeSlot5,ma.TimeSlot6,ma.TimeSlot7,ma.TimeSlot8\n" +
+        temp.append("select ma.maintainerID,ma.day,ma.TimeSlot1,ma.TimeSlot2,ma.TimeSlot3,ma.TimeSlot4,ma.TimeSlot5,ma.TimeSlot6,ma.TimeSlot7,ma.TimeSlot8\n" +
                     " from MaintainerAvailabilityCurrentWeek as ma\n" +
                     " where ma.day= '").append(day).append("' and ma.maintainerID= '").append(mainteinerID).append("';");
         try {
@@ -450,7 +446,7 @@ public class Repository extends RepositoryBase{
     }
     public ResultSet getWeekAvailability(String mainteinerID){
         StringBuilder temp = new StringBuilder();
-        temp.append("sselect ma.maintainerID,ma.day,ma.TimeSlot1,ma.TimeSlot2,ma.TimeSlot3,ma.TimeSlot4,ma.TimeSlot5,ma.TimeSlot6,ma.TimeSlot7,ma.TimeSlot8\n" +
+        temp.append("select ma.maintainerID,ma.day,ma.TimeSlot1,ma.TimeSlot2,ma.TimeSlot3,ma.TimeSlot4,ma.TimeSlot5,ma.TimeSlot6,ma.TimeSlot7,ma.TimeSlot8\n" +
                     " from MaintainerAvailabilityCurrentWeek as ma\n" +
                     " where ma.maintainerID= '").append(mainteinerID).append("';");
         try {
@@ -481,9 +477,12 @@ public class Repository extends RepositoryBase{
         
          try {
             connect();
-            stm.executeUpdate(temp.toString());
+            if(stm.executeUpdate(temp.toString())!=0){
+                closeConnection();
+                return true;
+            }
             closeConnection();
-            return true;
+            return false;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -506,9 +505,12 @@ public class Repository extends RepositoryBase{
         
          try {
             connect();
-            stm.executeUpdate(temp.toString());
+            if(stm.executeUpdate(temp.toString())!=0){
+                closeConnection();
+                return true;
+            }
             closeConnection();
-            return true;
+            return false;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -809,9 +811,12 @@ public class Repository extends RepositoryBase{
         temp1.append(" where activityid = ").append(" '").append(activityID).append(" ';");
         try {
             connect();
-            stm.executeUpdate(temp1.toString());
+            if(stm.executeUpdate(temp1.toString())!=0){
+                closeConnection();
+                return true;
+            }
             closeConnection();
-            return true;
+            return false;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return false;
