@@ -19,6 +19,7 @@ import static java.lang.Integer.parseInt;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -45,6 +46,9 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
     private boolean cleaned;
     private String selectedDayOfWeek;
     private ArrayList<Integer> numericSlots;
+    private ArrayList <Integer>tempNumericSlots;
+    private int [] actFractTime;
+    private int codeError;
     
     /**
      * Creates new form AssignActivityGUI
@@ -69,6 +73,69 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
             return cell;
         }
     }
+    private String indexConverter(int index){
+        switch(index){
+            case 0: return "8:00 - 9:00";
+            case 1: return "9:00 - 10:00";
+            case 2: return "10:00 - 11:00";
+            case 3: return "11:00 - 12:00";
+            case 4: return "12:00 - 13:00";
+            case 5: return "14:00 - 15:00";
+            case 6: return "15:00 - 16:00";
+            case 7: return "16:00 - 17:00";
+            default: return "";
+        }
+    }
+    
+    private void calculateAssignment(){
+        int [] selectedIndex={};
+        String output=new String();
+        selectedIndex =this.jTable1.getSelectedColumns();
+        int remainigTime=0;
+        boolean validSelection=false;
+        tempNumericSlots = new ArrayList<>();
+        tempNumericSlots.addAll(numericSlots);
+        for(int index : selectedIndex){
+            if(index>1){
+                remainigTime+=tempNumericSlots.get(index-2);
+                validSelection=true;
+            }  
+        }
+        if(!validSelection){
+            this.jTextArea1.setText("Invalid Selection");
+            codeError = 1;
+            return;
+        }
+        if(remainigTime < this.intervetionTime){
+            this.jTextArea1.setText("Invalid Selection");
+            codeError = 2;
+            return;
+        }
+        int timeToAssing=this.intervetionTime;
+        this.actFractTime=new int[8];
+        String selectionInfo = "The activity will be split as the following fashon:\n";
+        for(int index: selectedIndex){
+            if(tempNumericSlots.get(index-2)>=timeToAssing){
+            tempNumericSlots.set(index-2,tempNumericSlots.get(index-2) - timeToAssing);
+            actFractTime[index-2]=timeToAssing;
+            System.out.println(tempNumericSlots);
+            String interval=indexConverter(index-2);
+            selectionInfo+=interval+": "+timeToAssing+" min\n";
+            for(int j=0;j<8;j++)
+                System.out.print(actFractTime[j]+", ");
+            break;
+            }
+            else{
+                timeToAssing-=tempNumericSlots.get(index-2);
+                actFractTime[index-2]=tempNumericSlots.get(index-2);
+                String interval=indexConverter(index-2);
+                selectionInfo+=interval+": "+ tempNumericSlots.get(index-2)+" min\n";
+                tempNumericSlots.set(index-2, 0);    
+            }
+        }
+        this.jTextArea1.setText(selectionInfo);
+        codeError=-1;
+    }
     
     public ActivityAssignmentGUI(Planner p, String maintenerName,String skillCompliance,String selectedDayWeek,String activityInfo, String notes,LocalDate selectedDate, String selectedActvity, Color percentageColor, String percentage, String selectedMaintainerId, int estimatedActivityTime) {
         this.selectedActvity=selectedActvity;
@@ -80,20 +147,23 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
         this.maintainerName=maintenerName;
         this.skillCompliance=skillCompliance;
         this.selectedMaintainer = selectedMaintainerId;
+        this.actFractTime=new int[8];
+        this.codeError=0;
         initComponents();
         this.setLocationRelativeTo(null);
         jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             @Override
             public void valueChanged(ListSelectionEvent e) {
-        ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-        int [] selectedIndex={};
-        String output=new String();
-        if((!e.getValueIsAdjusting()) && (!ActivityAssignmentGUI.this.cleaned)){
-                selectedIndex = ActivityAssignmentGUI.this.jTable1.getSelectedColumns();
-                for(int index : selectedIndex)
-                    output+=index+", ";
-                //System.out.println(output);
-        }
+                ListSelectionModel lsm = (ListSelectionModel)e.getSource();
+                int [] selectedIndex={};
+                String output=new String();
+                if((!e.getValueIsAdjusting()) && (!ActivityAssignmentGUI.this.cleaned)){
+                        selectedIndex = ActivityAssignmentGUI.this.jTable1.getSelectedColumns();
+                        for(int index : selectedIndex)
+                            output+=index+", ";
+                        //System.out.println(output);
+                        calculateAssignment();
+                }
         if(ActivityAssignmentGUI.this.cleaned)
             ActivityAssignmentGUI.this.cleaned=false;
                 
@@ -139,6 +209,8 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
         closeButton1 = new CommonComponents.CloseButton();
         minimizeButton1 = new CommonComponents.MinimizeButton();
         operationButton1 = new CommonComponents.OperationButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -251,6 +323,11 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
             }
         });
 
+        jTextArea1.setEditable(false);
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane3.setViewportView(jTextArea1);
+
         javax.swing.GroupLayout panelBase1Layout = new javax.swing.GroupLayout(panelBase1);
         panelBase1.setLayout(panelBase1Layout);
         panelBase1Layout.setHorizontalGroup(
@@ -263,15 +340,16 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
                             .addComponent(labelLight1, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
                             .addComponent(jScrollPane2)
                             .addComponent(operationButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBase1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                                .addComponent(forwardButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(forwardButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33))
                             .addGroup(panelBase1Layout.createSequentialGroup()
+                                .addComponent(forwardButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(forwardButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
+                            .addGroup(panelBase1Layout.createSequentialGroup()
                                 .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
                                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE))
@@ -287,7 +365,7 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
                         .addGap(26, 26, 26)
                         .addComponent(activtyAssign1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(45, 45, 45)
-                        .addComponent(activityInfoLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(activityInfoLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBase1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -301,7 +379,7 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
                 .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(closeButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(minimizeButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBase1Layout.createSequentialGroup()
                         .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -323,15 +401,16 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBase1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(forwardButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(forwardButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(panelBase1Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(operationButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(operationButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelBase1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(forwardButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+                            .addComponent(forwardButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
 
@@ -347,7 +426,7 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelBase1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 20, Short.MAX_VALUE))
         );
 
         pack();
@@ -359,60 +438,34 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
 
     private void forwardButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forwardButton1ActionPerformed
         //String [] fraction= content.split(" ");
-        int [] selectedIndex={};
-        String output=new String();
-        selectedIndex =this.jTable1.getSelectedColumns();
-        int remainigTime=0;
-        int [] actFractTime = {0, 0, 0, 0, 0, 0, 0, 0};
-        boolean validSelection=false;
+        
         JPanel panel=new JPanel();
         panel.setOpaque(true);
         panel.setBackground(new Color(248,148,6));
-        for(int index : selectedIndex){
-            if(index>1){
-                remainigTime+=this.numericSlots.get(index-2);
-                validSelection=true;
-            }  
+        if(codeError==1){
+            JOptionPane.showMessageDialog(panel,  "You must select the cells that contain time ","Invalid Selection", JOptionPane.ERROR_MESSAGE);
         }
-        if(!validSelection){
-            JOptionPane.showMessageDialog(panel,  "Devi selezionare le caselle coi minuti","Selezione non valida", JOptionPane.ERROR_MESSAGE);
-            return;
+        if(codeError==2){
+            JOptionPane.showMessageDialog(panel,  "Not enough time","Invalid Selection", JOptionPane.ERROR_MESSAGE);
         }
-        if(remainigTime < this.intervetionTime){
-            JOptionPane.showMessageDialog(panel,  "Non c'è abbastanza tempo rimanente","Selezione non valida", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        int timeToAssing=this.intervetionTime;
-        for(int index: selectedIndex){
-            if(numericSlots.get(index-2)>=timeToAssing){
-            this.numericSlots.set(index-2,numericSlots.get(index-2) - timeToAssing);
-            actFractTime[index-2]=timeToAssing;
-            System.out.println(this.numericSlots);
-            for(int j=0;j<8;j++)
-                System.out.print(actFractTime[j]+", ");
-            break;
+        if(codeError==-1){
+            boolean okOp1=planner.updateMaintainerAvailability(this.selectedMaintainer, this.selectedDayOfWeek, this.tempNumericSlots);
+            boolean okOp2=planner.assignActivityFraction(this.selectedActvity, this.selectedMaintainer, this.selectedDayOfWeek, parseInt(this.weekNumber1.getText().trim()), actFractTime);
+            if(okOp1 && okOp2){
+                planner.updateActivityToMaintainer(this.selectedActvity, this.selectedMaintainer);
+                JOptionPane.showMessageDialog(panel,  "Now you will return to select other actvity","Activity assigned succefully", JOptionPane.INFORMATION_MESSAGE);
+                Navigator nav = Navigator.getInstance(planner);
+                nav.changeToSelectActivityWindow(this);
             }
-            else{
-                timeToAssing-=this.numericSlots.get(index-2);
-                this.numericSlots.set(index-2, 0);
-                actFractTime[index-2]=60;
-            }
+            else
+                 JOptionPane.showMessageDialog(panel,  "Operazione sul repository non riusciuta","Errore", JOptionPane.ERROR_MESSAGE);
         }
-        boolean okOp1=planner.updateMaintainerAvailability(this.selectedMaintainer, this.selectedDayOfWeek, this.numericSlots);
-        boolean okOp2=planner.assignActivityFraction(this.selectedActvity, this.selectedMaintainer, this.selectedDayOfWeek, parseInt(this.weekNumber1.getText().trim()), actFractTime);
-        if(okOp1 && okOp2){
-        planner.updateActivityToMaintainer(this.selectedActvity, this.selectedMaintainer);
-        JOptionPane.showMessageDialog(panel,  "Tornerai a pianificare le attività","Modifica effettuata", JOptionPane.INFORMATION_MESSAGE);
-        Navigator nav = Navigator.getInstance(planner);
-        nav.changeToSelectActivityWindow(this);
-        }
-        else
-             JOptionPane.showMessageDialog(panel,  "Operazione sul repository non riusciuta","Errore", JOptionPane.ERROR_MESSAGE);
-        
     }//GEN-LAST:event_forwardButton1ActionPerformed
 
     private void forwardButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forwardButton2ActionPerformed
         this.cleaned=true;
+        this.codeError=0;
+        this.jTextArea1.setText("");
         this.jTable1.getSelectionModel().clearSelection();
     }//GEN-LAST:event_forwardButton2ActionPerformed
 
@@ -474,7 +527,9 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextPane jTextPane1;
     private CommonComponents.LabelForWeekDay labelForWeekDay1;
     private CommonComponents.LabelForWeekNumber labelForWeekNumber1;
