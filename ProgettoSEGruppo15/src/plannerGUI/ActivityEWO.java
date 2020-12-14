@@ -37,6 +37,7 @@ public class ActivityEWO extends javax.swing.JFrame {
      * @param workspacenote
      */
     public ActivityEWO(Planner p, String id,String siteID, String typology, String workspacenote) {
+        
         this.p= p;
         this.id= id;
         this.siteID= siteID;
