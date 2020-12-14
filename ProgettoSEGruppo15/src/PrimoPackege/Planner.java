@@ -189,11 +189,9 @@ public class Planner {
         final int numAttr=4;
         Object attrTable[][]= new Object[numRighe][];
         int j=0;
-        boolean empty=true;
         for (int i=0; i<this.activityList.size();i++){
             MaintanceActivity act= this.activityList.get(i);
             if(act.getWeekNumber() == currentWeekNumber && act.getMaintainerID() == null){
-                
                 String id= act.getId();
                 Site site= act.getSite();
                 String area= site.getArea();
@@ -201,20 +199,19 @@ public class Planner {
                 String type= act.getTypology();
                 String time= ""+act.getIntervationTime();
                 attrTable[j++]=new Object[]{id,area+" "+factory,type,time,new JButton("Select")};
-                empty=false;
+                
             }
         }
-     //   for(int k=0;k<2;k++){
-       //     for(int q=0;q<5;q++)
-//                System.out.print(attrTable[k][q].toString()+", ");
-         //   System.out.println("");
-        //}
-        if(!empty)
-        return attrTable;
-        else{
-            Object ris [][]={{}};
-            return ris;
+        /*for(int k=0;k<2;k++){
+            for(int q=0;q<5;q++)
+                System.out.print(attrTable[k][q].toString()+", ");
+            System.out.println("");
+        }*/
+        if(numRighe==0){
+            attrTable=new Object[1][];
+            attrTable[0] = new Object[]{"","","","",""};
         }
+        return attrTable;
         
     }
     
@@ -340,11 +337,13 @@ public class Planner {
         }
         String days[] = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
         Object[][] AvailabilityWeekTable= new Object[maintainersNumber][];
-        ArrayList<String>WeekAvailability = new ArrayList<>();
+        
         for(int i=0;i<maintainersNumber;i++){
             Maintainer m=maintainers.get(i);
+            ArrayList<String>WeekAvailability = new ArrayList<>();
             for(String day : days)
                 WeekAvailability.add(m.getDayAvailability(day));
+            System.out.println(m.getName()+": "+WeekAvailability);
             AvailabilityWeekTable[i] = new Object[]{m.getName(),skillCompliance(selectedActvityId, m.getId()), WeekAvailability.get(0), WeekAvailability.get(1), WeekAvailability.get(2), WeekAvailability.get(3), WeekAvailability.get(4), WeekAvailability.get(5), WeekAvailability.get(6)};
         }
         return AvailabilityWeekTable;
