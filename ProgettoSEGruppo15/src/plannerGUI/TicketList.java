@@ -113,6 +113,7 @@ public class TicketList extends javax.swing.JFrame{
             closeButton2 = new CommonComponents.CloseButton();
             operationButton1 = new CommonComponents.OperationButton();
             jLabel1 = new javax.swing.JLabel();
+            operationButton2 = new CommonComponents.OperationButton();
 
             setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
             setBackground(new java.awt.Color(248, 148, 6));
@@ -150,6 +151,13 @@ public class TicketList extends javax.swing.JFrame{
             jLabel1.setFont(new java.awt.Font("Berlin Sans FB", 0, 48)); // NOI18N
             jLabel1.setText("Tickets");
 
+            operationButton2.setText("back to Homepage");
+            operationButton2.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    operationButton2ActionPerformed(evt);
+                }
+            });
+
             javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
             jPanel1.setLayout(jPanel1Layout);
             jPanel1Layout.setHorizontalGroup(
@@ -162,10 +170,15 @@ public class TicketList extends javax.swing.JFrame{
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(closeButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(operationButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(42, 42, 42)
+                            .addComponent(operationButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(operationButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGap(78, 78, 78))
             );
             jPanel1Layout.setVerticalGroup(
@@ -180,9 +193,11 @@ public class TicketList extends javax.swing.JFrame{
                             .addComponent(jLabel1)))
                     .addGap(31, 31, 31)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(operationButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 12, Short.MAX_VALUE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(operationButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(operationButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(0, 13, Short.MAX_VALUE))
             );
 
             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -215,8 +230,9 @@ public class TicketList extends javax.swing.JFrame{
                 JOptionPane.showMessageDialog(rootPane, "Devi selezionare un Ticket!");
         }
         else{
+             //System.out.println(s[1]);
         Navigator nav=Navigator.getInstance(p);
-        nav.changeToActivityEWO(this,s[0], s[1], s[2], s[3]);    
+        nav.changeToActivityEWO(this, s[0], s[1], s[2], s[3]);    
         /*     
         ActivityEWO a= new ActivityEWO(p, s[0], s[1], s[2], s[3]);
         a.setVisible(true);
@@ -226,6 +242,11 @@ public class TicketList extends javax.swing.JFrame{
         this.dispose();*/
         }
     }//GEN-LAST:event_operationButton1ActionPerformed
+
+    private void operationButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton2ActionPerformed
+         Navigator nav=Navigator.getInstance(p);
+        nav.changeToWelcomeWindow(this);
+    }//GEN-LAST:event_operationButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -271,5 +292,6 @@ public class TicketList extends javax.swing.JFrame{
     private javax.swing.JList list;
     private CommonComponents.MinimizeButton minimizeButton2;
     private CommonComponents.OperationButton operationButton1;
+    private CommonComponents.OperationButton operationButton2;
     // End of variables declaration//GEN-END:variables
 }

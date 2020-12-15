@@ -6,6 +6,8 @@ package PlannerTest;
  * and open the template in the editor.
  */
 
+import PrimoPackege.MaintanceActivityFactory;
+import PrimoPackege.MaintanceActivityFactory.Category;
 import PrimoPackege.Planner;
 import PrimoPackege.Site;
 import Repository.Repository;
@@ -58,10 +60,10 @@ public class PlannerTest {
             Logger.getLogger(PlannerTest.class.getName()).log(Level.SEVERE, null, ex);
         } 
     }
-    public void insertNewMaintenanceActivity(String id,String site, String type) throws SQLException{
+    public void insertNewMaintenanceActivity(String id,String site, String type, String category) throws SQLException{
          stm.executeUpdate("insert into MaintenanceActivity(activityID,activityDescription,activityInterventionTime,\n" +
 "								interruptibleActivity,activityWeekNumber,activityTypology,siteID,procedureID, plannedActivity)\n" +
-"values ('"+id+"','descrizioneAttivita',120,true,22,'"+type+"','"+site+"','proc01',true);");
+"values ('"+id+"','descrizioneAttivita',120,true,22,'"+type+"','"+site+"','proc01',true,'"+category+"');");
     }
     private void insertSite(String id) throws SQLException{
         stm.executeUpdate("insert into Site values ('"+id+"','factory1','area1')");
@@ -120,7 +122,7 @@ public class PlannerTest {
         this.insertCompetence();
         this.insertProcedure();
         this.insertCompetenceToProcedure();
-        this.insertNewMaintenanceActivity("act005","site01","eletrical");
+        this.insertNewMaintenanceActivity("act005","site01","eletrical","PLANNED");
         Planner p=new Planner();
         assertTrue(p.getActivityList().get(0).getId().equals("act005") && p.getSiteList().get(0).getId().equals("site01"));
     }
@@ -130,7 +132,7 @@ public class PlannerTest {
     @Test
     public void testInsertActvityNoData(){
        Planner p=new Planner();
-       assertFalse(p.createActivity("act005", new Site("site01","Fisciano","Molding"), "Eletrical", "descrizioneAttività" , 120, true, 5, "Informazioni aggiuntive"));
+       assertFalse(p.createActivity(Category.PLANNED,"act005", new Site("site01","Fisciano","Molding"), "Eletrical", "descrizioneAttività" , 120, true, 5, "Informazioni aggiuntive"));
     }
     //Test:  Inserimento di un'attività nel database e nella lista mantenuta dal planner
     //       quando sono già presenti il sito e la tipologia.
@@ -143,7 +145,7 @@ public class PlannerTest {
         this.insertCompetenceToProcedure();
         this.insertTypology("Eletrical");
         Planner p=new Planner();
-        p.createActivity("act005", new Site("site01", "Factory", "area"), "Eletrical", "Descrizione", 120, true, 20, "Aggiuntivo");
+        p.createActivity(Category.PLANNED,"act005", new Site("site01", "Factory", "area"), "Eletrical", "Descrizione", 120, true, 20, "Aggiuntivo");
         ResultSet rst=stm.executeQuery("select activityid from MaintenanceActivity where activityid='act005'");
         rst.next();
         String id = this.getActivityId(rst);
@@ -159,7 +161,7 @@ public class PlannerTest {
         this.insertCompetenceToProcedure();
         this.insertTypology("Eletrical");
         Planner p=new Planner();
-        assertFalse(p.createActivity("act005", new Site("site02", "Factory", "area"), "Eletrical", "Descrizione", 120, true, 20, "Aggiuntivo"));
+        assertFalse(p.createActivity(Category.PLANNED,"act005", new Site("site02", "Factory", "area"), "Eletrical", "Descrizione", 120, true, 20, "Aggiuntivo"));
     }
     //Test: Inserimento di un attività con il sito non presente nel db
     //Risultato atteso: Fallimento dell'operazione
@@ -171,7 +173,7 @@ public class PlannerTest {
         this.insertCompetenceToProcedure();
         this.insertTypology("Eletrical");
         Planner p=new Planner();
-        assertFalse(p.createActivity("act005", new Site("site01", "Factory", "area"), "mechanical", "Descrizione", 120, true, 20, "Aggiuntivo"));
+        assertFalse(p.createActivity(Category.PLANNED,"act005", new Site("site01", "Factory", "area"), "mechanical", "Descrizione", 120, true, 20, "Aggiuntivo"));
     }
     //Test: Aggiornamento di un attività di manutenzione con il database vuoto
     //Risultato atteso: Fallimento dell'operazione(in questo caso il metodo restituisce false).
@@ -547,16 +549,33 @@ public class PlannerTest {
     public void testGetStringInFileWithErrorPath(){
         Planner p= new Planner();
         //String []c= p.getStringInFile(new File("\\src\\Tickets"));
-        assertNull(p.getStringInFile(new File("\\src\\Ticke")));
+        assertNull(p.getStringInFile(new File("src\\Ticke")));
     }
     //Test:
     //Risultato atteso:
     public void testGetStringInFileWithNoErrorPath(){
         Planner p= new Planner();
         //String []c= p.getStringInFile(new File("\\src\\Tickets"));
-        assertTrue((p.getStringInFile(new File("\\src\\Tickets"))).length >0);
+        assertTrue((p.getStringInFile(new File("src\\Tickets\\ticket1.txt"))).length >0);
     }
     
+    @Test
+    public void testGetStringInFile(){
+        Planner p= new Planner();
+        assertEquals("EWO001", p.getStringInFile(new File("src\\Tickets\\ticket1.txt"))[0]);
+    }
+    /*
+    @Test
+    public void testInsertActivityWithData() throws SQLException{
+        this.insertSite();
+        this.insertCompetence();
+        this.insertProcedure();
+        this.insertCompetenceToProcedure();
+        Planner p=new Planner();
+        p.createActivity("act005", new Site("site01", "Factory", "area"), "Eletrical", "Descrizione", 120, true, 20, "Aggiuntivo");
+        String id=this.selectActivityId();
+        assertTrue(p.getActivityList().size()==1 && id.equals("act005"));
+    }*/
     
     
     
@@ -566,7 +585,7 @@ public class PlannerTest {
     
     //Test:
     //Risultato atteso:
-    @Test
+    /*@Test
     public void testGetCompetenceWithData() throws SQLException{
         this.insertSite();
         this.insertCompetence();
