@@ -19,7 +19,6 @@ public class DemoAdminIsertNewMaintainer {
        //insert new maintainer as the example:
        //r.insertNewMaintainer("mant44", "pluto", "1234");
        
-       
        r.insertNewMaintainer("mant01", "pluto", "1234");
        r.insertNewMaintainer("mant02", "pippo", "1234");
        r.insertNewMaintainer("mant03", "paperino", "1234");

@@ -867,5 +867,129 @@ public class Repository extends RepositoryBase{
             return false;
         }
     }
+    //funzione che ritorna un resultSet con tutti gli id delle attivita presenti in quello slot che specifica l'orario
+    public ResultSet getActivitiesOfTimeSlot(String maintainerId, String day, int weeknumber, int timeSlotIndex){
+        if(timeSlotIndex>9 || timeSlotIndex<0)
+            return null;
+        if(weeknumber>53 || weeknumber<0)
+            return null;
+        String query;
+        query=String.format("select activityId from ActivityTimeDivision\n" +
+                        "where maintainerid='%s'and day='%s' and weekNumber=%d and slotassigned%d>0;",maintainerId,day,weeknumber,timeSlotIndex);
+        
+        try {
+            connect();
+            ResultSet rst =stm.executeQuery(query);
+            closeConnection();
+            return rst;
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    //funzioni che ritornano il tempo distribuito nei vari intervalli temporali di un'attivita assegnata ad un maintainer
+    private ResultSet getAssignedTimeSlotOfActivity(String activityID){
+        String query;
+        query=String.format("select SlotAssigned1, SlotAssigned2, SlotAssigned3, SlotAssigned4, SlotAssigned5, SlotAssigned6, SlotAssigned7, SlotAssigned8\n" +
+                            "from ActivityTimeDivision \n" +
+                            "where activityId='%s';",activityID);
+        
+        try {
+            connect();
+            ResultSet rst = stm.executeQuery(query);
+            closeConnection();
+            return rst;
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    public int[] getAssignedTimeslotsOfActivity(String activityID){
+        ResultSet rst=getAssignedTimeSlotOfActivity(activityID);
+        String base= "SlotAssigned";
+        int timeVector[]=new int[8];
+        try {
+        rst.next();
+        for(int i=1;i<=8;i++)   
+                timeVector[i-1]=rst.getInt(""+base+i);
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return new int[8];
+        }
+        return timeVector;
+    }
+    //----------------------------------------------------------------
+    private ResultSet getActivityTimeDivision(String activityID){
+        String query;
+        query=String.format("select * from ActivityTimeDivision\n" +
+                            "where activityId='%s';",activityID);
+        
+        try {
+            connect();
+            ResultSet rst =stm.executeQuery(query);
+            closeConnection();
+            return rst;
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    public boolean deleteAssignedActivity(String activityID){
+        try {
+            if(activityID.length()>6){
+                System.err.println("Activity id ERROR: length exceeded");
+                return false;
+            }
+            //array contenente il tempo assegnato all'attivita nei vari slot temporali
+            int timeActivity[]= getAssignedTimeslotsOfActivity(activityID);
+            
+            ResultSet rst1=getActivityTimeDivision(activityID);
+            rst1.next();
+            String day=getDay(rst1);
+            String maintainerID= getMaintainerID(rst1);
+            
+            ResultSet rst2=getDayAvailability(maintainerID,day);
+            
+            //indica la disponiblita del maintainer in uno specifico giorno separando le fascie orarie tramite l'indice dell'array
+            int timeMaintainer[]=getTimeslots(rst2);
+            
+            int[] newMaintainerAvailability = new int[8];
+            //calcolo della nuova disponibilita del maintainer tenendo conto che un'attivita a lui assegnata è stata rimossa
+            for(int i=0;i<8; i++)
+                newMaintainerAvailability[i] = timeActivity[i]+timeMaintainer[i];
+            
+            
+            
+            
+            //toDo fare in un unica query con la sql trasaction
+            if(deleteMaintenanceActivity(activityID)) {
+                updateMaintainerAvailabilityCurrentWeek(maintainerID,day,
+                        newMaintainerAvailability[0],newMaintainerAvailability[1],newMaintainerAvailability[2],newMaintainerAvailability[3],
+                        newMaintainerAvailability[4],newMaintainerAvailability[5],newMaintainerAvailability[6],newMaintainerAvailability[7]);
+                return true;
+            }else
+                return false;
+            /*
+            connect();
+            //SQL transaction
+            conn.setAutoCommit(false);
+            stm.executeUpdate(temp.toString());
+            for(int i=0;i<7;i++){
+            insertNewMaintainerAvailability(id,days[i]);
+            }
+            conn.commit();
+            conn.setAutoCommit(true);
+            closeConnection();
+            return true;
+            */
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+    }
 }
 

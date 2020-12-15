@@ -197,11 +197,13 @@ public class Planner {
                 empty=false;
             }
         }
+        /*
         for(int k=0;k<2;k++){
             for(int q=0;q<5;q++)
                 System.out.print(attrTable[k][q].toString()+", ");
             System.out.println("");
         }
+        */
         if(!empty)
         return attrTable;
         else{
