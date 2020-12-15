@@ -30,17 +30,17 @@ import javax.swing.JButton;
  * @author Gabriella
  */
 public class Planner {
-  MaintanceActivity activity;
+  //private MaintanceActivity activity;
   //Repository repository;
-  RepositoryActivityInterface repoActivity;
-  RepositoryAvailabilityInterface repoAvailability;
-  RepositoryMaintainerInterface repoMaintainer;
-  RepositorySiteInterface repoSite;
-  RepositoryUtilities repoUtilities;
+  private RepositoryActivityInterface repoActivity;
+  private RepositoryAvailabilityInterface repoAvailability;
+  private RepositoryMaintainerInterface repoMaintainer;
+  private RepositorySiteInterface repoSite;
+  private RepositoryUtilities repoUtilities;
   
-  ArrayList<MaintanceActivity> activityList;
-  ArrayList<Site> siteList;
-  ArrayList<Maintainer> maintainers; 
+  private ArrayList<MaintanceActivity> activityList;
+  private ArrayList<Site> siteList;
+  private ArrayList<Maintainer> maintainers; 
 
 
 
@@ -203,6 +203,7 @@ public class Planner {
         for (int i=0; i<this.activityList.size();i++){
             MaintanceActivity act= this.activityList.get(i);
             if(act.getWeekNumber() == currentWeekNumber && act.getMaintainerID() == null){
+                if(act.getCategory().equals(MaintanceActivityFactory.Category.PLANNED)){
                 String id= act.getId();
                 Site site= act.getSite();
                 String area= site.getArea();
@@ -210,7 +211,7 @@ public class Planner {
                 String type= act.getTypology();
                 String time= ""+act.getIntervationTime();
                 attrTable[j++]=new Object[]{id,area+" "+factory,type,time,new JButton("Select")};
-            } else {
+            } }else {
             }
         }
         /*for(int k=0;k<2;k++){

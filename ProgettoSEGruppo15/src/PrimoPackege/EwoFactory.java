@@ -5,6 +5,8 @@
  */
 package PrimoPackege;
 
+import PrimoPackege.MaintanceActivityFactory.Category;
+
 /**
  *
  * @author User
@@ -14,7 +16,6 @@ public class EwoFactory extends MaintanceActivityFactory {
 
     @Override
     protected MaintanceActivity selectMaintanceActivity(Category category, String id, Site site, String typology, String activityDescription, int intervationTime, boolean interruptible, int week, String procedureID, String fileSMP, String maintainerID, String workspace) {
-     return new EwoActivity(id, site, typology, activityDescription, intervationTime, interruptible, week, procedureID, fileSMP, maintainerID, workspace); 
+     return new EwoActivity(category, id, site, typology, activityDescription, intervationTime, interruptible, week, procedureID, fileSMP, maintainerID, workspace); 
      }
-
 }

@@ -13,8 +13,8 @@ public class PlannedFactory extends MaintanceActivityFactory {
 
     
     @Override
-    protected MaintanceActivity selectMaintanceActivity(MaintanceActivityFactory.Category category, String id, Site site, String typology, String activityDescription, int intervationTime, boolean interruptible, int week, String procedureID, String fileSMP, String maintainerID, String workspace) {
-      return new PlannedActivity(id, site, typology, activityDescription, intervationTime, interruptible, week, procedureID, fileSMP, maintainerID, workspace); 
+    protected MaintanceActivity selectMaintanceActivity(Category category, String id, Site site, String typology, String activityDescription, int intervationTime, boolean interruptible, int week, String procedureID, String fileSMP, String maintainerID, String workspace) {
+        return new PlannedActivity(category, id, site, typology, activityDescription, intervationTime, interruptible, week, procedureID, fileSMP, maintainerID, workspace); 
     }
     
 }
