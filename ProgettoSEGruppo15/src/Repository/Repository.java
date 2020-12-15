@@ -22,7 +22,7 @@ public class Repository extends RepositoryBase{
         super();
     }
 
-    public ResultSet getInformationOfMaintenanceActivity() {
+    public ResultSet getInformationOfMaintenanceActivity() { ////
         try {
             connect();
             String query = "select* from "
@@ -40,7 +40,7 @@ public class Repository extends RepositoryBase{
         }
         
     }
-    public String getActivityID(ResultSet rst){
+    public String getActivityID(ResultSet rst){ //
         try {
             connect();
             String s = rst.getString("activityID");
@@ -52,7 +52,7 @@ public class Repository extends RepositoryBase{
         }
        
     }
-    public String getMaintainerID(ResultSet rst){
+    public String getMaintainerID(ResultSet rst){ ////
         try {
             connect();
             String s = rst.getString("maintainerID");
@@ -64,7 +64,7 @@ public class Repository extends RepositoryBase{
         }
        
     }
-    public String getActivityDescription(ResultSet rst){
+    public String getActivityDescription(ResultSet rst){//
         try {
             connect();
             String s = rst.getString("activityDescription");
@@ -76,7 +76,7 @@ public class Repository extends RepositoryBase{
         }
         
     }
-    public int getActivityInterventionTime(ResultSet rst){
+    public int getActivityInterventionTime(ResultSet rst){//
         try {
             connect();
             int i=  rst.getInt("activityInterventionTime");
@@ -89,7 +89,7 @@ public class Repository extends RepositoryBase{
         }
       
     }
-    public boolean isInterruptibleActivity(ResultSet rst){
+    public boolean isInterruptibleActivity(ResultSet rst){//
         try {
             connect();
             boolean b = rst.getBoolean("interruptibleActivity");
@@ -101,7 +101,7 @@ public class Repository extends RepositoryBase{
         }
         
     }
-    public int getActivityWeekNumber(ResultSet rst){
+    public int getActivityWeekNumber(ResultSet rst){//
         try {
             connect();
             int i = rst.getInt("activityWeekNumber");
@@ -112,7 +112,7 @@ public class Repository extends RepositoryBase{
             return 0;
         }
     }
-    public String getActivityTypology(ResultSet rst){
+    public String getActivityTypology(ResultSet rst){//
         try {
             connect();
             String s = rst.getString("activityTypology");
@@ -123,7 +123,7 @@ public class Repository extends RepositoryBase{
             return null;
         }
     }
-    public String getSiteID(ResultSet rst){
+    public String getSiteID(ResultSet rst){ ////
         try {
             connect();
             String s = rst.getString("siteID");
@@ -134,7 +134,7 @@ public class Repository extends RepositoryBase{
             return null;
         }
     }
-    public String getFactorySite(ResultSet rst){
+    public String getFactorySite(ResultSet rst){ //
         try {
             connect();
             String s = rst.getString("FactorySite");
@@ -146,7 +146,7 @@ public class Repository extends RepositoryBase{
         }
         
     }
-    public String getAreaSite(ResultSet rst){
+    public String getAreaSite(ResultSet rst){ ////
         try {
             connect();
             String s = rst.getString("AreaSite");
@@ -158,7 +158,7 @@ public class Repository extends RepositoryBase{
         }
         
     }
-    public String getProcedureID(ResultSet rst){
+    public String getProcedureID(ResultSet rst){ ////
         try {
             connect();
             String s = rst.getString("ProcedureID");
@@ -170,7 +170,7 @@ public class Repository extends RepositoryBase{
         }
         
     }
-    public String getProcedureName(ResultSet rst){
+    public String getProcedureName(ResultSet rst){ //
         try {
             connect();
             String s = rst.getString("ProcedureName");
@@ -182,7 +182,7 @@ public class Repository extends RepositoryBase{
 
         }
     }
-    public String getProcedureDescription(ResultSet rst){
+    public String getProcedureDescription(ResultSet rst){//
         try {
             connect();
             String s = rst.getString("ProcedureDescription");
@@ -194,7 +194,7 @@ public class Repository extends RepositoryBase{
         }
         
     }
-      public String getFileSMP(ResultSet rst){
+      public String getFileSMP(ResultSet rst){ ////
         try {
             connect();
             String s= rst.getString("FileSMP");
@@ -206,7 +206,7 @@ public class Repository extends RepositoryBase{
         }
         
     }
-      public String getWorkSpacenotes(ResultSet rst){
+      public String getWorkSpacenotes(ResultSet rst){ //
           try {
             connect();
             String s= rst.getString("activityWorkspaceNotes");
@@ -217,7 +217,7 @@ public class Repository extends RepositoryBase{
             return null;
         }
       }
-      public String getPlannedActivity(ResultSet rst){
+      public String getPlannedActivity(ResultSet rst){//
           try {
             connect();
             String s= rst.getString("PlannedActivity");
@@ -235,7 +235,7 @@ public class Repository extends RepositoryBase{
                 boolean interruptibleActivity,
                 //String activityMaterials,
                 int activityWeekNumber,
-                String activityWorkspaceNotes,String activityTypology, String typeactivity){
+                String activityWorkspaceNotes,String activityTypology, String typeactivity){ //
         // c parameter is used to set the parameter "planned" in activity table in database
         StringBuilder temp = new StringBuilder();
         temp.append("insert into MaintenanceActivity(activityID, "
@@ -274,7 +274,7 @@ public class Repository extends RepositoryBase{
         }
     }
     
-    public boolean deleteMaintenanceActivity(String activityID){
+    public boolean deleteMaintenanceActivity(String activityID){ //
         StringBuilder temp = new StringBuilder();
         //System.out.println(activityID);
         temp.append("delete from MaintenanceActivity"
@@ -298,7 +298,8 @@ public class Repository extends RepositoryBase{
     }
     
     
-    public boolean updateMaintenanceActivity(String id,String site,String typology, String description, int time, boolean inter, int week){
+    public boolean updateMaintenanceActivity(String id,String site,String typology, 
+            String description, int time, boolean inter, int week){ //
         StringBuilder temp = new StringBuilder();
         temp.append("update MaintenanceActivity"
         + " set activityDescription = ");
@@ -321,7 +322,7 @@ public class Repository extends RepositoryBase{
         }
         
     }
-    
+    /*
     public boolean viewMaintenanceActivityTable(){
             
         try {
@@ -350,8 +351,8 @@ public class Repository extends RepositoryBase{
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
-    }
-    public ResultSet getSiteTable(){
+    }*/
+    public ResultSet getSiteTable(){ ////
          try {
             connect();
             String query = "select* from Site ";
@@ -366,7 +367,7 @@ public class Repository extends RepositoryBase{
         }
     }
     
-    public ResultSet getTypologyTable(){
+    public ResultSet getTypologyTable(){ ////
          try {
             connect();
             String query = "select* from Typology ";
@@ -382,7 +383,7 @@ public class Repository extends RepositoryBase{
             return null;
         }
     }
-    public ResultSet getCompetencesOfActivity(String activityID){
+    public ResultSet getCompetencesOfActivity(String activityID){ //
       
         StringBuilder temp = new StringBuilder();
         temp.append("select c.competenceID,c.competenceName from \n" +
@@ -404,7 +405,7 @@ public class Repository extends RepositoryBase{
     }
 
    
-  public ResultSet getMaintainerTable(){
+  public ResultSet getMaintainerTable(){ ////
          try {
             connect();
             String query = "select maintainerId, maintainerName from Maintainer; ";
@@ -419,7 +420,7 @@ public class Repository extends RepositoryBase{
         }
     }
   
-  public ResultSet getMaintainer(String id){
+  public ResultSet getMaintainer(String id){ ////
          try {
             connect();
             String query = "select maintainerId, maintainerName from Maintainer where maintainerId='"+id+"';";
@@ -436,7 +437,7 @@ public class Repository extends RepositoryBase{
   
     
   
-    public ResultSet getAllMaintainersCurrentWeekDayAvailability(String day){
+    public ResultSet getAllMaintainersCurrentWeekDayAvailability(String day){//
         //check day string
         String days[] = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
         for(int i=0;i>7;i++){
@@ -465,7 +466,7 @@ public class Repository extends RepositoryBase{
             return null;
         }
     }
-    public ResultSet getDayAvailability(String mainteinerID, String day){
+    public ResultSet getDayAvailability(String mainteinerID, String day){//
         //check day string
         String days[] = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
         for(int i=0;i>7;i++){
@@ -491,7 +492,7 @@ public class Repository extends RepositoryBase{
         }
     }
     
-    public int[] getTimeslots(ResultSet rst){
+    public int[] getTimeslots(ResultSet rst){ //
         String base= "timeslot";
         int timeVector[]=new int[8];
         try {
@@ -505,7 +506,7 @@ public class Repository extends RepositoryBase{
         return timeVector;
     }
     
-    public ResultSet getWeekAvailability(String mainteinerID){
+    public ResultSet getWeekAvailability(String mainteinerID){//
         StringBuilder temp = new StringBuilder();
         temp.append("select ma.maintainerID,ma.day,ma.TimeSlot1,ma.TimeSlot2,ma.TimeSlot3,ma.TimeSlot4,ma.TimeSlot5,ma.TimeSlot6,ma.TimeSlot7,ma.TimeSlot8\n" +
                     " from MaintainerAvailabilityCurrentWeek as ma\n" +
@@ -522,7 +523,8 @@ public class Repository extends RepositoryBase{
         }
     }
     public boolean updateMaintainerAvailabilityCurrentWeek(String maintainerID, String day,
-                    int timeSlot1,int timeSlot2,int timeSlot3,int timeSlot4,int timeSlot5,int timeSlot6,int timeSlot7,int timeSlot8 ){
+                    int timeSlot1,int timeSlot2,int timeSlot3,int timeSlot4,int timeSlot5,
+                    int timeSlot6,int timeSlot7,int timeSlot8 ){//
         StringBuilder temp = new StringBuilder();
         temp.append("update MaintainerAvailabilityCurrentWeek"
         + " set");
@@ -550,7 +552,7 @@ public class Repository extends RepositoryBase{
         }
         
     }
-    public boolean resetMaintainerAvailabilityCurrentWeek(String maintainerID, String day){
+    public boolean resetMaintainerAvailabilityCurrentWeek(String maintainerID, String day){//
         StringBuilder temp = new StringBuilder();
         temp.append("update MaintainerAvailabilityCurrentWeek"
         + " set");
@@ -578,7 +580,7 @@ public class Repository extends RepositoryBase{
         }
         
     }
-    public ResultSet getCompetencesOfMaintainer(String maintainerID){
+    public ResultSet getCompetencesOfMaintainer(String maintainerID){ ////
       
         StringBuilder temp = new StringBuilder();
         temp.append("select c.competenceID , c.competenceName from \n" +
@@ -596,7 +598,7 @@ public class Repository extends RepositoryBase{
             return null;
         }
     }
-    public String getCompetenceID(ResultSet rst){
+    public String getCompetenceID(ResultSet rst){ ////
         try {
             connect();
             String s = rst.getString("CompetenceID");
@@ -608,7 +610,7 @@ public class Repository extends RepositoryBase{
             return null;
         }
     }
-    public String getCompetenceName(ResultSet rst){
+    public String getCompetenceName(ResultSet rst){ //
         try {
             connect();
             String s = rst.getString("CompetenceName");
@@ -619,8 +621,8 @@ public class Repository extends RepositoryBase{
             return null;
         }
     }
-    
-    public String getActivityMaintainerID(ResultSet rst){
+    /*
+    public String getActivityMaintainerID(ResultSet rst){ //
         try {
             connect();
             String s = rst.getString("MaintainerID");
@@ -630,8 +632,8 @@ public class Repository extends RepositoryBase{
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-    }
-    public String getMaintainerName(ResultSet rst){
+    }*/
+    public String getMaintainerName(ResultSet rst){ ////
         try {
             connect();
             String s = rst.getString("MaintainerName");
@@ -847,7 +849,7 @@ public class Repository extends RepositoryBase{
         }
     }
     
-    public ResultSet getCompetenceOfTypology(String typology){
+    public ResultSet getCompetenceOfTypology(String typology){ ////
          StringBuilder temp = new StringBuilder();
          temp.append("select c.competenceName from \n" +
            "TypologyToCompetence as tc \n" +
@@ -864,7 +866,7 @@ public class Repository extends RepositoryBase{
             return null;
         }
     }
-    public boolean updateWorkspceNotes(String activityID, String activityWorkspaceNotes){
+    public boolean updateWorkspceNotes(String activityID, String activityWorkspaceNotes){//
         StringBuilder temp1 = new StringBuilder();
         temp1.append("update MaintenanceActivity"
         + " set activityWorkspaceNotes = ");

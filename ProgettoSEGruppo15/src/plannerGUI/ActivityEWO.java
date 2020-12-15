@@ -5,18 +5,18 @@
  */
 package plannerGUI;
 
+import EWOassignment.EwoAssignmentGUI;
 import Navigator.Navigator;
 import PrimoPackege.MaintanceActivityFactory;
 import PrimoPackege.Planner;
 import java.awt.AWTException;
+import java.awt.Color;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 //import EWOassignment.EwoAssignmentGUI;
-import java.util.ArrayList;
+import javax.swing.JOptionPane;
 /**
  *
  * @author User
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class ActivityEWO extends javax.swing.JFrame {
     Planner p;
     String id;
-    String site;
+    //String site;
     String siteID;
     String typology; 
     String workspacenote;
@@ -32,11 +32,11 @@ public class ActivityEWO extends javax.swing.JFrame {
      * Creates new form ActivityEWO
      * @param p
      * @param id
-     * @param site
+     * @param siteID
      * @param typology
      * @param workspacenote
      */
-    public ActivityEWO(Planner p, String id,String siteID, String typology, String workspacenote) {
+    public ActivityEWO(Planner p, String id, String siteID, String typology, String workspacenote) {
         
         this.p= p;
         this.id= id;
@@ -44,8 +44,9 @@ public class ActivityEWO extends javax.swing.JFrame {
         this.typology= typology;
         this.workspacenote= workspacenote;        
         initComponents();
+        //System.out.println((p.findSiteInList((siteID),p.getSiteList())));
         this.setLocationRelativeTo(null);
-        activityInfoLabel1.setText(id+" - "+(p.findSiteInList((siteID),p.getSiteList()).getArea().toString())+" "+ (p.findSiteInList((siteID),p.getSiteList()).getFactory().toString()) +" - "+typology);
+        activityInfoLabel1.setText(id+" - "+(p.findSiteInList((siteID),p.getSiteList()).getArea())+" "+(p.findSiteInList((siteID),p.getSiteList()).getFactory()) +" - "+typology);
         jTextArea1.setText(workspacenote);
     }
      public ActivityEWO() {
@@ -128,7 +129,18 @@ public class ActivityEWO extends javax.swing.JFrame {
         });
 
         jTextArea3.setColumns(20);
+        jTextArea3.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
+        jTextArea3.setForeground(new java.awt.Color(153, 153, 153));
         jTextArea3.setRows(5);
+        jTextArea3.setText("Time required:");
+        jTextArea3.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextArea3FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextArea3FocusLost(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTextArea3);
 
         operationButton1.setText("back to tickets");
@@ -286,21 +298,44 @@ public class ActivityEWO extends javax.swing.JFrame {
     }//GEN-LAST:event_jList1MouseExited
 
     private void forwardButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forwardButton1ActionPerformed
-        p.createActivity(MaintanceActivityFactory.Category.EWO, id, p.findSiteInList((siteID),p.getSiteList()), typology, jTextArea2.getText(), Integer.parseInt(jTextArea3.getText()), false, Integer.parseInt(weekNumber1.getText()),  workspacenote, null, null, null);
-
-        //System.out.println(jList1.getSelectedValuesList());
-        /*
-        EwoAssignmentGUI c= new EwoAssignmentGUI(p, site, id, typology, workspacenote, jList1.getSelectedValuesList());
+        if(p.getMaintanceActivity(id)==null){
+        p.createActivity(MaintanceActivityFactory.Category.EWO, id, p.findSiteInList((siteID),p.getSiteList()), typology, jTextArea2.getText(), Integer.parseInt(jTextArea3.getText()), false, Integer.parseInt(weekNumber1.getText()),  workspacenote);
+        EwoAssignmentGUI c= new EwoAssignmentGUI(p, siteID, id, typology, workspacenote,jList1.getSelectedValuesList());
         c.setVisible(true);
         c.pack();
         c.setLocationRelativeTo(null);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         this.dispose();
+        }
+        
+        else{
+        JOptionPane.showMessageDialog(rootPane, "Already created! You must select other Ticket!");
+        Navigator nav=Navigator.getInstance(p);
+        nav.changeToTicketList(this);
+            //JOptionPane.showMessageDialog(rootPane, "Attività già creata! Seleziona un'altro ticket!", "Error Message", JOptionPane.ERROR_MESSAGE);
+        }
+        //System.out.println(jList1.getSelectedValuesList());
+        
+       
                 //System.out.println(jList1.getSelectedValuesList());
-        */
+        
         
     }//GEN-LAST:event_forwardButton1ActionPerformed
+
+    private void jTextArea3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextArea3FocusGained
+        if(jTextArea3.getText().equals("Time required:")){
+            jTextArea3.setText("");
+            jTextArea3.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_jTextArea3FocusGained
+
+    private void jTextArea3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextArea3FocusLost
+        if(jTextArea3.getText().equals("")){
+            jTextArea3.setText("Time required:");
+            jTextArea3.setForeground(new Color(153,153,153));
+        }
+    }//GEN-LAST:event_jTextArea3FocusLost
 
     /**
      * @param args the command line arguments
