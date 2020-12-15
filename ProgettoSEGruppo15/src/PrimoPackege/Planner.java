@@ -2,6 +2,7 @@ package PrimoPackege;
 
 
 import PrimoPackege.MaintanceActivity;
+import PrimoPackege.MaintanceActivity.Category;
 import Repository.Repository;
 import java.io.BufferedReader;
 import java.io.File;
@@ -164,9 +165,12 @@ public class Planner {
     private int getNumberActivityInWeek(int weekNumber){
         int numAct=0;
         for (int i=0; i<this.activityList.size(); i++){
-            PlannedActivity act=(PlannedActivity) this.activityList.get(i);
-            if(act.getWeekNumber() == weekNumber && act.getMaintainerID() == null)
-                numAct++;
+            MaintanceActivity mact= this.activityList.get(i);
+            if(mact.getCategory().equals(Category.PLANNED)){
+                PlannedActivity act=(PlannedActivity)mact; 
+                if(act.getWeekNumber() == weekNumber && act.getMaintainerID() == null)
+                    numAct++;
+            }
         }
         return numAct;
     }
@@ -175,7 +179,7 @@ public class Planner {
     //per permettere al planner di scegliere l'attività vuole assegnare. Le righe sono inserite
     //in ordine crescente di numero di settimana
     
-    public Object[][] getSelectionableAttribute(String currentWeek){
+    public Object[][] getSelectionableActvity(String currentWeek){
         int currentWeekNumber=parseInt(currentWeek.trim());
         int numRighe=this.getNumberActivityInWeek(currentWeekNumber);
         System.out.println(numRighe);
@@ -183,16 +187,18 @@ public class Planner {
         Object attrTable[][]= new Object[numRighe][];
         int j=0;
         for (int i=0; i<this.activityList.size();i++){
-            PlannedActivity act= (PlannedActivity)this.activityList.get(i);
-            if(act.getWeekNumber() == currentWeekNumber && act.getMaintainerID() == null){
-                String id= act.getId();
-                Site site= act.getSite();
-                String area= site.getArea();
-                String factory =site.getFactory();
-                String type= act.getTypology();
-                String time= ""+act.getIntervationTime();
-                attrTable[j++]=new Object[]{id,area+" "+factory,type,time,new JButton("Select")};
-                
+            MaintanceActivity mact= this.activityList.get(i);
+            if(mact.getCategory().equals(Category.PLANNED)){
+                PlannedActivity act=(PlannedActivity)mact;
+                if(act.getWeekNumber() == currentWeekNumber && act.getMaintainerID() == null){
+                    String id= act.getId();
+                    Site site= act.getSite();
+                    String area= site.getArea();
+                    String factory =site.getFactory();
+                    String type= act.getTypology();
+                    String time= ""+act.getIntervationTime();
+                    attrTable[j++]=new Object[]{id,area+" "+factory,type,time,new JButton("Select")};
+                }
             }
         }
         /*for(int k=0;k<2;k++){
