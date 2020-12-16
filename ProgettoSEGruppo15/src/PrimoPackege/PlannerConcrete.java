@@ -21,9 +21,13 @@ import javax.swing.JButton;
 /**
  *
  * @author Gabriella
+ * Class that represents the business logig beetween the data level and the GUI level
+ * <p> 
  */
 public class PlannerConcrete extends PlannerAbstract{
-
+    /**
+     * 
+     */
     public PlannerConcrete() {
         super();
     }
@@ -73,7 +77,8 @@ public class PlannerConcrete extends PlannerAbstract{
         for (int i=0; i<this.activityList.size(); i++){
             MaintanceActivity act= this.activityList.get(i);
             if(act.getWeekNumber() == weekNumber && act.getMaintainerID() == null)
-                numAct++;
+                if(act.getCategory().equals(MaintanceActivityFactory.Category.PLANNED))
+                    numAct++;
         }
         return numAct;
     }
