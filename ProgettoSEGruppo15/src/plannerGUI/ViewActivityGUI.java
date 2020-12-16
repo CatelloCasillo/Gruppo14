@@ -20,7 +20,7 @@ public class ViewActivityGUI extends javax.swing.JFrame {
     private PlannerInterface p ;
     private String header[]= new String []{"ID", "site", "typology", "activityDescription", "intervationTime", "interruptible", "week"};
     private DefaultTableModel dtm;
-    private int row= -1, col;
+    private int row=-1, col;
    
     
 
@@ -91,6 +91,8 @@ public class ViewActivityGUI extends javax.swing.JFrame {
   * @return 
   */   
     private boolean activityAssigned(int i){
+        if(i<0)
+            return false;
         if(p.getActivityList().get(i).getMaintainerID()!=null){
             return true;
         }
@@ -372,11 +374,16 @@ public class ViewActivityGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_operationButton1ActionPerformed
 
     private void operationButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton2ActionPerformed
+        
         if(activityAssigned(jTable1.getSelectedRow())){
             disabledField();
             JOptionPane.showMessageDialog(rootPane, "Attività già assegnata impossibile modificare!", "Error message", JOptionPane.ERROR_MESSAGE);
         }
         else{
+            if(row<0){
+        disabledField();
+            }
+            else{
         enabledField();
         String updateSite= jComboBox2.getItemAt(jComboBox2.getSelectedIndex());
         String updateTypology = jComboBoxTyp.getItemAt(jComboBoxTyp.getSelectedIndex());
@@ -385,7 +392,7 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         boolean updateInterruptible= jRadioButton1.isSelected();
         int updateWeek = Integer.parseInt(jTextFieldWeek.getText().trim());
         p.updateActivity(row, jTextFieldId.getText(), updateSite, updateTypology, updateDescription, updateTime, updateInterruptible, updateWeek);
-        populateTable();
+        populateTable();}
         }
     }//GEN-LAST:event_operationButton2ActionPerformed
 

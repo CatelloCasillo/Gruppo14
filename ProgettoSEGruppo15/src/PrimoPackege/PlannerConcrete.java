@@ -110,11 +110,19 @@ public class PlannerConcrete extends PlannerAbstract{
 
     @Override
     public boolean deleteActivity(String idActivity, int row) {
+        if(getMaintanceActivity(idActivity).getMaintainerID()==null){
          if(repoActivity.deleteMaintenanceActivity(idActivity)){
             activityList.remove(row);
             return true;
         }
-        return false;}
+        }else{
+            if(repoAvailability.deleteAssignedActivity(idActivity)){
+                activityList.remove(row);
+                return true;
+            }
+        }
+         return false;
+    }
 
     @Override
     public boolean updateActivity(int row, String id, String site, String typology, String description, int time, boolean inter, int week) {
