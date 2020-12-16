@@ -10,15 +10,16 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Gabriella
- */
+
 public class RepositorySite extends RepositoryBase implements RepositorySiteInterface {
+
+    public RepositorySite() {
+        super();
+    }
 
     @Override
     public String getSiteID(ResultSet rst) {
-    try {
+        try {
             connect();
             String s = rst.getString("siteID");
             closeConnection();
@@ -31,7 +32,7 @@ public class RepositorySite extends RepositoryBase implements RepositorySiteInte
 
     @Override
     public String getFactorySite(ResultSet rst) {
-    try {   
+        try {
             connect();
             String s = rst.getString("FactorySite");
             closeConnection();
@@ -39,11 +40,12 @@ public class RepositorySite extends RepositoryBase implements RepositorySiteInte
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
-        }}
+        }
+    }
 
     @Override
     public String getAreaSite(ResultSet rst) {
-     try {
+        try {
             connect();
             String s = rst.getString("AreaSite");
             closeConnection();
@@ -51,21 +53,23 @@ public class RepositorySite extends RepositoryBase implements RepositorySiteInte
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
-        }}
+        }
+    }
 
     @Override
     public ResultSet getSiteTable() {
-     try {
+        try {
             connect();
             String query = "select* from Site ";
-                   
+
             ResultSet rst = stm.executeQuery(query);
             closeConnection();
             return rst;
-        
+
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
-        }}
-    
+        }
+    }
+
 }

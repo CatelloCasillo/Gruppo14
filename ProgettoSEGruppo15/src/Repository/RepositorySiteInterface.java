@@ -7,13 +7,31 @@ package Repository;
 
 import java.sql.ResultSet;
 
-/**
- *
- * @author Gabriella
- */
 public interface RepositorySiteInterface {
+    /**
+     * 
+     * @param rst
+     * @return The ID of the Site present in the ResultSet.
+     */
     public String getSiteID(ResultSet rst);
+    
+    /**
+     * 
+     * @param rst
+     * @return The Factory of the Site present in the ResultSet.
+     */
     public String getFactorySite(ResultSet rst);
+    
+    /**
+     * 
+     * @param rst
+     * @return The Area of the Site present in the ResultSet.
+     */
     public String getAreaSite(ResultSet rst);
+    
+    /**
+     * 
+     * @return A ResultSet that correspond to the Site table present in the Database
+     */
     public ResultSet getSiteTable();
 }

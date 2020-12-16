@@ -5,16 +5,20 @@
  */
 package Navigator;
 
-import ActivityAssignment.ActivityAssignmentGUI;
+import EWOassignment.EwoAssignmentGUI;
+import MantainerSelection.ActivityAssignmentGUI;
 import MantainerSelection.MaintainerSelectionGUI;
 import PrimoPackege.Maintainer;
 import PrimoPackege.MaintanceActivity;
 import PrimoPackege.Planner;
+import PrimoPackege.PlannerConcrete;
+import PrimoPackege.PlannerInterface;
 import SelectionGUI.SelectActivityGUI;
 import VerifyGUI.VerifyActivityGUI;
 import java.awt.Color;
 import java.io.File;
 import java.time.LocalDate;
+import java.util.List;
 import javax.swing.JFrame;
 import plannerGUI.ActivityEWO;
 import plannerGUI.CreateAnActivityGUI;
@@ -28,19 +32,19 @@ import plannerGUI.ViewActivityGUI;
  */
 public class Navigator {
     private static Navigator instance;
-    private Planner p;
+    private PlannerInterface p;
     private MaintanceActivity selectedActivity;
     private String selectedActivityInfo;
     private File f [];
     
-    public synchronized static Navigator getInstance(Planner p) {
+    public synchronized static Navigator getInstance(PlannerInterface p) {
         if (instance == null) {
             instance = new Navigator(p);
         }
         return instance;
     }
 
-    private Navigator(Planner p) {
+    private Navigator(PlannerInterface p) {
         this.p = p;
         this.f = new File("src\\Tickets").listFiles();
     }
@@ -90,6 +94,10 @@ public class Navigator {
         changeInterface(ticket, currentWindow);
     }
     
+    public void changeToEWOassignment(JFrame currentWindow,String site,String id,String typology,String workspacenote,List<String> skills){
+        EwoAssignmentGUI a= new EwoAssignmentGUI(p, site,id,typology, workspacenote, skills);
+        changeInterface(a, currentWindow);
+    }
     
     private void changeInterface(JFrame nextWindow, JFrame currentWindow){
         nextWindow.setVisible(true);

@@ -7,6 +7,7 @@ package ActivityAssignment;
 
 import Navigator.Navigator;
 import PrimoPackege.Planner;
+import PrimoPackege.PlannerAbstract;
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 import javax.swing.JFrame;
@@ -18,7 +19,7 @@ import javax.swing.JPanel;
  * @author Catello
  */
 public class CorrectSelection implements SelectionState{
-    private Planner planner;
+    private PlannerAbstract planner;
     private String selectedMaintainer;
     private String selectedDayOfWeek;
     private String selectedActvity;
@@ -27,7 +28,7 @@ public class CorrectSelection implements SelectionState{
     private ArrayList<Integer>tempNumericSlots;
     private JFrame currentWindow;
 
-    public CorrectSelection(Planner planner, String selectedMaintainer, String selectedDayOfWeek, String selectedActvity, int weekNumber, int[] actFractTime, ArrayList<Integer> tempNumericSlots, JFrame currentWindow) {
+    public CorrectSelection(PlannerAbstract planner, String selectedMaintainer, String selectedDayOfWeek, String selectedActvity, int weekNumber, int[] actFractTime, ArrayList<Integer> tempNumericSlots, JFrame currentWindow) {
         this.planner = planner;
         this.selectedMaintainer = selectedMaintainer;
         this.selectedDayOfWeek = selectedDayOfWeek;

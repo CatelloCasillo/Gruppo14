@@ -9,6 +9,7 @@ package EWOassignment;
 import CommonComponents.CommonTableElements.NoEditableTableModel;
 import ActivityAssignment.ActivityAssignmentGUI;
 import PrimoPackege.Planner;
+import PrimoPackege.PlannerInterface;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import java.util.List;
  */
 
 public class EwoAssignmentGUI extends javax.swing.JFrame {
-    Planner p;
+    PlannerInterface p;
     String id;
     String site;
     String typology;
@@ -42,7 +43,7 @@ public class EwoAssignmentGUI extends javax.swing.JFrame {
      * @param skills
      */
 
-    public EwoAssignmentGUI(Planner p,String site,String id,String typology,String workspacenote,List skills) {
+    public EwoAssignmentGUI(PlannerInterface p,String site,String id,String typology,String workspacenote,List skills) {
         this.p=p;
         this.site=site;
         this.id=id;

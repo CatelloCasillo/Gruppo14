@@ -11,6 +11,7 @@ import CommonComponents.CommonTableElements.MaintenerColumnRenderer;
 import CommonComponents.CommonTableElements.NoEditableTableModel;
 import CommonComponents.CommonTableElements.SkillColumnRenderer;
 import PrimoPackege.Planner;
+import PrimoPackege.PlannerAbstract;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 
@@ -33,7 +34,7 @@ public class MaintainerDailyTable extends JTable{
                     "<html><div style = 'text-align: center'>Availab.<br><span style = 'font-size: 65%'>16:00 - 17:00</span></div></html>\"",
     };
     
-    public MaintainerDailyTable(Planner p, String maintainerName, String skillCompliance , Object [] slots) {
+    public MaintainerDailyTable(PlannerAbstract p, String maintainerName, String skillCompliance , Object [] slots) {
         super();
         this.setColumnSelectionAllowed(true);
         this.setRowSelectionAllowed(false);

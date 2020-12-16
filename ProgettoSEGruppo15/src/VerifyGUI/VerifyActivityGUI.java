@@ -3,6 +3,8 @@ package VerifyGUI;
 import MantainerSelection.MaintainerSelectionGUI;
 import Navigator.Navigator;
 import PrimoPackege.Planner;
+import PrimoPackege.PlannerConcrete;
+import PrimoPackege.PlannerInterface;
 import SelectionGUI.SelectActivityGUI;
 import java.awt.Color;
 import java.awt.Desktop;
@@ -33,22 +35,20 @@ import javax.swing.filechooser.FileSystemView;
  * @author nicolo
  */
 public class VerifyActivityGUI extends javax.swing.JFrame {
-    Planner p;
+    PlannerInterface p;
     String id;
     String activityDescription;
-    //File myfile;
-    Image icon= new ImageIcon("src\\image\\cartella.jpg").getImage();
-    
+    Image icon;
     String workspacenotes;
 
     /**
      * Creates new form VerifyActivityGUI
      
      */
-    public VerifyActivityGUI(Planner p, String id, String activityInfo) {
+    public VerifyActivityGUI(PlannerInterface p, String id, String activityInfo) {
         this.p=p;
         this.id=id;
-        
+        this.icon = new ImageIcon("src\\image\\cartella.jpg").getImage();
         initComponents();
         jTextAreaWork.setText(p.getMaintanceActivity(id).getWorkspacenotes());
         jTextAreaIntervention1.setText(p.getMaintanceActivity(id).getActivityDescription());  

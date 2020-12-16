@@ -7,16 +7,40 @@ package Repository;
 
 import java.sql.ResultSet;
 
-/**
- *
- * @author Gabriella
- */
+
 public interface RepositoryUtilitiesInterface {
+    /**
+     * 
+     * @return A ResultSet that correspond to the Typology table present in the Database
+     */
     public ResultSet getTypologyTable();
-    public String getCompetenceID(ResultSet rst);
-    //public String getCompetenceName(ResultSet rst);
-    public ResultSet getCompetenceOfTypology(String typology);
-    public String getProcedureID(ResultSet rst);
-    public String getFileSMP(ResultSet rst);
     
+    /**
+     * 
+     * @param rst
+     * @return The ID of the Competence present in the ResultSet.
+     */
+    public String getCompetenceID(ResultSet rst);
+
+    /**
+     * 
+     * @param typology
+     * @return A ResultSet that cointains all the competences required for the specified Typology.
+     */
+    public ResultSet getCompetenceOfTypology(String typology);
+    
+    /**
+     * 
+     * @param rst
+     * @return The ID of the Procedure present in the ResultSet.
+     */
+    public String getProcedureID(ResultSet rst);
+    
+    /**
+     * 
+     * @param rst
+     * @return The fileSMP path present in the ResultSet.
+     */
+    public String getFileSMP(ResultSet rst);
+
 }

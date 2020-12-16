@@ -276,12 +276,9 @@ public class Repository extends RepositoryBase{
     
     public boolean deleteMaintenanceActivity(String activityID){ //
         StringBuilder temp = new StringBuilder();
-        //System.out.println(activityID);
         temp.append("delete from MaintenanceActivity"
                 + " where activityid = ");
         temp.append(" '").append(activityID).append("' ;");
-        //System.out.println(temp);
-        
                 
         try {
             connect();
@@ -881,6 +878,131 @@ public class Repository extends RepositoryBase{
             }
             closeConnection();
             return false;
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    //funzione che ritorna un resultSet con tutti gli id delle attivita presenti in quello slot che specifica l'orario
+    public ResultSet getActivitiesOfTimeSlot(String maintainerId, String day, int weeknumber, int timeSlotIndex){
+        if(timeSlotIndex>9 || timeSlotIndex<0)
+            return null;
+        if(weeknumber>53 || weeknumber<0)
+            return null;
+        String query;
+        query=String.format("select activityId from ActivityTimeDivision\n" +
+                        "where maintainerid='%s'and day='%s' and weekNumber=%d and slotassigned%d>0;",maintainerId,day,weeknumber,timeSlotIndex);
+        
+        try {
+            connect();
+            ResultSet rst =stm.executeQuery(query);
+            closeConnection();
+            return rst;
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    //funzioni che ritornano il tempo distribuito nei vari intervalli temporali di un'attivita assegnata ad un maintainer
+    private ResultSet getAssignedTimeSlotOfActivity(String activityID){
+        String query;
+        query=String.format("select SlotAssigned1, SlotAssigned2, SlotAssigned3, SlotAssigned4, SlotAssigned5, SlotAssigned6, SlotAssigned7, SlotAssigned8\n" +
+                            "from ActivityTimeDivision \n" +
+                            "where activityId='%s';",activityID);
+        
+        try {
+            connect();
+            ResultSet rst = stm.executeQuery(query);
+            closeConnection();
+            return rst;
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    public int[] getAssignedTimeslotsOfActivity(String activityID){
+        ResultSet rst=getAssignedTimeSlotOfActivity(activityID);
+        String base= "SlotAssigned";
+        int timeVector[]=new int[8];
+        try {
+        if(rst.next()){
+        for(int i=1;i<=8;i++)   
+                timeVector[i-1]=rst.getInt(""+base+i);
+        }
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return new int[8];
+        }
+        return timeVector;
+    }
+    //----------------------------------------------------------------
+    private ResultSet getActivityTimeDivision(String activityID){
+        String query;
+        query=String.format("select * from ActivityTimeDivision\n" +
+                            " where activityId='%s';",activityID);
+        
+        try {
+            connect();
+            ResultSet rst =stm.executeQuery(query);
+            closeConnection();
+            return rst;
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    public boolean deleteAssignedActivity(String activityID){
+        try {
+            
+            //array contenente il tempo assegnato all'attivita nei vari slot temporali
+            int timeActivity[]= getAssignedTimeslotsOfActivity(activityID);
+            
+            ResultSet rst1=getActivityTimeDivision(activityID);
+            if(!rst1.next())
+                return false;
+            String day=rst1.getString("day");
+            String maintainerID= rst1.getString("maintainerID");
+            
+            ResultSet rst2=getDayAvailability(maintainerID,day);
+            if(rst2==null)
+                return false;
+            
+            //indica la disponiblita del maintainer in uno specifico giorno separando le fascie orarie tramite l'indice dell'array
+            int timeMaintainer[]=getTimeslots(rst2);
+            
+            int[] newMaintainerAvailability = new int[8];
+            //calcolo della nuova disponibilita del maintainer tenendo conto che un'attivita a lui assegnata è stata rimossa
+            for(int i=0;i<8; i++)
+                newMaintainerAvailability[i] = timeActivity[i]+timeMaintainer[i];
+        
+            String query1 = String.format(" delete from MaintenanceActivity"
+                + " where activityid = '%s' ;", activityID);
+            StringBuilder query2 = new StringBuilder();
+            query2.append("update MaintainerAvailabilityCurrentWeek"
+            + " set");
+            query2.append(" timeSlot1 =").append(newMaintainerAvailability[0]).append(",");
+            query2.append(" timeSlot2 =").append(newMaintainerAvailability[1]).append(",");
+            query2.append(" timeSlot3 =").append(newMaintainerAvailability[2]).append(",");
+            query2.append(" timeSlot4 =").append(newMaintainerAvailability[3]).append(",");
+            query2.append(" timeSlot5 =").append(newMaintainerAvailability[4]).append(",");
+            query2.append(" timeSlot6 =").append(newMaintainerAvailability[5]).append(",");
+            query2.append(" timeSlot7 =").append(newMaintainerAvailability[6]).append(",");
+            query2.append(" timeSlot8 =").append(newMaintainerAvailability[7]).append(" ");
+            query2.append(" where maintainerID = '").append(maintainerID).append("' and day= '").append(day).append("' ;"); 
+          
+            connect();
+            //SQL transaction
+            conn.setAutoCommit(false);
+            stm.executeUpdate(query1);
+            stm.executeUpdate(query2.toString());
+            conn.commit();
+            conn.setAutoCommit(true);
+            closeConnection();
+            return true;
+            
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return false;

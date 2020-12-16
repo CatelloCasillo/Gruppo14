@@ -9,6 +9,8 @@ package PlannerTest;
 import PrimoPackege.MaintanceActivityFactory;
 import PrimoPackege.MaintanceActivityFactory.Category;
 import PrimoPackege.Planner;
+import PrimoPackege.PlannerAbstract;
+import PrimoPackege.PlannerConcrete;
 import PrimoPackege.Site;
 import Repository.Repository;
 import java.io.File;
@@ -131,7 +133,7 @@ public class PlannerTest {
     //Risultato atteso: La lista dei siti e delle attività mantenute dal planner deve essere vuota
     @Test
     public void testplannerCreate(){
-       Planner p=new Planner();
+       PlannerAbstract p=new PlannerConcrete();
        assertTrue(p.getActivityList().size()==0 && p.getSiteList().size()==0);
     }
     //Test: creazione di un Planner con il database non vuoto in particolare con una tipologia
@@ -142,7 +144,7 @@ public class PlannerTest {
         this.insertSite("site01");
         this.insertTypology("eletrical");
         this.insertNewMaintenanceActivity("act005","site01","eletrical",null);
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertTrue(p.getActivityList().get(0).getId().equals("act005") && p.getSiteList().get(0).getId().equals("site01"));
     }
     //Test: Inserimento di un attività con il database vuoto
@@ -150,7 +152,7 @@ public class PlannerTest {
     //                  dell'operazione per via della mancaza di tipo e sito
     @Test
     public void testInsertActvityNoData(){
-       Planner p=new Planner();
+       PlannerAbstract p=new PlannerConcrete();
        assertFalse(p.createActivity(Category.PLANNED,"act005", new Site("site01","Fisciano","Molding"), "Eletrical", "descrizioneAttività" , 120, true, 5, "Informazioni aggiuntive"));
     }
     //Test:  Inserimento di un'attività nel database e nella lista mantenuta dal planner
@@ -160,7 +162,7 @@ public class PlannerTest {
     public void testInsertActivityWithDataSucces() throws SQLException{
         this.insertSite("site01");
         this.insertTypology("Eletrical");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         p.createActivity(Category.PLANNED,"act005", new Site("site01", "Factory", "area"), "Eletrical", "Descrizione", 120, true, 20, "Aggiuntivo");
         ResultSet rst=stm.executeQuery("select activityid from MaintenanceActivity where activityid='act005'");
         rst.next();
@@ -173,7 +175,7 @@ public class PlannerTest {
     public void testInsertActivityWithDataSiteMissing() throws SQLException{
         this.insertSite("site01");
         this.insertTypology("Eletrical");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertFalse(p.createActivity(Category.PLANNED,"act005", new Site("site02", "Factory", "area"), "Eletrical", "Descrizione", 120, true, 20, "Aggiuntivo"));
     }
     //Test: Inserimento di un attività con il sito non presente nel db
@@ -182,14 +184,14 @@ public class PlannerTest {
     public void testInsertActivityWithDataTypeMissing() throws SQLException{
         this.insertSite("site01");
         this.insertTypology("Eletrical");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertFalse(p.createActivity(Category.PLANNED,"act005", new Site("site01", "Factory", "area"), "mechanical", "Descrizione", 120, true, 20, "Aggiuntivo"));
     }
     //Test: Aggiornamento di un attività di manutenzione con il database vuoto
     //Risultato atteso: Fallimento dell'operazione(in questo caso il metodo restituisce false).
     @Test
     public void testUpdateActvityNoData(){
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertFalse(p.updateActivity(0,"act005", "site01", "Eletrical", "descrizioneAttività" , 120, true, 5));
     }
     //Test: Aggiornamento di un'attività gia presente nel database per tutti i suoi campi selezionando una tipologia 
@@ -202,7 +204,7 @@ public class PlannerTest {
         this.insertTypology("eletrical");
         this.insertTypology("mechanical");
         this.insertNewMaintenanceActivity("act005","site01", "eletrical",null);
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         p.updateActivity(0, "act005", "site02", "mechanical", "Modifica", 60, false, 50);
         ResultSet rst=stm.executeQuery("select * from MaintenanceActivity where activityid='act005'");
         rst.next();
@@ -223,7 +225,7 @@ public class PlannerTest {
         this.insertTypology("eletrical");
         this.insertTypology("mechanical");
         this.insertNewMaintenanceActivity("act005","site01", "eletrical",null);
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertFalse(p.updateActivity(0, "act005", "site02", "mechanical", "Modifica", 60, false, 50));
     }
     //Test: Aggiornamento multicampo di un' attività cambiando il sito ad esso associato con uno non presente nel database
@@ -234,14 +236,14 @@ public class PlannerTest {
         this.insertSite("site02");
         this.insertTypology("eletrical");
         this.insertNewMaintenanceActivity("act005","site01", "eletrical",null);
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertFalse(p.updateActivity(0, "act005", "site02", "mec", "Modifica", 60, false, 50));
     }
     //Test: Cancellazione di un'attività con il database vuoto
     //Risultato atteso: Fallimento dell'operazione
     @Test
     public void testDeleteActivityNoData(){
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertFalse(p.deleteActivity("act005", 0));
     }
     //Test: Cancellazione dell'unica attività presente nel database
@@ -251,7 +253,7 @@ public class PlannerTest {
         this.insertSite("site01");
         this.insertTypology("eletrical");
         this.insertNewMaintenanceActivity("act005","site01","eletrical",null);
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertTrue(p.deleteActivity("act005", 0));
     }
     //Test: Cancellazione di un' attività che non è l'unica presente nel database
@@ -263,7 +265,7 @@ public class PlannerTest {
         this.insertNewMaintenanceActivity("act005","site01","eletrical",null);
         this.insertNewMaintenanceActivity("act006","site01","eletrical",null);
         this.insertNewMaintenanceActivity("act007","site01","eletrical",null);
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertTrue(p.deleteActivity("act005", 0));
     }
     
@@ -271,7 +273,7 @@ public class PlannerTest {
     //Risultato atteso: Fallimento
     @Test
     public void testGetMaintanceActivityNoData(){
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertNull(p.getMaintanceActivity("act005"));
     }
     //Test: Ricerca di un'attvità presente in base all'id in una lista che contiene solo quell'attività.
@@ -281,7 +283,7 @@ public class PlannerTest {
         this.insertSite("site01");
         this.insertTypology("eletrical");
         this.insertNewMaintenanceActivity("act005","site01","eletrical",null);
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertTrue(p.getMaintanceActivity("act005").getId().equals("act005"));
     }
     //Test: Ricerca di un'attvità non presente in base all'id in una lista non vuota.
@@ -294,7 +296,7 @@ public class PlannerTest {
         this.insertNewMaintenanceActivity("act006","site01","eletrical",null);
         this.insertNewMaintenanceActivity("act007","site01","eletrical",null);
         this.insertNewMaintenanceActivity("act008","site01","eletrical",null);
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertNull(p.getMaintanceActivity("act010"));
     }
     
@@ -308,7 +310,7 @@ public class PlannerTest {
         this.insertNewMaintenanceActivity("act006","site01","eletrical",null);
         this.insertNewMaintenanceActivity("act007","site01","eletrical",null);
         this.insertNewMaintenanceActivity("act008","site01","eletrical",null);
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertTrue(p.getMaintanceActivity("act005").getId().equals("act005"));
     }
     
@@ -322,7 +324,7 @@ public class PlannerTest {
         this.insertNewMaintenanceActivity("act006","site01","eletrical",null);
         this.insertNewMaintenanceActivity("act007","site01","eletrical",null);
         this.insertNewMaintenanceActivity("act008","site01","eletrical",null);
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertTrue(p.getMaintanceActivity("act008").getId().equals("act008"));
     }
     
@@ -336,14 +338,14 @@ public class PlannerTest {
         this.insertNewMaintenanceActivity("act006","site01","eletrical",null);
         this.insertNewMaintenanceActivity("act007","site01","eletrical",null);
         this.insertNewMaintenanceActivity("act008","site01","eletrical",null);
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertTrue(p.getMaintanceActivity("act007").getId().equals("act007"));
     }
     //Test: Ricerca di un sito in base all'id in una lista do siti vuota.
     //Risultato atteso: Fallimento dell'operazione
     @Test
     public void testFindSiteInListNoData(){
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertNull(p.findSiteInList("site01",p.getSiteList()));
     }
     
@@ -352,7 +354,7 @@ public class PlannerTest {
     @Test
     public void testFindSiteInListOneActivity() throws SQLException{
         this.insertSite("site01");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertTrue(p.findSiteInList("site01:area01", p.getSiteList()).getId().equals("site01"));
     }
     //Test: Ricerca di un sito non presente in base all'id in una lista non vuota.
@@ -363,7 +365,7 @@ public class PlannerTest {
         this.insertSite("site02");
         this.insertSite("site03");
         this.insertSite("site04");        
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertNull(p.findSiteInList("site05:area01", p.getSiteList()));
     }
     
@@ -375,7 +377,7 @@ public class PlannerTest {
         this.insertSite("site02");
         this.insertSite("site03");
         this.insertSite("site04");        
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertTrue(p.findSiteInList("site01:area01", p.getSiteList()).getId().equals("site01"));
     }
     
@@ -387,7 +389,7 @@ public class PlannerTest {
         this.insertSite("site02");
         this.insertSite("site03");
         this.insertSite("site04");        
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertTrue(p.findSiteInList("site04:area04", p.getSiteList()).getId().equals("site04"));
     }
     
@@ -399,7 +401,7 @@ public class PlannerTest {
         this.insertSite("site02");
         this.insertSite("site03");
         this.insertSite("site04");        
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertTrue(p.findSiteInList("site02:area02", p.getSiteList()).getId().equals("site02"));
     }
     //Test: Ricerca di un sito nella lista passandoo al metodo una stringa formattata in modo errato
@@ -410,14 +412,14 @@ public class PlannerTest {
         this.insertSite("site02");
         this.insertSite("site03");
         this.insertSite("site04");        
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertNull(p.findSiteInList("site05", p.getSiteList()));
     }
     //Test: verifica se un'attività con un certo id è presente in una lista di attività vuota
     //Risultato atteso: Attività non trovata
     @Test
     public void testIdControlNoData(){
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertFalse(p.idControl("act005"));
     }
     //Test: verifica se un'attività con un certo id è presente in una lista con una sola attività
@@ -427,7 +429,7 @@ public class PlannerTest {
         this.insertSite("site01");
         this.insertTypology("eletrical");
         this.insertNewMaintenanceActivity("act005","site01","eletrical",null);
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertTrue(p.idControl("act005"));
     }
     //Test: Verifica se un'attività con un certo id è presente in una lista non vuota che non la contiene
@@ -440,7 +442,7 @@ public class PlannerTest {
         this.insertNewMaintenanceActivity("act006","site01","eletrical",null);
         this.insertNewMaintenanceActivity("act007","site01","eletrical",null);
         this.insertNewMaintenanceActivity("act008","site01","eletrical",null);
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertFalse(p.idControl("act001"));
     }
    
@@ -454,7 +456,7 @@ public class PlannerTest {
         this.insertNewMaintenanceActivity("act006","site01","eletrical",null);
         this.insertNewMaintenanceActivity("act007","site01","eletrical",null);
         this.insertNewMaintenanceActivity("act008","site01","eletrical",null);
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertTrue(p.idControl("act005"));
     }
     
@@ -468,7 +470,7 @@ public class PlannerTest {
         this.insertNewMaintenanceActivity("act006","site01","eletrical",null);
         this.insertNewMaintenanceActivity("act007","site01","eletrical",null);
         this.insertNewMaintenanceActivity("act008","site01","eletrical",null);
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertTrue(p.idControl("act008"));
     }
     
@@ -482,14 +484,14 @@ public class PlannerTest {
         this.insertNewMaintenanceActivity("act006","site01","eletrical",null);
         this.insertNewMaintenanceActivity("act007","site01","eletrical",null);
         this.insertNewMaintenanceActivity("act008","site01","eletrical",null);
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertTrue(p.idControl("act006"));
     }
     //Test: Selezionare le attività assegnabili dal planner in un dato giorno da una lista di attività vuota
     //Risultato atteso: matrice con una sola riga di stringhe 
     @Test
     public void testGetSelectionableActvityNoData(){
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         Object[][] mat=p.getSelectionableActvity("40");
         assertTrue(mat.length==1 && mat[0][0].toString().equals("") && mat[0][1].toString().equals("") && mat[0][2].toString().equals("") && mat[0][3].toString().equals("") && mat[0][4].toString().equals(""));
     }
@@ -502,7 +504,7 @@ public class PlannerTest {
         this.insertNewEWO("ewo005","site01","eletrical");
         this.insertNewEWO("ewo006","site01","eletrical");
         this.insertNewEWO("ewo007","site01","eletrical");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         Object[][] mat=p.getSelectionableActvity("22");
         assertTrue(mat.length==1 && mat[0][0].toString().equals("") && mat[0][1].toString().equals("") && mat[0][2].toString().equals("") && mat[0][3].toString().equals("") && mat[0][4].toString().equals(""));
     }
@@ -516,7 +518,7 @@ public class PlannerTest {
         this.insertNewEWO("ewo005","site01","eletrical");
         this.insertNewMaintenanceActivity("act006","site01","eletrical",null);
         this.insertNewMaintenanceActivity("act007","site01","eletrical",null);
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         Object[][] mat=p.getSelectionableActvity("30");
         assertTrue(mat.length==1 && mat[0][0].toString().equals("") && mat[0][1].toString().equals("") && mat[0][2].toString().equals("") && mat[0][3].toString().equals("") && mat[0][4].toString().equals(""));
     }
@@ -530,7 +532,7 @@ public class PlannerTest {
         this.insertNewEWO("ewo006","site01","eletrical");
         this.insertNewMaintenanceActivity("act006","site01","eletrical",null);
         this.insertNewMaintenanceActivity("act007","site01","eletrical",null);
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         Object[][] mat=p.getSelectionableActvity("22");
         System.out.println(mat[0][0].toString()+" "+mat[1][0].toString()+" "+mat.length);
         assertTrue(mat.length==2  && mat[0][0].toString().equals("act006") && mat[1][0].toString().equals("act007"));
@@ -539,7 +541,7 @@ public class PlannerTest {
     //Risultato atteso: La lista delle competenze restituita deve essere vuota
     @Test
     public void testGetCompetencesActivityNoData(){
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertEquals(p.getCompetencesList("act005").size(),0);
     }
     //Test: Selezionare la lista di compentenze di una attività da un lista che contiene più attività
@@ -559,7 +561,7 @@ public class PlannerTest {
         this.insertCompetenceToProcedure("proc02","comp03");
         this.insertNewMaintenanceActivity("act008","site01","eletrical","proc02");
         this.insertNewMaintenanceActivity("act007","site01","eletrical","proc01");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         ArrayList<String> competences = p.getCompetencesList("act007");
         System.out.println(competences.size()+" "+competences.get(0)+" " +competences.get(1));
         assertTrue(competences.size()==2 && competences.get(0).equals("comp01") && competences.get(1).equals("comp02"));   
@@ -581,14 +583,14 @@ public class PlannerTest {
         this.insertCompetenceToProcedure("proc02","comp03");
         this.insertNewMaintenanceActivity("act008","site01","eletrical","proc02");
         this.insertNewMaintenanceActivity("act007","site01","eletrical","proc01");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertEquals(p.getCompetencesList("act001").size(),0);
     }
     //Test: Selezionare la lista di compentenze relativa ad un certa tipologia con il database vuoto
     //Risultato atteso: La lista delle competenze deve essere vuota
     @Test
     public void testGetCompetenceTypologyNoData(){
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertEquals(p.getCompetenceTypology("eletrical").size(),0);
     }
     //Test: Selezionare la lista di compentenze associate ad una certa tipologia che non è presente nel database
@@ -603,7 +605,7 @@ public class PlannerTest {
         this.insertCompetenceToTypology("eletrical", "comp01");
         this.insertCompetenceToTypology("eletrical", "comp02");
         this.insertCompetenceToTypology("mechanical", "comp03");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertEquals(p.getCompetenceTypology("hydraulic").size(),0);
     }
     //Test: Selezionare la lista di compentenze associate ad una certa tipologia che non è presente nel database
@@ -618,7 +620,7 @@ public class PlannerTest {
         this.insertCompetenceToTypology("eletrical", "comp01");
         this.insertCompetenceToTypology("eletrical", "comp02");
         this.insertCompetenceToTypology("mechanical", "comp03");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         ArrayList<String> competences = p.getCompetenceTypology("eletrical");
         assertTrue(competences.size()==2 && competences.get(0).equals("svitare") && competences.get(1).equals("aggiustare"));
     }
@@ -626,7 +628,7 @@ public class PlannerTest {
     //Risultato atteso: Il calendario deve essere vuoto
     @Test
     public void testGetMaintainerWeekCalendarNoData() {
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertEquals(p.getMaintainerWeekCalendar("act005").length,0);
     }
     //Test: creazione del calendario della disponibilità settimanale di tutti i maintainer con il database che ne contiene solo 1
@@ -635,7 +637,7 @@ public class PlannerTest {
     
     @Test
     public void testGetMaintainerWeekCalendarOneMaitainer() throws SQLException{
-        Planner p=new Planner();
+        
         this.insertMaintainer("mant01", "Pippo");
         this.insertSite("site01");
         this.insertTypology("eletrical");
@@ -646,6 +648,7 @@ public class PlannerTest {
         this.insertCompetenceToProcedure("proc01","comp02");
         this.insertCompetenceToMaintainer("mant01", "comp01");
         this.insertNewMaintenanceActivity("act007","site01","eletrical","proc01");
+        PlannerAbstract p=new PlannerConcrete();
         Object[][] calendar=p.getMaintainerWeekCalendar("act007");
         System.out.println(calendar.length +" "+ calendar[0][0].toString() +" "+ calendar[0][1].toString());
         assertTrue(calendar.length==1 && calendar[0][0].toString().equals("Pippo") && calendar[0][1].toString().equals("1/2"));
@@ -658,7 +661,7 @@ public class PlannerTest {
     
     @Test
     public void testGetMaintainerWeekCalendarMoreMaitainer() throws SQLException{
-        Planner p=new Planner();
+        
         this.insertMaintainer("mant01", "Pippo");
         this.insertMaintainer("mant02", "Pluto");
         this.insertSite("site01");
@@ -670,6 +673,7 @@ public class PlannerTest {
         this.insertCompetenceToProcedure("proc01","comp02");
         this.insertCompetenceToMaintainer("mant01", "comp01");
         this.insertNewMaintenanceActivity("act007","site01","eletrical","proc01");
+        PlannerAbstract p=new PlannerConcrete();
         Object[][] calendar=p.getMaintainerWeekCalendar("act007");
         boolean bln1=calendar[0][0].toString().equals("Pippo") && calendar[0][1].toString().equals("1/2");
         boolean bln2=calendar[1][0].toString().equals("Pluto") && calendar[1][1].toString().equals("0/2");
@@ -680,7 +684,7 @@ public class PlannerTest {
     //Risultato attesso: Il vettore restituito conterrà tutti null
     @Test
     public void testGetMaintainerDailyAvailabilityNoData() {
-        Planner p=new Planner();
+       PlannerAbstract p=new PlannerConcrete();
         Object[] disp=p.getMaintainerDailyAvailability("mant01","Monday");
         assertNull(disp[0]);
     }
@@ -690,7 +694,7 @@ public class PlannerTest {
     public void testGetMaintainerDailyAvailabilityWrongMaintainer() {
         this.insertMaintainer("mant01", "Pippo");
         this.insertMaintainer("mant02", "Pluto");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         Object[] disp=p.getMaintainerDailyAvailability("mant03","Monday");
         assertNull(disp[0]);
     }
@@ -702,7 +706,7 @@ public class PlannerTest {
         this.insertMaintainer("mant01", "Pippo");
         this.insertMaintainer("mant02", "Pluto");
         this.insertMaintainer("mant03", "Paperino");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         Object[] disp=p.getMaintainerDailyAvailability("mant03","Friday");
         boolean disp0=disp[0].toString().equals("60 min");
         boolean disp1=disp[1].toString().equals("60 min");
@@ -718,7 +722,7 @@ public class PlannerTest {
     //Risultato attesso: Viene restituio null (visto che non esiste proprio la lista di manutentori)
     @Test
     public void testGetSelectedMaintainerNoData() {
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertNull(p.getSelectedMaintainer(0));
     }
     //Test: Ottieni il manutentore presente che occupa una certa posizione in una lista quando il database è non vuoto 
@@ -730,7 +734,7 @@ public class PlannerTest {
         this.insertMaintainer("mant01", "Pippo");
         this.insertMaintainer("mant02", "Pluto");
         this.insertMaintainer("mant03", "Paperino");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         p.getMaintainerWeekCalendar("");
         assertNull(p.getSelectedMaintainer(-1));
     }
@@ -743,7 +747,7 @@ public class PlannerTest {
         this.insertMaintainer("mant01", "Pippo");
         this.insertMaintainer("mant02", "Pluto");
         this.insertMaintainer("mant03", "Paperino");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         p.getMaintainerWeekCalendar("");
         assertNull(p.getSelectedMaintainer(3));
     }
@@ -756,7 +760,7 @@ public class PlannerTest {
         this.insertMaintainer("mant01", "Pippo");
         this.insertMaintainer("mant02", "Pluto");
         this.insertMaintainer("mant03", "Paperino");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         p.getMaintainerWeekCalendar("");
         assertTrue(p.getSelectedMaintainer(0).getId().equals("mant01"));
     }
@@ -769,7 +773,7 @@ public class PlannerTest {
         this.insertMaintainer("mant01", "Pippo");
         this.insertMaintainer("mant02", "Pluto");
         this.insertMaintainer("mant03", "Paperino");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         p.getMaintainerWeekCalendar("");
         assertTrue(p.getSelectedMaintainer(1).getId().equals("mant02"));
     }
@@ -783,7 +787,7 @@ public class PlannerTest {
         this.insertMaintainer("mant01", "Pippo");
         this.insertMaintainer("mant02", "Pluto");
         this.insertMaintainer("mant03", "Paperino");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         p.getMaintainerWeekCalendar("");
         assertTrue(p.getSelectedMaintainer(2).getId().equals("mant03"));
     }
@@ -791,7 +795,7 @@ public class PlannerTest {
     //Risultato atteso: Fallimento dell'operazione(Non si può aggiornare la disponibilità di un maitainer che non esiste)
     @Test
     public void testUpdateMaintainerAvailabilityNoData() {
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         ArrayList<Integer> list = new ArrayList<>();
         for(int i=0;i<8;i++)
             list.add(i, 40);
@@ -803,7 +807,7 @@ public class PlannerTest {
     public void testUpdateMaintainerAvailabilityWrongMaitainer() {
         
         this.insertMaintainer("mant01", "Pippo");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         ArrayList<Integer> list = new ArrayList<>();
         for(int i=0;i<8;i++)
             list.add(i, 40);
@@ -815,7 +819,7 @@ public class PlannerTest {
     public void testUpdateMaintainerAvailabilityAvailabilityOutLimit() {
         
         this.insertMaintainer("mant01", "Pippo");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         ArrayList<Integer> list = new ArrayList<>();
         for(int i=0;i<8;i++)
             list.add(i, 80);
@@ -827,7 +831,7 @@ public class PlannerTest {
     public void testupdateMaintainerAvailabilityNegativeAvailability() {
         
         this.insertMaintainer("mant01", "Pippo");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         ArrayList<Integer> list = new ArrayList<>();
         for(int i=0;i<8;i++)
             list.add(i, -40);
@@ -841,7 +845,7 @@ public class PlannerTest {
         this.insertMaintainer("mant01", "Pippo");
         this.insertMaintainer("mant02", "Pippo");
         this.insertMaintainer("mant03", "Pippo");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         ArrayList<Integer> list = new ArrayList<>();
         for(int i=0;i<8;i++)
             list.add(i, 40);
@@ -851,7 +855,7 @@ public class PlannerTest {
     //Risultato attesso: Fallimento dell'operazione( Non esiste nè l'attività da assegnare nè il manutentore al quale assegnarla)
     @Test
     public void testAssignActivityFractionNoData() {
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         int [] fractions = new int[8];
         for(int i=0;i<8;i++)
             fractions[i] = 40;
@@ -866,7 +870,7 @@ public class PlannerTest {
         this.insertTypology("eletrical");
         this.insertNewMaintenanceActivity("act005","site01","eletrical",null);
         this.insertMaintainer("mant01", "Pippo");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         int [] fractions = new int[8];
         for(int i=0;i<8;i++)
             fractions[i] = 40;
@@ -881,7 +885,7 @@ public class PlannerTest {
         this.insertTypology("eletrical");
         this.insertNewMaintenanceActivity("act005","site01","eletrical",null);
         this.insertMaintainer("mant01", "Pippo");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         int [] fractions = new int[8];
         for(int i=0;i<8;i++)
             fractions[i] = 40;
@@ -897,7 +901,7 @@ public class PlannerTest {
         this.insertTypology("eletrical");
         this.insertNewMaintenanceActivity("act005","site01","eletrical",null);
         this.insertMaintainer("mant01", "Pippo");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         int [] fractions = new int[8];
         for(int i=0;i<8;i++)
             fractions[i] = 40;
@@ -914,7 +918,7 @@ public class PlannerTest {
         this.insertTypology("eletrical");
         this.insertNewMaintenanceActivity("act005","site01","eletrical",null);
         this.insertMaintainer("mant01", "Pippo");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         int [] fractions = new int[8];
         for(int i=0;i<8;i++)
             fractions[i] = 40;
@@ -929,7 +933,7 @@ public class PlannerTest {
         this.insertTypology("eletrical");
         this.insertNewMaintenanceActivity("act005","site01","eletrical",null);
         this.insertMaintainer("mant01", "Pippo");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         int [] fractions1 = new int[8];
         int [] fractions2 = new int[8];
         for(int i=0;i<8;i++)
@@ -949,7 +953,7 @@ public class PlannerTest {
         this.insertTypology("eletrical");
         this.insertNewMaintenanceActivity("act001","site01","eletrical",null);
         this.insertMaintainer("mant01", "Pippo");
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         int [] fractions = new int[8];
         for(int i=0;i<8;i++)
             fractions[i] = 40;
@@ -959,7 +963,7 @@ public class PlannerTest {
     //Risultato atteso: Fallimento dell'operazione( Se l'attività non esiste non possono essere aggiornate le sue note)
     @Test
     public void testUpdateNotesNoData() {
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertFalse(p.updateNotes("act005","NuoveNote"));
     }
     //Test: Aggiornamento delle note di un'attività che non esiste
@@ -970,7 +974,7 @@ public class PlannerTest {
         this.insertSite("site01");
         this.insertTypology("eletrical");
         this.insertNewMaintenanceActivity("act001","site01","eletrical",null);
-        Planner p=new Planner();
+        PlannerAbstract p=new PlannerConcrete();
         assertFalse(p.updateNotes("act005","NuoveNote"));
     }
     //Test: Aggiornamento delle note di un'attività che esistente
@@ -982,21 +986,9 @@ public class PlannerTest {
         this.insertTypology("eletrical");
         this.insertNewMaintenanceActivity("act001","site01","eletrical",null);
         this.insertNewMaintenanceActivity("act002","site01","eletrical",null);
-        Planner p=new Planner();
-        p.updateNotes("act001","NuoveNote");
-        ResultSet rst=stm.executeQuery("select * from MaintenanceActivity where activityid='act001'");
-        rst.next();
-        System.out.println("Prova ultimo metodo"+rst.getString("activityWorkspaceNotes"));
-        assertTrue(false);
+        PlannerAbstract p=new PlannerConcrete();
+        assertTrue(p.updateNotes("act001","NuoveNote"));
     }
-    
-    
-    /*
-    
-    
-    
-    
-   
     
     //Test:
     //Risultato atteso:
@@ -1019,18 +1011,5 @@ public class PlannerTest {
         Planner p= new Planner();
         assertEquals("EWO001", p.getStringInFile(new File("src\\Tickets\\ticket1.txt"))[0]);
     }
-    /*
-    @Test
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    */
-    
-    
+   
 }

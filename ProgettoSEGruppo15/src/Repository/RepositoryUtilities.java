@@ -10,24 +10,23 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author User
- */
+
 public class RepositoryUtilities extends RepositoryBase implements RepositoryUtilitiesInterface {
+
+    public RepositoryUtilities() {
+        super();
+    }
 
     @Override
     public ResultSet getTypologyTable() {
-       try {
+        try {
             connect();
             String query = "select* from Typology ";
-                   
-            
+
             ResultSet rst = stm.executeQuery(query);
             closeConnection();
             return rst;
-            
-        
+
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -36,39 +35,42 @@ public class RepositoryUtilities extends RepositoryBase implements RepositoryUti
 
     @Override
     public String getCompetenceID(ResultSet rst) {
-       try {
+        try {
             connect();
             String s = rst.getString("CompetenceID");
             closeConnection();
             return s;
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
-        }}
-/*
+        }
+    }
+
+    /*
     @Override
     public String getCompetenceName(ResultSet rst) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-*/
+     */
     @Override
     public ResultSet getCompetenceOfTypology(String typology) {
-    StringBuilder temp = new StringBuilder();
-         temp.append("select c.competenceName from \n" +
-           "TypologyToCompetence as tc \n" +
-           "join competence as c on (c.competenceID=tc.competenceID ) ");
-           temp.append(" where tc.activityTypology=  '").append(typology).append("' ;");
-           try {
+        StringBuilder temp = new StringBuilder();
+        temp.append("select c.competenceName from \n"
+                + "TypologyToCompetence as tc \n"
+                + "join competence as c on (c.competenceID=tc.competenceID ) ");
+        temp.append(" where tc.activityTypology=  '").append(typology).append("' ;");
+        try {
             connect();
             ResultSet rst = stm.executeQuery(temp.toString());
             closeConnection();
             return rst;
-           
+
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
-        }}
+        }
+    }
 
     @Override
     public String getProcedureID(ResultSet rst) {
@@ -80,18 +82,20 @@ public class RepositoryUtilities extends RepositoryBase implements RepositoryUti
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
-        }}
+        }
+    }
 
     @Override
     public String getFileSMP(ResultSet rst) {
-         try {
+        try {
             connect();
-            String s= rst.getString("FileSMP");
+            String s = rst.getString("FileSMP");
             closeConnection();
             return s;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return null;
-        }}
-    
+        }
+    }
+
 }

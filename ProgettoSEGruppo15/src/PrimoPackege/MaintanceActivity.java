@@ -30,36 +30,6 @@ public abstract class MaintanceActivity {
 
     
 
-    //costruttore usato per creare una nuova attivitià
-    /*
-    public MaintanceActivity(String id, Site site, String typology,
-    String activityDescription, int intervationTime, boolean interruptible, int weekNumber,
-    String workspacenotes) {
-    this.id = id;
-    this.site = site;
-    this.typology = typology;
-    this.activityDescription = activityDescription;
-    this.intervationTime = intervationTime;
-    this.interruptible = interruptible;
-    this.weekNumber = weekNumber;
-    this.workspacenotes= workspacenotes;
-    }
-    public MaintanceActivity(String id, Site site, String typology,
-    String activityDescription, int intervationTime, boolean interruptible, int week,
-    String procedureID,String fileSMP) {
-    this.id = id;
-    this.site = site;
-    this.typology = typology;
-    this.activityDescription = activityDescription;
-    this.intervationTime = intervationTime;
-    this.interruptible = interruptible;
-    this.weekNumber = week;
-    this.fileSMP=fileSMP;
-    this.procedureID=procedureID;
-    }
-     */
-    
-
     public MaintanceActivity(Category category, String id, Site site, String typology, String activityDescription, int intervationTime, boolean interruptible, int week, String procedureID, String fileSMP, String maintainerID, String workspace) {
         this.category= category;
         this.id = id;
