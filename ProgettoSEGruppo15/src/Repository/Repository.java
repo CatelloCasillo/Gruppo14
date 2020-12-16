@@ -501,7 +501,8 @@ public class Repository extends RepositoryBase{
                 timeVector[i-1]=rst.getInt(""+base+i);
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
-            return new int[8];
+            int [] empty = {-1,-1,-1,-1,-1,-1,-1,-1};
+            return empty;
         }
         return timeVector;
     }

@@ -191,7 +191,7 @@ public class RepositoryAvailability extends RepositoryBase implements Repository
         temp1.append("update MaintenanceActivity"
         + " set maintainerID = ");
         temp1.append(" '").append(maintainerID).append("'");
-        temp1.append(" where activityid = ").append(" '").append(activityID).append(" ';");
+        temp1.append(" where activityid = ").append(" '").append(activityID).append("';");
         
         // store the time division of the activity
         StringBuilder temp2 = new StringBuilder();

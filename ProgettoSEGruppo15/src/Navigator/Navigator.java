@@ -5,7 +5,7 @@
  */
 package Navigator;
 
-import MantainerSelection.ActivityAssignmentGUI;
+import ActivityAssignment.ActivityAssignmentGUI;
 import MantainerSelection.MaintainerSelectionGUI;
 import PrimoPackege.Maintainer;
 import PrimoPackege.MaintanceActivity;

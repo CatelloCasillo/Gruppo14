@@ -34,7 +34,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="panelBase1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="20" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -57,19 +57,24 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="forwardButton2" min="-2" pref="95" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jScrollPane3" max="32767" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="forwardButton1" min="-2" pref="90" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jPanel1" min="-2" pref="680" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="jScrollPane1" pref="680" max="32767" attributes="0"/>
-                                      <Component id="jPanel1" pref="680" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="forwardButton2" min="-2" pref="95" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="jScrollPane3" max="32767" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="forwardButton1" min="-2" pref="90" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <Component id="jScrollPane4" min="-2" pref="680" max="-2" attributes="0"/>
+                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      </Group>
                                   </Group>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -86,7 +91,7 @@
                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                           <Component id="activtyAssign1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                          <Component id="activityInfoLabel1" pref="452" max="32767" attributes="0"/>
+                          <Component id="activityInfoLabel1" pref="453" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
@@ -132,65 +137,29 @@
                       <Component id="labelLight1" min="-2" max="-2" attributes="0"/>
                       <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="jScrollPane2" min="-2" pref="117" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="operationButton1" min="-2" pref="39" max="-2" attributes="0"/>
+                          <EmptySpace pref="22" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
-                          <Component id="jScrollPane1" min="-2" pref="58" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jScrollPane4" min="-2" pref="58" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="forwardButton2" max="32767" attributes="0"/>
-                              <Component id="jScrollPane3" pref="119" max="32767" attributes="0"/>
+                              <Component id="jScrollPane3" pref="127" max="32767" attributes="0"/>
                               <Component id="forwardButton1" max="32767" attributes="0"/>
+                              <Component id="forwardButton2" alignment="1" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-          <Properties>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="null"/>
-            </Property>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jScrollPane1.getViewport().setBackground(new Color(248,148,6));"/>
-            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-          </AuxValues>
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-          <SubComponents>
-            <Component class="javax.swing.JTable" name="jTable1">
-              <Properties>
-                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new NoEditableTableModel(&#xa;    new Object [][] {&#xa;        {ActivityAssignmentGUI.this.maintainerName, this.skillCompliance, slots[0], slots[1],slots[2], slots[3], slots[4], slots[5],slots[6],slots[7]}&#xa;    },&#xa;    new String [] {&#xa;&#xa;        &quot;Maintainer&quot;,&#xa;        &quot;Skills&quot;,&#xa;        &quot;&lt;html&gt;&lt;div style = &apos;text-align: center&apos;&gt;Availab.&lt;br&gt;&lt;span style = &apos;font-size: 65%&apos;&gt;8:00 - 9:00&lt;/span&gt;&lt;/div&gt;&lt;/html&gt;\&quot;&quot;,&#xa;        &quot;&lt;html&gt;&lt;div style = &apos;text-align: center&apos;&gt;Availab.&lt;br&gt;&lt;span style = &apos;font-size: 65%&apos;&gt;9:00 - 10:00&lt;/span&gt;&lt;/div&gt;&lt;/html&gt;\&quot;&quot;,&#xa;        &quot;&lt;html&gt;&lt;div style = &apos;text-align: center&apos;&gt;Availab.&lt;br&gt;&lt;span style = &apos;font-size: 65%&apos;&gt;10:00 - 11:00&lt;/span&gt;&lt;/div&gt;&lt;/html&gt;\&quot;&quot;,&#xa;        &quot;&lt;html&gt;&lt;div style = &apos;text-align: center&apos;&gt;Availab.&lt;br&gt;&lt;span style = &apos;font-size: 65%&apos;&gt;11:00 - 12:00&lt;/span&gt;&lt;/div&gt;&lt;/html&gt;\&quot;&quot;,&#xa;&#xa;        &quot;&lt;html&gt;&lt;div style = &apos;text-align: center&apos;&gt;Availab.&lt;br&gt;&lt;span style = &apos;font-size: 65%&apos;&gt;13:00 - 14:00&lt;/span&gt;&lt;/div&gt;&lt;/html&gt;\&quot;&quot;,&#xa;        &quot;&lt;html&gt;&lt;div style = &apos;text-align: center&apos;&gt;Availab.&lt;br&gt;&lt;span style = &apos;font-size: 65%&apos;&gt;14:00 - 15:00&lt;/span&gt;&lt;/div&gt;&lt;/html&gt;\&quot;&quot;,&#xa;        &quot;&lt;html&gt;&lt;div style = &apos;text-align: center&apos;&gt;Availab.&lt;br&gt;&lt;span style = &apos;font-size: 65%&apos;&gt;15:00 - 16:00&lt;/span&gt;&lt;/div&gt;&lt;/html&gt;\&quot;&quot;,&#xa;        &quot;&lt;html&gt;&lt;div style = &apos;text-align: center&apos;&gt;Availab.&lt;br&gt;&lt;span style = &apos;font-size: 65%&apos;&gt;16:00 - 17:00&lt;/span&gt;&lt;/div&gt;&lt;/html&gt;\&quot;&quot;,&#xa;    }&#xa;)" type="code"/>
-                </Property>
-                <Property name="columnSelectionAllowed" type="boolean" value="true"/>
-                <Property name="selectionBackground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="99" green="0" red="99" type="rgb"/>
-                </Property>
-                <Property name="selectionModel" type="javax.swing.ListSelectionModel" editor="org.netbeans.modules.form.editors2.JTableSelectionModelEditor">
-                  <JTableSelectionModel selectionMode="1"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable1MouseClicked"/>
-              </Events>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTable1.getTableHeader().setDefaultRenderer(new DefaultHeaderRenderer());&#xa;TableColumn firstColumn = jTable1.getColumnModel().getColumn(0);&#xa;firstColumn.setPreferredWidth(150);&#xa;firstColumn.setCellRenderer(new MaintenerColumnRenderer());&#xa;TableColumn secondColumn = jTable1.getColumnModel().getColumn(1);&#xa;secondColumn.setCellRenderer(new SkillColumnRenderer());&#xa;for(int i=2;i&lt;10;i++){&#xa;    TableColumn column=jTable1.getColumnModel().getColumn(i);&#xa;    column.setCellRenderer(new OtherColumnRenderer());&#xa;}"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Object [] slots=planner.getMaintainerDailyAvailability(this.selectedMaintainer, this.selectedDayOfWeek);&#xa;for (Object slot :slots){&#xa;    String [] s=slot.toString().trim().split(&quot; &quot;);&#xa;    this.numericSlots.add(parseInt(s[0]));&#xa;}"/>
-              </AuxValues>
-            </Component>
-          </SubComponents>
-        </Container>
         <Component class="CommonComponents.ForwardButton" name="forwardButton1">
           <Properties>
             <Property name="text" type="java.lang.String" value="SEND"/>
@@ -241,7 +210,7 @@
                       <Component id="labelLight2" min="-2" pref="281" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="261" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -333,6 +302,26 @@
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
               </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane4">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="null"/>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="CommonComponents.MaintainerDailyTable" name="jTable1">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new CommonComponents.MaintainerDailyTable(planner, this.maintainerName,this.skillCompliance,slots)"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="slots=planner.getMaintainerDailyAvailability(this.selectedMaintainer, this.selectedDayOfWeek);&#xa;for (Object slot :slots){&#xa;    String [] s=slot.toString().trim().split(&quot; &quot;);&#xa;    this.numericSlots.add(parseInt(s[0]));&#xa;}"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>

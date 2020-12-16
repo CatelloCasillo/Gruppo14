@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MantainerSelection;
+package ActivityAssignment;
 
 import CommonComponents.CommonTableElements.DefaultHeaderRenderer;
 import CommonComponents.CommonTableElements.MaintenerColumnRenderer;
@@ -49,30 +49,13 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
     private ArrayList <Integer>tempNumericSlots;
     private int [] actFractTime;
     private int codeError;
+    private SelectionState state;
+    private Object [] slots;
     
     /**
      * Creates new form AssignActivityGUI
      */
-    private class OtherColumnRenderer extends DefaultTableCellRenderer{
-        @Override
-        public Component getTableCellRendererComponent(JTable jtable, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            JLabel cell=(JLabel)super.getTableCellRendererComponent(jtable,value,isSelected,hasFocus,row,column);
-            if(column>1){
-                String content=jtable.getModel().getValueAt(row, column).toString().trim();
-                String [] fraction= content.split(" ");
-                int percentage = (parseInt(fraction[0])*100)/60;
-                Color color = colorPicker(percentage);
-                cell.setOpaque(true);
-                cell.setBackground(color);
-                cell.setHorizontalAlignment(SwingConstants.CENTER);
-                
-            }
-            if(isSelected){
-                cell.setBackground(Color.BLACK);
-            }
-            return cell;
-        }
-    }
+    
     private String indexConverter(int index){
         switch(index){
             case 0: return "8:00 - 9:00";
@@ -99,16 +82,22 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
             if(index>1){
                 remainigTime+=tempNumericSlots.get(index-2);
                 validSelection=true;
-            }  
+            }
+            /*else{
+                validSelection=false;
+                break;
+            }*/
         }
         if(!validSelection){
             this.jTextArea1.setText("Invalid Selection");
-            codeError = 1;
+            //codeError = 1;
+            this.state = new NoMinutesCells();
             return;
         }
         if(remainigTime < this.intervetionTime){
             this.jTextArea1.setText("Invalid Selection");
-            codeError = 2;
+            //codeError = 2;
+            this.state=new NotEnoughTime();
             return;
         }
         int timeToAssing=this.intervetionTime;
@@ -134,7 +123,8 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
             }
         }
         this.jTextArea1.setText(selectionInfo);
-        codeError=-1;
+        //codeError=-1;
+        this.state =new CorrectSelection(planner, selectedMaintainer, selectedDayOfWeek, selectedActvity, parseInt(this.weekNumber1.getText().trim()), actFractTime, tempNumericSlots, this);
     }
     
     public ActivityAssignmentGUI(Planner p, String maintenerName,String skillCompliance,String selectedDayWeek,String activityInfo, String notes,LocalDate selectedDate, String selectedActvity, Color percentageColor, String percentage, String selectedMaintainerId, int estimatedActivityTime) {
@@ -148,7 +138,8 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
         this.skillCompliance=skillCompliance;
         this.selectedMaintainer = selectedMaintainerId;
         this.actFractTime=new int[8];
-        this.codeError=0;
+        //this.codeError=0;
+        this.state = new NoSelection();
         initComponents();
         this.setLocationRelativeTo(null);
         jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
@@ -190,8 +181,6 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         panelBase1 = new CommonComponents.PanelBase();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         forwardButton1 = new CommonComponents.ForwardButton();
         forwardButton2 = new CommonComponents.ForwardButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -211,56 +200,16 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
         operationButton1 = new CommonComponents.OperationButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
-
-        jScrollPane1.getViewport().setBackground(new Color(248,148,6));
-        jScrollPane1.setBorder(null);
-
-        Object [] slots=planner.getMaintainerDailyAvailability(this.selectedMaintainer, this.selectedDayOfWeek);
+        jScrollPane4 = new javax.swing.JScrollPane();
+        slots=planner.getMaintainerDailyAvailability(this.selectedMaintainer, this.selectedDayOfWeek);
         for (Object slot :slots){
             String [] s=slot.toString().trim().split(" ");
             this.numericSlots.add(parseInt(s[0]));
         }
-        jTable1.setModel(new NoEditableTableModel(
-            new Object [][] {
-                {ActivityAssignmentGUI.this.maintainerName, this.skillCompliance, slots[0], slots[1],slots[2], slots[3], slots[4], slots[5],slots[6],slots[7]}
-            },
-            new String [] {
+        jTable1 = new CommonComponents.MaintainerDailyTable(planner, this.maintainerName,this.skillCompliance,slots);
 
-                "Maintainer",
-                "Skills",
-                "<html><div style = 'text-align: center'>Availab.<br><span style = 'font-size: 65%'>8:00 - 9:00</span></div></html>\"",
-                "<html><div style = 'text-align: center'>Availab.<br><span style = 'font-size: 65%'>9:00 - 10:00</span></div></html>\"",
-                "<html><div style = 'text-align: center'>Availab.<br><span style = 'font-size: 65%'>10:00 - 11:00</span></div></html>\"",
-                "<html><div style = 'text-align: center'>Availab.<br><span style = 'font-size: 65%'>11:00 - 12:00</span></div></html>\"",
-
-                "<html><div style = 'text-align: center'>Availab.<br><span style = 'font-size: 65%'>13:00 - 14:00</span></div></html>\"",
-                "<html><div style = 'text-align: center'>Availab.<br><span style = 'font-size: 65%'>14:00 - 15:00</span></div></html>\"",
-                "<html><div style = 'text-align: center'>Availab.<br><span style = 'font-size: 65%'>15:00 - 16:00</span></div></html>\"",
-                "<html><div style = 'text-align: center'>Availab.<br><span style = 'font-size: 65%'>16:00 - 17:00</span></div></html>\"",
-            }
-        ));
-        jTable1.setColumnSelectionAllowed(true);
-        jTable1.setSelectionBackground(new java.awt.Color(153, 0, 153));
-        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        jTable1.getTableHeader().setDefaultRenderer(new DefaultHeaderRenderer());
-        TableColumn firstColumn = jTable1.getColumnModel().getColumn(0);
-        firstColumn.setPreferredWidth(150);
-        firstColumn.setCellRenderer(new MaintenerColumnRenderer());
-        TableColumn secondColumn = jTable1.getColumnModel().getColumn(1);
-        secondColumn.setCellRenderer(new SkillColumnRenderer());
-        for(int i=2;i<10;i++){
-            TableColumn column=jTable1.getColumnModel().getColumn(i);
-            column.setCellRenderer(new OtherColumnRenderer());
-        }
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         forwardButton1.setText("SEND");
         forwardButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -300,7 +249,7 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
                 .addComponent(labelLight2, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(261, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,6 +277,9 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane3.setViewportView(jTextArea1);
 
+        jScrollPane4.setBorder(null);
+        jScrollPane4.setViewportView(jTable1);
+
         javax.swing.GroupLayout panelBase1Layout = new javax.swing.GroupLayout(panelBase1);
         panelBase1.setLayout(panelBase1Layout);
         panelBase1Layout.setHorizontalGroup(
@@ -343,17 +295,20 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelBase1Layout.createSequentialGroup()
-                                .addComponent(forwardButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(forwardButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(panelBase1Layout.createSequentialGroup()
-                                .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
-                                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE))
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(panelBase1Layout.createSequentialGroup()
+                                        .addComponent(forwardButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(forwardButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(panelBase1Layout.createSequentialGroup()
+                                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addContainerGap())))
                     .addGroup(panelBase1Layout.createSequentialGroup()
                         .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelForWeekNumber1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -365,7 +320,7 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
                         .addGap(26, 26, 26)
                         .addComponent(activtyAssign1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(45, 45, 45)
-                        .addComponent(activityInfoLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
+                        .addComponent(activityInfoLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBase1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -398,20 +353,20 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
                 .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelLight1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(18, 18, 18)
+                .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelBase1Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(operationButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(operationButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(22, Short.MAX_VALUE))
                     .addGroup(panelBase1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelBase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(forwardButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
-                            .addComponent(forwardButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                            .addComponent(forwardButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(forwardButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -426,20 +381,16 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelBase1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 20, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        
-    }//GEN-LAST:event_jTable1MouseClicked
-
     private void forwardButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forwardButton1ActionPerformed
         //String [] fraction= content.split(" ");
         
-        JPanel panel=new JPanel();
+       /* JPanel panel=new JPanel();
         panel.setOpaque(true);
         panel.setBackground(new Color(248,148,6));
         if(codeError==1){
@@ -459,14 +410,16 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
             }
             else
                  JOptionPane.showMessageDialog(panel,  "Operazione sul repository non riusciuta","Errore", JOptionPane.ERROR_MESSAGE);
-        }
+        }*/
+       this.state.confirmSelection();
     }//GEN-LAST:event_forwardButton1ActionPerformed
 
     private void forwardButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forwardButton2ActionPerformed
         this.cleaned=true;
-        this.codeError=0;
+        //this.codeError=0;
+        this.state = new NoSelection();
         this.jTextArea1.setText("");
-        this.jTable1.getSelectionModel().clearSelection();
+        this.jTable1.clearSelection();
     }//GEN-LAST:event_forwardButton2ActionPerformed
 
     private void operationButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton1ActionPerformed
@@ -525,10 +478,10 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
     private CommonComponents.ForwardButton forwardButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane4;
+    private CommonComponents.MaintainerDailyTable jTable1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextPane jTextPane1;
     private CommonComponents.LabelForWeekDay labelForWeekDay1;

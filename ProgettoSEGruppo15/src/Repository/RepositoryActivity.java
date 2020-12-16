@@ -191,17 +191,20 @@ public class RepositoryActivity extends RepositoryBase implements RepositoryActi
         temp.append("update MaintenanceActivity"
         + " set activityDescription = ");
         temp.append(" '").append(description).append("',");
-        temp.append(" siteID = ").append(" '").append(site).append(" ',");
+        temp.append(" siteID = ").append(" '").append(site).append("',");
         temp.append(" activityInterventionTime = ").append("  ").append(time).append(" ,");
         temp.append(" activityTypology = ").append("'").append(typology).append("',");
         temp.append(" interruptibleActivity = ").append("  ").append(inter).append(" ,");
         temp.append(" activityWeekNumber = ").append("  ").append(week).append(" ");
-        temp.append(" where activityid = ").append(" '").append(id).append(" ';");
+        temp.append(" where activityid = ").append(" '").append(id).append("';");
         try {
             connect();
-            stm.executeUpdate(temp.toString());
+            if(stm.executeUpdate(temp.toString())!=0){
             closeConnection();
             return true;
+            }
+            closeConnection();
+            return false;
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -232,7 +235,7 @@ public class RepositoryActivity extends RepositoryBase implements RepositoryActi
         temp1.append("update MaintenanceActivity"
         + " set activityWorkspaceNotes = ");
         temp1.append(" '").append(activityWorkspaceNotes).append("'");
-        temp1.append(" where activityid = ").append(" '").append(activityID).append(" ';");
+        temp1.append(" where activityid = ").append(" '").append(activityID).append("';");
         try {
             connect();
             if(stm.executeUpdate(temp1.toString())!=0){
