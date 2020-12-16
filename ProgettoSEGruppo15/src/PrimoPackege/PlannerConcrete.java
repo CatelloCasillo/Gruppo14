@@ -27,7 +27,19 @@ public class PlannerConcrete extends PlannerAbstract{
     public PlannerConcrete() {
         super();
     }
-
+/**
+ * This method allows to create an activity, and add it to the list and database 
+ * @param category (enum) indicates the type of maintenance activity
+ * @param id(String) indicates the id of activity to instantiate it
+ * @param site(Site) indicates the site of activity to instantiate it
+ * @param typology (String) indicates the typology of activity to instantiate it
+ * @param activityDescription (String) indicates the description of activity to instantiate it
+ * @param intervationTime (int) indicates the required time of activity to instantiate it
+ * @param interruptible (boolean) indicates if activity is interruptible to instantiate it
+ * @param week (int) indicates the week of activity to instantiate it
+ * @param workspacenotes (String) indicates the workspace of activity to instantiate it
+ * @return true if activity is created successfully false otherwise
+ */
     @Override
     public boolean createActivity(MaintanceActivityFactory.Category category, String id, Site site, String typology, String activityDescription, int intervationTime, boolean interruptible, int week, String workspacenotes) {
         MaintanceActivity a= MaintanceActivityFactory.make(category, id, site, typology, activityDescription, intervationTime, interruptible, week, null, null, null, workspacenotes);
@@ -36,7 +48,11 @@ public class PlannerConcrete extends PlannerAbstract{
             return true;
        }
        return false;}
-
+/**
+ * This method allows take a maintenance activity in the list by id
+ * @param idActivity id of activity
+ * @return Maintenance Activity according id if exists, null otherwise
+ */
     @Override
     public MaintanceActivity getMaintanceActivity(String idActivity) {
         for(MaintanceActivity m : activityList){
@@ -44,7 +60,10 @@ public class PlannerConcrete extends PlannerAbstract{
                 return m;
         }
       return null;}
-
+/**
+ * This method create a list of typology  from database 
+ * @return ArrayList of typology 
+ */
     @Override
     public ArrayList<String> getTypology() {
        ArrayList<String> a = new ArrayList<>();
@@ -53,13 +72,16 @@ public class PlannerConcrete extends PlannerAbstract{
             while (rst.next()) {
             String typology = repoActivity.getActivityTypology(rst);
             a.add(typology);
-            //System.out.println(typology);
             }return a;
         }catch (SQLException ex) {
           Logger.getLogger(Planner.class.getName()).log(Level.SEVERE, null, ex);
           return null;
       }}
-
+/**
+ * This method search if an activity with specific id already exists 
+ * @param id id of activity
+ * @return true if activity with this id already exists, false otherwise
+ */
     @Override
     public boolean idControl(String id) {
         for(MaintanceActivity m : activityList){
@@ -107,7 +129,13 @@ public class PlannerConcrete extends PlannerAbstract{
             attrTable[0] = new Object[]{"","","","",""};
         }
         return attrTable;}
-
+/**
+ * This method allows to delete an activity with specific id, both in the list and in the database. 
+ * Control if activity is already assigned to restore information
+ * @param idActivity (String) id of activity
+ * @param row (int) index of activity in the list
+ * @return true if delete successful, false otherwise
+ */
     @Override
     public boolean deleteActivity(String idActivity, int row) {
         if(getMaintanceActivity(idActivity).getMaintainerID()==null){
@@ -123,7 +151,18 @@ public class PlannerConcrete extends PlannerAbstract{
         }
          return false;
     }
-
+/**
+ * This method allows to modify the activity with a specific id, both in the list and in the database
+ * @param row (int) index of activity in the list
+ * @param id(String) indicates the id ofactivity 
+ * @param site(Site) indicates the site of activity 
+ * @param typology (String) indicates the typology of activity 
+ * @param description (String) indicates the description of activity 
+ * @param time (int) indicates the required time of activity
+ * @param inter (boolean) indicates if activity is interruptible
+ * @param week (int) indicates the week of activity
+ * @return true if the activity is modified successful, false otherwise
+ */
     @Override
     public boolean updateActivity(int row, String id, String site, String typology, String description, int time, boolean inter, int week) {
        Site s= this.findSiteInList(site, siteList);
@@ -137,12 +176,18 @@ public class PlannerConcrete extends PlannerAbstract{
             return true;
         }
         return false;}
-
+/**
+ * 
+ * @return the list of maintenance activity activity 
+ */
     @Override
     public ArrayList<MaintanceActivity> getActivityList() {
         return activityList;
     }
-
+/**
+ * 
+ * @return the list of the site already created
+ */
     @Override
     public ArrayList<Site> getSiteList() {
         return siteList;
@@ -162,7 +207,11 @@ public class PlannerConcrete extends PlannerAbstract{
           return skillList;
         }
     }
-
+/**
+ * This method allows to known all the competencies of a specific typology
+ * @param typology(String) indicates the typology of activity 
+ * @return an arrayList of String that indicates all competencies associated to a specific typology 
+ */
     @Override
     public ArrayList<String> getCompetenceTypology(String typology) {
         ResultSet rst= repoUtilities.getCompetenceOfTypology(typology);
@@ -176,7 +225,11 @@ public class PlannerConcrete extends PlannerAbstract{
           Logger.getLogger(Planner.class.getName()).log(Level.SEVERE, null, ex);
         return null;
         }}
-
+/**
+ * This method allows to read all fields in a specific file
+ * @param f indicates the selected file that must be read
+ * @return a string vector that represented all the fields read in the file, or null if the action is not completed
+ */
     @Override
     public String[] getStringInFile(File f) {
         BufferedReader b;

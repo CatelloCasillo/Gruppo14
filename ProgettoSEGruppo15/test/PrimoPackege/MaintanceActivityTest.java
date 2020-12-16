@@ -148,17 +148,6 @@ public class MaintanceActivityTest {
     }
 
     /**
-     * Test of setId method, of class MaintanceActivity.
-     */
-    @Test
-    public void testSetId() {
-        System.out.println("setId");
-        String id = "000";
-        instance.setId(id);
-        assertEquals(id, instance.getId());
-    }
-
-    /**
      * Test of getCategory method, of class MaintanceActivity.
      */
     @Test

@@ -66,14 +66,16 @@ public class TicketList extends javax.swing.JFrame{
 
     /**
      * Creates new form TicketList
+     * @param p
+     * @param f
      */
-    public TicketList() {
-        initComponents();
-    }
     public TicketList(PlannerInterface p, File[] f) {
         this.p=p;
         this.f= f;
         initComponents();
+    }
+    
+        private TicketList() {
     }
 
     /**

@@ -99,7 +99,7 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         return false;
 }
  /**
-  * thid method adds the rows to table
+  * this method adds the rows to table
   */
     private void populateTable(){
         dtm.setRowCount(0);
