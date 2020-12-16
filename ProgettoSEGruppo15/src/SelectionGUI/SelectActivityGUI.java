@@ -3,6 +3,7 @@ package SelectionGUI;
 import CommonComponents.CommonTableElements.DefaultHeaderRenderer;
 import Navigator.Navigator;
 import PrimoPackege.Planner;
+import PrimoPackege.PlannerInterface;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
@@ -44,7 +45,7 @@ import plannerGUI.FirstPagePlannerGUI;
  * @author Catello
  */
 public class SelectActivityGUI extends javax.swing.JFrame {
-    private Planner planner;
+    private PlannerInterface planner;
     //Creazione di un modello personalizzato per la JTable
     private class MyTableModel extends AbstractTableModel{
         private String[] columnNames;
@@ -115,14 +116,14 @@ public class SelectActivityGUI extends javax.swing.JFrame {
     
     /**
      * Creates new form SelectActivityGUI
+     * @param p
      */
-    public SelectActivityGUI(Planner p) {
+    public SelectActivityGUI(PlannerInterface p) {
         planner=p;
         initComponents();
         this.setLocationRelativeTo(null);
     }
     private SelectActivityGUI() {
-        planner=new Planner();
         initComponents();
         this.setLocationRelativeTo(null);
     }

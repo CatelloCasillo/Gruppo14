@@ -13,6 +13,7 @@ import static CommonComponents.CommonTableElements.RenderingUtility.colorPicker;
 import CommonComponents.CommonTableElements.SkillColumnRenderer;
 import Navigator.Navigator;
 import PrimoPackege.Planner;
+import PrimoPackege.PlannerInterface;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -38,7 +39,7 @@ import javax.swing.table.TableModel;
  * @author Catello
  */
 public class MaintainerSelectionGUI extends javax.swing.JFrame {
-    private Planner p;
+    private PlannerInterface p;
     private String selectedActivityId;
     
 
@@ -68,7 +69,7 @@ public class MaintainerSelectionGUI extends javax.swing.JFrame {
     /**
      * Creates new form MaintainerSelectionGUI
      */
-    public MaintainerSelectionGUI(Planner planner,String selectedActivityId, String activityInformation) {
+    public MaintainerSelectionGUI(PlannerInterface planner,String selectedActivityId, String activityInformation) {
         this.p=planner;
         this.selectedActivityId=selectedActivityId;
         initComponents();

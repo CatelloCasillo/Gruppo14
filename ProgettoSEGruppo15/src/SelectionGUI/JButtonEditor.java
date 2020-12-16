@@ -2,6 +2,7 @@ package SelectionGUI;
 
 import Navigator.Navigator;
 import PrimoPackege.Planner;
+import PrimoPackege.PlannerInterface;
 import VerifyGUI.VerifyActivityGUI;
 import java.awt.Color;
 import java.awt.Component;
@@ -36,9 +37,9 @@ public class JButtonEditor extends AbstractCellEditor implements TableCellEditor
     private JButton button;
     private Object editorValue;
     private JTable table;
-    private Planner planner;
+    private PlannerInterface planner;
     private JFrame frame;
-    public JButtonEditor(Planner p, JFrame frame) {
+    public JButtonEditor(PlannerInterface p, JFrame frame) {
         this.frame=frame;
         this.planner=p;
         this.button = new JButton("Select");

@@ -1,5 +1,7 @@
 package PrimoPackege;
 
+import java.util.Objects;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -34,10 +36,33 @@ public class Site {
     }
 
     @Override
-    public String toString() {
-        return "SiTE: "+id+factory+area; //To change body of generated methods, choose Tools | Templates.
+    public int hashCode() {
+        int hash = 7;
+        return hash;
     }
 
- 
-    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Site other = (Site) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.factory, other.factory)) {
+            return false;
+        }
+        if (!Objects.equals(this.area, other.area)) {
+            return false;
+        }
+        return true;
+    }
+  
 }

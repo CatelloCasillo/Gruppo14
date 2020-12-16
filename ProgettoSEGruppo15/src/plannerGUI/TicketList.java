@@ -6,16 +6,12 @@
 package plannerGUI;
 
 import Navigator.Navigator;
-import PrimoPackege.Planner;
+import PrimoPackege.PlannerInterface;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -26,46 +22,46 @@ import javax.swing.filechooser.FileSystemView;
 
 /**
  *
- * @author User
+ * @author Gabriella
  */
 public class TicketList extends javax.swing.JFrame{
     
-    private Planner p;
-    private int COLUMNS = 1;
+    private PlannerInterface p;
+    private final int COLUMNS = 1;
     private Dimension size;
     private String [] s;
     private File[] f;
 
+/**
+ * Create a personal renderer to show the list of tickets
+ */
+    private class MyCellRenderer extends JLabel implements ListCellRenderer {
 
-     private class MyCellRenderer extends JLabel implements ListCellRenderer {
-
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        public Component getListCellRendererComponent(JList list, Object value,
-                int index, boolean isSelected, boolean cellHasFocus) {
-            Border b = BorderFactory.createCompoundBorder();
-                   b = BorderFactory.createCompoundBorder(b, BorderFactory.createMatteBorder(1,0,0,0,Color.WHITE));
-            if (value instanceof File) {
-                File file = (File) value;
-                setText(file.getName());
-                setIcon(FileSystemView.getFileSystemView().getSystemIcon(file));
-                setBorder(b);
-                if (isSelected) {
-                    setBackground(list.getSelectionBackground());
-                    setForeground(list.getSelectionForeground());
-                } else {
-                    setBackground(list.getBackground());
-                    setForeground(list.getForeground());
-                }
-                setPreferredSize(new Dimension(250, 25));
-                setEnabled(list.isEnabled());
-                setFont(list.getFont());
-                setOpaque(true);
-            }
-            return this;
-        }
-    }
+       @Override
+       public Component getListCellRendererComponent(JList list, Object value,
+               int index, boolean isSelected, boolean cellHasFocus) {
+           Border b = BorderFactory.createCompoundBorder();
+                  b = BorderFactory.createCompoundBorder(b, BorderFactory.createMatteBorder(1,0,0,0,Color.WHITE));
+           if (value instanceof File) {
+               File file = (File) value;
+               setText(file.getName());
+               setIcon(FileSystemView.getFileSystemView().getSystemIcon(file));
+               setBorder(b);
+               if (isSelected) {
+                   setBackground(list.getSelectionBackground());
+                   setForeground(list.getSelectionForeground());
+               } else {
+                   setBackground(list.getBackground());
+                   setForeground(list.getForeground());
+               }
+               setPreferredSize(new Dimension(250, 25));
+               setEnabled(list.isEnabled());
+               setFont(list.getFont());
+               setOpaque(true);
+           }
+           return this;
+       }
+   }
     
 
     /**
@@ -73,17 +69,12 @@ public class TicketList extends javax.swing.JFrame{
      */
     public TicketList() {
         initComponents();
-        this.setLocationRelativeTo(null);
-        //leggi();
     }
-    public TicketList(Planner p, File[] f) {
+    public TicketList(PlannerInterface p, File[] f) {
         this.p=p;
         this.f= f;
         initComponents();
-        this.setLocationRelativeTo(null);
-        //leggi();
     }
-  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -230,22 +221,14 @@ public class TicketList extends javax.swing.JFrame{
                 JOptionPane.showMessageDialog(rootPane, "Devi selezionare un Ticket!");
         }
         else{
-             //System.out.println(s[1]);
         Navigator nav=Navigator.getInstance(p);
         nav.changeToActivityEWO(this, s[0], s[1], s[2], s[3]);    
-        /*     
-        ActivityEWO a= new ActivityEWO(p, s[0], s[1], s[2], s[3]);
-        a.setVisible(true);
-        a.pack();
-        a.setLocationRelativeTo(null);
-        a.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();*/
         }
     }//GEN-LAST:event_operationButton1ActionPerformed
 
     private void operationButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton2ActionPerformed
          Navigator nav=Navigator.getInstance(p);
-        nav.changeToWelcomeWindow(this);
+         nav.changeToWelcomeWindow(this);
     }//GEN-LAST:event_operationButton2ActionPerformed
 
     /**
@@ -276,14 +259,11 @@ public class TicketList extends javax.swing.JFrame{
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                    new TicketList().setVisible(true);
-          }
+        java.awt.EventQueue.invokeLater(() -> {
+            new TicketList().setVisible(true);
         });
 }
-    
-   
+  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private CommonComponents.CloseButton closeButton2;
     private javax.swing.JLabel jLabel1;

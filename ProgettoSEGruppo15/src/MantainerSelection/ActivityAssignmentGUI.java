@@ -12,6 +12,7 @@ import static CommonComponents.CommonTableElements.RenderingUtility.colorPicker;
 import CommonComponents.CommonTableElements.SkillColumnRenderer;
 import Navigator.Navigator;
 import PrimoPackege.Planner;
+import PrimoPackege.PlannerInterface;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Panel;
@@ -40,7 +41,7 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
     private String selectedActvity;
     private int intervetionTime;
     private String selectedMaintainer;
-    private Planner planner;
+    private PlannerInterface planner;
     private String skillCompliance;   
     private String maintainerName;
     private boolean cleaned;
@@ -137,7 +138,7 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
         codeError=-1;
     }
     
-    public ActivityAssignmentGUI(Planner p, String maintenerName,String skillCompliance,String selectedDayWeek,String activityInfo, String notes,LocalDate selectedDate, String selectedActvity, Color percentageColor, String percentage, String selectedMaintainerId, int estimatedActivityTime) {
+    public ActivityAssignmentGUI(PlannerInterface p, String maintenerName,String skillCompliance,String selectedDayWeek,String activityInfo, String notes,LocalDate selectedDate, String selectedActvity, Color percentageColor, String percentage, String selectedMaintainerId, int estimatedActivityTime) {
         this.selectedActvity=selectedActvity;
         this.numericSlots=new ArrayList<>();
         this.planner=p;

@@ -253,7 +253,7 @@ public class RepositoryActivity extends RepositoryBase implements RepositoryActi
                 return true;
             }
             closeConnection();
-            return true;
+            return false;
             
         } catch (SQLException ex) {
             Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);

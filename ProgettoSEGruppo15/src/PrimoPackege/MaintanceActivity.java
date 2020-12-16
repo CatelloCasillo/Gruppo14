@@ -1,7 +1,7 @@
 package PrimoPackege;
 
+import PrimoPackege.MaintanceActivityFactory.Category;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -26,44 +26,12 @@ public abstract class MaintanceActivity {
     private String procedureID;
     private String fileSMP;
     private String maintainerID;
-    public enum Category{PLANNED, EWO};
+    private Category category;
 
     
-    //costruttore usato per creare una nuova attivitià
-    /*
-    public MaintanceActivity(String id, Site site, String typology, 
-            String activityDescription, int intervationTime, boolean interruptible, int weekNumber,
-            String workspacenotes) {
-        this.id = id;
-        this.site = site;
-        this.typology = typology;
-        this.activityDescription = activityDescription;
-        this.intervationTime = intervationTime;
-        this.interruptible = interruptible;
-        this.weekNumber = weekNumber;
-        this.workspacenotes= workspacenotes;
-        
-        
-    }
 
-    public MaintanceActivity(String id, Site site, String typology, 
-             String activityDescription, int intervationTime, boolean interruptible, int week,
-             String procedureID,String fileSMP) {
-        this.id = id;
-        this.site = site;
-        this.typology = typology;
-        this.activityDescription = activityDescription;
-        this.intervationTime = intervationTime;
-        this.interruptible = interruptible;
-        this.weekNumber = week;
-        this.fileSMP=fileSMP;
-        this.procedureID=procedureID;
-    
-    }
-    */
-    public MaintanceActivity(String id, Site site, String typology, 
-             String activityDescription, int intervationTime, boolean interruptible, int week,
-             String procedureID,String fileSMP, String maintainerID, String workspace){
+    public MaintanceActivity(Category category, String id, Site site, String typology, String activityDescription, int intervationTime, boolean interruptible, int week, String procedureID, String fileSMP, String maintainerID, String workspace) {
+        this.category= category;
         this.id = id;
         this.site = site;
         this.typology = typology;
@@ -118,6 +86,9 @@ public abstract class MaintanceActivity {
         this.id = id;
     }
 
+    public Category getCategory(){    
+        return category;
+    }
     
     public void setTypology(String typology) {
         this.typology = typology;

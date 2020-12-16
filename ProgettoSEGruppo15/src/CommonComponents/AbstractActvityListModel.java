@@ -5,6 +5,7 @@
  */
 package CommonComponents;
 import PrimoPackege.Planner;
+import PrimoPackege.PlannerInterface;
 import java.util.ArrayList;
 import javax.swing.AbstractListModel;
 /**
@@ -14,7 +15,7 @@ import javax.swing.AbstractListModel;
 public class AbstractActvityListModel extends AbstractListModel<String> {
     private String[] strings;
     
-    public AbstractActvityListModel(Planner p, String id){
+    public AbstractActvityListModel(PlannerInterface p, String id){
         strings = toArrayString(p.getCompetencesList(id));
     }
     
