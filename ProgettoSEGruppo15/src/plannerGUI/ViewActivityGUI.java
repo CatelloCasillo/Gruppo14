@@ -3,8 +3,6 @@ package plannerGUI;
 
 import Navigator.Navigator;
 import PrimoPackege.*;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,15 +17,17 @@ import javax.swing.table.DefaultTableModel;
  * @author Gabriella
  */
 public class ViewActivityGUI extends javax.swing.JFrame {
-    Planner p ;
-    String header[]= new String []{"ID", "site", "typology", "activityDescription", "intervationTime", "interruptible", "week"};
-    DefaultTableModel dtm;
-    int row, col;
-    int k;
+    private PlannerInterface p ;
+    private String header[]= new String []{"ID", "site", "typology", "activityDescription", "intervationTime", "interruptible", "week"};
+    private DefaultTableModel dtm;
+    private int row= -1, col;
+   
     
 
-    /** Creates new form ViewActivityGUI */
-    public ViewActivityGUI(Planner p) {
+    /** Creates new form ViewActivityGUI
+     * @param p 
+     */
+    public ViewActivityGUI(PlannerInterface p) {
         this.p= p;
         initComponents();
         dtm=  new DefaultTableModel(header, 0){
@@ -35,10 +35,8 @@ public class ViewActivityGUI extends javax.swing.JFrame {
             public boolean isCellEditable(int row, int column) {
                 return false; 
             }    
-        }
-                ;
+        };
         jTable1.setModel(dtm);
-        this.setLocationRelativeTo(null);
         disabledField();
         populateTable();
     }
@@ -47,10 +45,11 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         initComponents();
         dtm=  new DefaultTableModel(header, 0);
         jTable1.setModel(dtm);
-        this.setLocationRelativeTo(null);
         disabledField();
    }
-    
+ /**
+  * this method disalbled all the fields
+  */   
     private void disabledField(){
         jTextFieldId.setEnabled(false);
         jComboBox2.setEnabled(false);
@@ -61,7 +60,9 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         jRadioButton1.setEnabled(false);
         jRadioButton2.setEnabled(false);
     }
-   
+ /**
+  * this method enabled all the fields
+  */
     private void enabledField(){
         jComboBox2.setEnabled(true);
         jComboBoxTyp.setEnabled(true);
@@ -71,7 +72,9 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         jRadioButton2.setEnabled(true);
         jTextFieldWeek.setEnabled(true); 
     }
-    
+  /**
+   * this method clear all the fields
+   */  
     private void clearField(){
         jTextFieldId.setText("");
         jComboBox2.setSelectedIndex(0);
@@ -82,14 +85,20 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         jRadioButton2.setSelected(false);
         jTextFieldWeek.setText("");
     }
-    
+ /**
+  * this method check if an activity is already assigned
+  * @param i 
+  * @return 
+  */   
     private boolean activityAssigned(int i){
-           if(p.getActivityList().get(i).getMaintainerID()!=null){
-               return true;
-           }
+        if(p.getActivityList().get(i).getMaintainerID()!=null){
+            return true;
+        }
         return false;
 }
-    
+ /**
+  * thid method adds the rows to table
+  */
     private void populateTable(){
         dtm.setRowCount(0);
         for(int i=0; i<p.getActivityList().size(); i++){
@@ -316,7 +325,10 @@ public class ViewActivityGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
- 
+ /**
+  * this method changes the field 
+  * @param evt 
+  */
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         row= jTable1.getSelectedRow();
         col = jTable1.getColumnCount();
@@ -327,7 +339,6 @@ public class ViewActivityGUI extends javax.swing.JFrame {
                 jComboBoxTyp.setSelectedIndex(i);
             }
         }
-        
         String loc2= dtm.getValueAt(row, 1).toString();
         for(int i=0 ; i<(jComboBox2.getItemCount()); i++){
             if(jComboBox2.getItemAt(i).equalsIgnoreCase(loc2)){
@@ -349,7 +360,7 @@ public class ViewActivityGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void operationButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton1ActionPerformed
-        if( jTable1.isRowSelected(row)){
+        if(jTable1.isRowSelected(row)){
         int dialogButton =JOptionPane.YES_NO_OPTION;
         int dialogResult= JOptionPane.showConfirmDialog(this, "Delete this data", "Delete", dialogButton);
         if(dialogResult == 0){
@@ -361,8 +372,7 @@ public class ViewActivityGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_operationButton1ActionPerformed
 
     private void operationButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton2ActionPerformed
-        //if( jTable1.isRowSelected(row)){
-        if(activityAssigned( jTable1.getSelectedRow())){
+        if(activityAssigned(jTable1.getSelectedRow())){
             disabledField();
             JOptionPane.showMessageDialog(rootPane, "Attività già assegnata impossibile modificare!", "Error message", JOptionPane.ERROR_MESSAGE);
         }
@@ -374,14 +384,6 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         int updateTime = Integer.parseInt(jTextFieldTime.getText().trim());
         boolean updateInterruptible= jRadioButton1.isSelected();
         int updateWeek = Integer.parseInt(jTextFieldWeek.getText().trim());
-        
-        /*
-        p.getActivityList().get(row).setTypology(updateTypology);
-        p.getActivityList().get(row).setActivityDescription(updateDescription);
-        p.getActivityList().get(row).setIntervationTime(updateTime);
-        p.getActivityList().get(row).setInterruptible(updateInterruptible);
-        p.getActivityList().get(row).setWeek(updateWeek);
-        */
         p.updateActivity(row, jTextFieldId.getText(), updateSite, updateTypology, updateDescription, updateTime, updateInterruptible, updateWeek);
         populateTable();
         }
@@ -390,12 +392,6 @@ public class ViewActivityGUI extends javax.swing.JFrame {
     private void operationButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton3ActionPerformed
         Navigator nav=Navigator.getInstance(p);
         nav.changeToWelcomeWindow(this);
-        /*       FirstPagePlannerGUI welcome= new FirstPagePlannerGUI(p);
-        welcome.setVisible(true);
-        welcome.pack();
-        welcome.setLocationRelativeTo(null);
-        welcome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();*/
     }//GEN-LAST:event_operationButton3ActionPerformed
 
     /**
@@ -426,10 +422,8 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ViewActivityGUI().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new ViewActivityGUI().setVisible(true);
         });
     }
 

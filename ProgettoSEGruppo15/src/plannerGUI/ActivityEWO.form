@@ -256,8 +256,9 @@
                 <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jList1MouseExited"/>
               </Events>
               <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="/**&#xa; * this is a Jlist with the competence to select&#xa; */"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jList1.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DefaultListModel lm = new DefaultListModel();&#xa;for(String s: p.getCompetenceTypology(typology)){&#xa;lm.addElement(s);&#xa;    //lm.add(s);&#xa;};"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DefaultListModel lm = new DefaultListModel();&#xa;for(String s: p.getCompetenceTypology(typology)){&#xa;lm.addElement(s);&#xa;};"/>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>

@@ -3,14 +3,8 @@ package plannerGUI;
 
 import Navigator.Navigator;
 import static PrimoPackege.MaintanceActivityFactory.Category.PLANNED;
-import PrimoPackege.Planner;
-import plannerGUI.FirstPagePlannerGUI;
-import java.awt.Color;
-import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JFrame;
+import PrimoPackege.PlannerInterface;
 import javax.swing.JOptionPane;
-import javax.swing.border.Border;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -24,26 +18,24 @@ import javax.swing.border.Border;
  */
 public class CreateAnActivityGUI extends javax.swing.JFrame {
     
-    Planner p;
+    private PlannerInterface p;
 
     /**
      * Creates new form CreateAnActivity
+     * @param p
      */
-    public CreateAnActivityGUI(Planner p) {
+    public CreateAnActivityGUI(PlannerInterface p) {
         this.p = p;
         initComponents();
-        this.setLocationRelativeTo(null);
-        for(int i=0; i<p.getActivityList().size(); i++){
-        System.out.println(p.getActivityList().get(i).getSite().getId());
-        }
     }
 
     private CreateAnActivityGUI() {
         initComponents();
-        this.setLocationRelativeTo(null);
     }
     
-    //pulisce i campi 
+    /**
+     * this method clear all the fields
+     */ 
     private void clearField(){
         jTextFieldId1.setText("");
         jComboBoxTipo1.setSelectedIndex(0);
@@ -55,7 +47,11 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
         jTextAreaWorkSpace1.setText("");
     }
     
-    // verifica dei dati inseriti
+    /**
+     * this metod check the data entered
+     * @return true if the data are correct
+     * @return false if the date are not correct
+     */
     private boolean verifData(){
         if (jTextFieldId1.getText().equals("")  
                 || jTextFieldDescription1.getText().equals("") || jTextFieldTime1.getText().equals("") 
@@ -63,11 +59,7 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
                 ||(jRadioButton3.isSelected() == false) &&(jRadioButton4.isSelected()== false)){
             JOptionPane.showMessageDialog(null, "One or more fields are empty");
             return false;
-        }/*
-        if (jTextFieldId1.getText().length()!=6 ){
-            JOptionPane.showMessageDialog(null, "ID must has 6 char");
-            return false;
-        }*/
+        }
         if(Integer.parseInt(jTextFieldTime1.getText())<0 || Integer.parseInt(jTextFieldWeek1.getText())>52){
             JOptionPane.showMessageDialog(null, "Week must be between 1 and 52");
             return false;
@@ -287,34 +279,31 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-   
+/**
+ * this method allows to change interface "WelcomeWindows" when you click button Cancel
+ * @param evt 
+ */
     private void operationButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton1ActionPerformed
         Navigator nav=Navigator.getInstance(p);
         nav.changeToWelcomeWindow(this);
-        /*FirstPagePlannerGUI planner= new FirstPagePlannerGUI(p);
-        planner.setVisible(true);
-        planner.pack();
-        planner.setLocationRelativeTo(null);
-        planner.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();*/
     }//GEN-LAST:event_operationButton1ActionPerformed
-
+/**
+ * this method allows to create an activity when you click the button Create 
+ * @param evt 
+ */
     private void operationButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton3ActionPerformed
         if(verifData()){
           p.createActivity(PLANNED, jTextFieldId1.getText(), p.findSiteInList(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()), p.getSiteList()) ,  jComboBoxTipo1.getItemAt(jComboBoxTipo1.getSelectedIndex()), jTextFieldDescription1.getText(), Integer.parseInt(jTextFieldTime1.getText()), jRadioButton3.isSelected(), Integer.parseInt(jTextFieldWeek1.getText()), jTextAreaWorkSpace1.getText());
         JOptionPane.showMessageDialog(rootPane, "create successfully");
         clearField();}
     }//GEN-LAST:event_operationButton3ActionPerformed
-
+/**
+ * this method allows to change interface "View Activities"
+ * @param evt 
+ */
     private void operationButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton2ActionPerformed
        Navigator nav=Navigator.getInstance(p);
-        nav.changeToViewActivityWindow(this);
-        /* ViewActivityGUI view= new ViewActivityGUI(p);
-        view.setVisible(true);
-        view.pack();
-        view.setLocationRelativeTo(null);
-        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();*/
+       nav.changeToViewActivityWindow(this);
     }//GEN-LAST:event_operationButton2ActionPerformed
 
     /**
@@ -346,10 +335,8 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CreateAnActivityGUI().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new CreateAnActivityGUI().setVisible(true);
         });
     }
 

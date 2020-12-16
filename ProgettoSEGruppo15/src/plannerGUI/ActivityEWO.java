@@ -5,29 +5,25 @@
  */
 package plannerGUI;
 
-import EWOassignment.EwoAssignmentGUI;
 import Navigator.Navigator;
 import PrimoPackege.MaintanceActivityFactory;
-import PrimoPackege.Planner;
+import PrimoPackege.PlannerInterface;
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
-//import EWOassignment.EwoAssignmentGUI;
 import javax.swing.JOptionPane;
 /**
  *
- * @author User
+ * @author Gabriella
  */
 public class ActivityEWO extends javax.swing.JFrame {
-    Planner p;
-    String id;
-    //String site;
-    String siteID;
-    String typology; 
-    String workspacenote;
+    private PlannerInterface p;
+    private String id;
+    private String siteID;
+    private String typology; 
+    private String workspacenote;
     /**
      * Creates new form ActivityEWO
      * @param p
@@ -36,22 +32,18 @@ public class ActivityEWO extends javax.swing.JFrame {
      * @param typology
      * @param workspacenote
      */
-    public ActivityEWO(Planner p, String id, String siteID, String typology, String workspacenote) {
-        
+    public ActivityEWO(PlannerInterface p, String id, String siteID, String typology, String workspacenote) {
         this.p= p;
         this.id= id;
         this.siteID= siteID;
         this.typology= typology;
         this.workspacenote= workspacenote;        
         initComponents();
-        //System.out.println((p.findSiteInList((siteID),p.getSiteList())));
-        this.setLocationRelativeTo(null);
         activityInfoLabel1.setText(id+" - "+(p.findSiteInList((siteID),p.getSiteList()).getArea())+" "+(p.findSiteInList((siteID),p.getSiteList()).getFactory()) +" - "+typology);
         jTextArea1.setText(workspacenote);
     }
      public ActivityEWO() {
         initComponents();
-        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -77,6 +69,9 @@ public class ActivityEWO extends javax.swing.JFrame {
         jTextArea2 = new javax.swing.JTextArea();
         activtyAssign1 = new CommonComponents.ActivtyAssign();
         jScrollPane4 = new javax.swing.JScrollPane();
+        /**
+        * this is a Jlist with the competence to select
+        */
         jList1 = new javax.swing.JList<>();
         forwardButton1 = new CommonComponents.ForwardButton();
         activityInfoLabel1 = new CommonComponents.ActivityInfoLabel();
@@ -108,7 +103,6 @@ public class ActivityEWO extends javax.swing.JFrame {
         DefaultListModel lm = new DefaultListModel();
         for(String s: p.getCompetenceTypology(typology)){
             lm.addElement(s);
-            //lm.add(s);
         };
         jList1.setModel(lm);
         jList1.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -269,15 +263,12 @@ public class ActivityEWO extends javax.swing.JFrame {
     private void operationButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton1ActionPerformed
         Navigator nav=Navigator.getInstance(p);
         nav.changeToTicketList(this);
-        
-        /*        TicketList planner= new TicketList(p);
-        planner.setVisible(true);
-        planner.pack();
-        planner.setLocationRelativeTo(null);
-        planner.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();*/
     }//GEN-LAST:event_operationButton1ActionPerformed
 
+    /**
+     * this method simulate the press of Ctrl
+     * @param evt 
+     */
     private void jList1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseEntered
         Robot r;
         try {
@@ -287,7 +278,10 @@ public class ActivityEWO extends javax.swing.JFrame {
         }                           
 
     }//GEN-LAST:event_jList1MouseEntered
-
+   /**
+    * this method simulate the release of Ctrl
+    * @param evt 
+    */
     private void jList1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseExited
         Robot r;
         try {
@@ -296,40 +290,37 @@ public class ActivityEWO extends javax.swing.JFrame {
         }catch (AWTException ex) {
             }
     }//GEN-LAST:event_jList1MouseExited
-
+/**
+ * this method control if the activity associated to selected ticket alredy exists, 
+ * if yes return to ticketsPage, if no go to next interface 
+ * @param evt 
+ */
     private void forwardButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forwardButton1ActionPerformed
         if(p.getMaintanceActivity(id)==null){
         p.createActivity(MaintanceActivityFactory.Category.EWO, id, p.findSiteInList((siteID),p.getSiteList()), typology, jTextArea2.getText(), Integer.parseInt(jTextArea3.getText()), false, Integer.parseInt(weekNumber1.getText()),  workspacenote);
-        EwoAssignmentGUI c= new EwoAssignmentGUI(p, siteID, id, typology, workspacenote,jList1.getSelectedValuesList());
-        c.setVisible(true);
-        c.pack();
-        c.setLocationRelativeTo(null);
-        c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        this.dispose();
-        }
-        
-        else{
+        Navigator nav=Navigator.getInstance(p);
+        nav.changeToEWOassignment(this,siteID, id, typology, workspacenote,jList1.getSelectedValuesList());
+       }
+        else{ 
         JOptionPane.showMessageDialog(rootPane, "Already created! You must select other Ticket!");
         Navigator nav=Navigator.getInstance(p);
         nav.changeToTicketList(this);
-            //JOptionPane.showMessageDialog(rootPane, "Attività già creata! Seleziona un'altro ticket!", "Error Message", JOptionPane.ERROR_MESSAGE);
-        }
-        //System.out.println(jList1.getSelectedValuesList());
-        
-       
-                //System.out.println(jList1.getSelectedValuesList());
-        
-        
+        }    
     }//GEN-LAST:event_forwardButton1ActionPerformed
-
+/**
+ * this method sets the text to an empty string to write the time
+ * @param evt 
+ */
     private void jTextArea3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextArea3FocusGained
         if(jTextArea3.getText().equals("Time required:")){
             jTextArea3.setText("");
             jTextArea3.setForeground(Color.BLACK);
         }
     }//GEN-LAST:event_jTextArea3FocusGained
-
+/**
+ * this method sets the string to indicate what to insert
+ * @param evt 
+ */
     private void jTextArea3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextArea3FocusLost
         if(jTextArea3.getText().equals("")){
             jTextArea3.setText("Time required:");

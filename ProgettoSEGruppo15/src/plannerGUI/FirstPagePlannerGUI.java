@@ -2,9 +2,8 @@ package plannerGUI;
 
 
 import Navigator.Navigator;
-import PrimoPackege.Planner;
-import javax.swing.JFrame;
-import SelectionGUI.SelectActivityGUI;
+import PrimoPackege.PlannerConcrete;
+import PrimoPackege.PlannerInterface;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,21 +16,20 @@ import SelectionGUI.SelectActivityGUI;
  * @author Gabriella
  */
 public class FirstPagePlannerGUI extends javax.swing.JFrame {
-    Planner p;
+    private PlannerInterface p;
 
     /**
      * Creates new form FirstPagePlannerGUI
+     * @param p
      */
-    public FirstPagePlannerGUI(Planner p) {
+    public FirstPagePlannerGUI(PlannerInterface p) {
         initComponents();
         this.p= p;
-        //center form
-        this.setLocationRelativeTo(null);
     }
 
     private FirstPagePlannerGUI() {
         initComponents();
-        this.p = new Planner();
+        this.p = new PlannerConcrete();
         this.setLocationRelativeTo(null);
       }
 
@@ -154,45 +152,21 @@ public class FirstPagePlannerGUI extends javax.swing.JFrame {
     private void operationButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton1ActionPerformed
         Navigator nav=Navigator.getInstance(p);
         nav.changeToCreateActivityWindow(this);
-        /*CreateAnActivityGUI activity= new CreateAnActivityGUI(p);
-        activity.setVisible(true);
-        activity.pack();
-        activity.setLocationRelativeTo(null);
-        activity.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();*/
     }//GEN-LAST:event_operationButton1ActionPerformed
 
     private void operationButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton2ActionPerformed
         Navigator nav=Navigator.getInstance(p);
         nav.changeToSelectActivityWindow(this);
-        /*SelectActivityGUI select= new SelectActivityGUI(p);
-        select.setVisible(true);
-        select.pack();
-        select.setLocationRelativeTo(null);
-        select.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();*/
     }//GEN-LAST:event_operationButton2ActionPerformed
 
     private void operationButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton3ActionPerformed
         Navigator nav=Navigator.getInstance(p);
         nav.changeToViewActivityWindow(this);
-        /*ViewActivityGUI view= new ViewActivityGUI(p);
-        view.setVisible(true);
-        view.pack();
-        view.setLocationRelativeTo(null);
-        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();*/
     }//GEN-LAST:event_operationButton3ActionPerformed
 
     private void operationButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton4ActionPerformed
        Navigator nav=Navigator.getInstance(p);
        nav.changeToTicketList(this);
-        /* TicketList view= new TicketList(p);
-        view.setVisible(true);
-        view.pack();
-        view.setLocationRelativeTo(null);
-        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();*/
     }//GEN-LAST:event_operationButton4ActionPerformed
 
     /**
@@ -223,10 +197,8 @@ public class FirstPagePlannerGUI extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FirstPagePlannerGUI().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new FirstPagePlannerGUI().setVisible(true);
         });
     }
 

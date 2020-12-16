@@ -9,7 +9,7 @@ import PrimoPackege.MaintanceActivityFactory.Category;
 
 /**
  *
- * @author User
+ * @author Gabriella
  */
 public class EwoActivity extends MaintanceActivity {
     

@@ -191,12 +191,12 @@ public class RepositoryActivity extends RepositoryBase implements RepositoryActi
         temp.append("update MaintenanceActivity"
         + " set activityDescription = ");
         temp.append(" '").append(description).append("',");
-        temp.append(" siteID = ").append(" '").append(site).append(" ',");
+        temp.append(" siteID = ").append(" '").append(site).append("',");
         temp.append(" activityInterventionTime = ").append("  ").append(time).append(" ,");
         temp.append(" activityTypology = ").append("'").append(typology).append("',");
         temp.append(" interruptibleActivity = ").append("  ").append(inter).append(" ,");
         temp.append(" activityWeekNumber = ").append("  ").append(week).append(" ");
-        temp.append(" where activityid = ").append(" '").append(id).append(" ';");
+        temp.append(" where activityid = ").append(" '").append(id).append("';");
         try {
             connect();
             stm.executeUpdate(temp.toString());
