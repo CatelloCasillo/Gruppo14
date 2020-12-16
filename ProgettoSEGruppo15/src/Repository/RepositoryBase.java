@@ -29,7 +29,11 @@ public abstract class RepositoryBase {
         this.pwd = "password";
         
     }
-    
+    /**
+     * 
+     * @return True if the connection to the Database is established, False otherwise.
+     * @throws SQLException 
+     */
     public boolean connect() throws SQLException{
          try {
             Class.forName("org.postgresql.Driver");
@@ -45,6 +49,10 @@ public abstract class RepositoryBase {
             return false;
         }
     }
+    /**
+     * Function to close the current connection with Database
+     * @throws SQLException 
+     */
     public void closeConnection() throws SQLException{
         if(this.conn!=null) {
                 this.conn.close();

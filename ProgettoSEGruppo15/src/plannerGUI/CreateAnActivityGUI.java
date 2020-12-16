@@ -2,6 +2,7 @@ package plannerGUI;
 
 
 import Navigator.Navigator;
+import static PrimoPackege.MaintanceActivityFactory.Category.PLANNED;
 import PrimoPackege.Planner;
 import plannerGUI.FirstPagePlannerGUI;
 import java.awt.Color;
@@ -43,7 +44,7 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
     }
     
     //pulisce i campi 
-    public void clearField(){
+    private void clearField(){
         jTextFieldId1.setText("");
         jComboBoxTipo1.setSelectedIndex(0);
         jTextFieldDescription1.setText("");
@@ -55,18 +56,18 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
     }
     
     // verifica dei dati inseriti
-    public boolean verifData(){
+    private boolean verifData(){
         if (jTextFieldId1.getText().equals("")  
                 || jTextFieldDescription1.getText().equals("") || jTextFieldTime1.getText().equals("") 
                 || jTextFieldWeek1.getText().equals("") 
                 ||(jRadioButton3.isSelected() == false) &&(jRadioButton4.isSelected()== false)){
             JOptionPane.showMessageDialog(null, "One or more fields are empty");
             return false;
-        }
+        }/*
         if (jTextFieldId1.getText().length()!=6 ){
             JOptionPane.showMessageDialog(null, "ID must has 6 char");
             return false;
-        }
+        }*/
         if(Integer.parseInt(jTextFieldTime1.getText())<0 || Integer.parseInt(jTextFieldWeek1.getText())>52){
             JOptionPane.showMessageDialog(null, "Week must be between 1 and 52");
             return false;
@@ -300,7 +301,7 @@ public class CreateAnActivityGUI extends javax.swing.JFrame {
 
     private void operationButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton3ActionPerformed
         if(verifData()){
-          p.createActivity(jTextFieldId1.getText(), p.findSiteInList(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()), p.getSiteList()) ,  jComboBoxTipo1.getItemAt(jComboBoxTipo1.getSelectedIndex()), jTextFieldDescription1.getText(), Integer.parseInt(jTextFieldTime1.getText()), jRadioButton3.isSelected(), Integer.parseInt(jTextFieldWeek1.getText()), jTextAreaWorkSpace1.getText());
+          p.createActivity(PLANNED, jTextFieldId1.getText(), p.findSiteInList(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()), p.getSiteList()) ,  jComboBoxTipo1.getItemAt(jComboBoxTipo1.getSelectedIndex()), jTextFieldDescription1.getText(), Integer.parseInt(jTextFieldTime1.getText()), jRadioButton3.isSelected(), Integer.parseInt(jTextFieldWeek1.getText()), jTextAreaWorkSpace1.getText());
         JOptionPane.showMessageDialog(rootPane, "create successfully");
         clearField();}
     }//GEN-LAST:event_operationButton3ActionPerformed

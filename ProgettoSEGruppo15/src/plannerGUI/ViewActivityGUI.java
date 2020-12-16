@@ -23,7 +23,8 @@ public class ViewActivityGUI extends javax.swing.JFrame {
     String header[]= new String []{"ID", "site", "typology", "activityDescription", "intervationTime", "interruptible", "week"};
     DefaultTableModel dtm;
     int row, col;
-    int k;
+    int lastSelected=-1;
+    
     
 
     /** Creates new form ViewActivityGUI */
@@ -83,6 +84,14 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         jTextFieldWeek.setText("");
     }
     
+    private boolean activityAssigned(int i){
+        if (p.getActivityList().isEmpty())
+            return false;
+           if(p.getActivityList().get(i).getMaintainerID()!=null){
+               return true;
+           }
+        return false;
+}
     
     private void populateTable(){
         dtm.setRowCount(0);
@@ -90,6 +99,7 @@ public class ViewActivityGUI extends javax.swing.JFrame {
            Object[] objs = {p.getActivityList().get(i).getId(),p.getActivityList().get(i).getSite().getId().trim()+':' + p.getActivityList().get(i).getSite().getArea()+ '-'+ p.getActivityList().get(i).getSite().getFactory()  , p.getActivityList().get(i).getTypology(),
                p.getActivityList().get(i).getActivityDescription(), p.getActivityList().get(i).getIntervationTime(), p.getActivityList().get(i).isInterruptible(),
                p.getActivityList().get(i).getWeekNumber()} ;
+           
            dtm.addRow(objs);
     }
     }
@@ -355,6 +365,15 @@ public class ViewActivityGUI extends javax.swing.JFrame {
 
     private void operationButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton2ActionPerformed
         //if( jTable1.isRowSelected(row)){
+        lastSelected=jTable1.getSelectedRow();
+        if(p.getActivityList().isEmpty() || lastSelected<0){
+            return;
+        }
+        if(activityAssigned( jTable1.getSelectedRow())){
+            disabledField();
+            JOptionPane.showMessageDialog(rootPane, "Attività già assegnata impossibile modificare!", "Error message", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
         enabledField();
         String updateSite= jComboBox2.getItemAt(jComboBox2.getSelectedIndex());
         String updateTypology = jComboBoxTyp.getItemAt(jComboBoxTyp.getSelectedIndex());
@@ -370,9 +389,13 @@ public class ViewActivityGUI extends javax.swing.JFrame {
         p.getActivityList().get(row).setInterruptible(updateInterruptible);
         p.getActivityList().get(row).setWeek(updateWeek);
         */
-        p.updateActivity(row, jTextFieldId.getText(), updateSite, updateTypology, updateDescription, updateTime, updateInterruptible, updateWeek);
+        if( jTable1.isRowSelected(row))
+            p.updateActivity(row, jTextFieldId.getText(), updateSite, updateTypology, updateDescription, updateTime, updateInterruptible, updateWeek);
+        else
+             p.updateActivity(lastSelected, jTextFieldId.getText(), updateSite, updateTypology, updateDescription, updateTime, updateInterruptible, updateWeek);
+
         populateTable();
-        
+        }
     }//GEN-LAST:event_operationButton2ActionPerformed
 
     private void operationButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton3ActionPerformed

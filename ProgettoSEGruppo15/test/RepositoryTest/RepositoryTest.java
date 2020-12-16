@@ -31,14 +31,7 @@ public class RepositoryTest {
     private Connection conn;
     private Statement stm;
 
-   
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
+
     
     @Before
     public void setUp() {
@@ -390,10 +383,7 @@ public class RepositoryTest {
     public void testGetSiteTable() {
         assertNotNull(repo.getSiteTable());
     }
-    @Test
-    public void testViewMaintenanceActivityTable() {
-        assertEquals(true,repo.viewMaintenanceActivityTable());
-    }
+
     @Test
     public void testInsertActivityTable() {
         //siteID='test02' nella tabella di test

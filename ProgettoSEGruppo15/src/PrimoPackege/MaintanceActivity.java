@@ -25,10 +25,12 @@ public abstract class MaintanceActivity {
     private String workspacenotes;
     private String procedureID;
     private String fileSMP;
+    private String maintainerID;
     public enum Category{PLANNED, EWO};
 
     
     //costruttore usato per creare una nuova attivitià
+    /*
     public MaintanceActivity(String id, Site site, String typology, 
             String activityDescription, int intervationTime, boolean interruptible, int weekNumber,
             String workspacenotes) {
@@ -57,6 +59,22 @@ public abstract class MaintanceActivity {
         this.fileSMP=fileSMP;
         this.procedureID=procedureID;
     
+    }
+    */
+    public MaintanceActivity(String id, Site site, String typology, 
+             String activityDescription, int intervationTime, boolean interruptible, int week,
+             String procedureID,String fileSMP, String maintainerID, String workspace){
+        this.id = id;
+        this.site = site;
+        this.typology = typology;
+        this.activityDescription = activityDescription;
+        this.intervationTime = intervationTime;
+        this.interruptible = interruptible;
+        this.weekNumber = week;
+        this.fileSMP=fileSMP;
+        this.procedureID=procedureID;
+        this.maintainerID= maintainerID;
+        this.workspacenotes= workspace;
     }
 
     public void setSite(Site site) {
@@ -136,6 +154,14 @@ public abstract class MaintanceActivity {
         this.fileSMP = fileSMP;
     }
 
+    public String getMaintainerID() {
+        return maintainerID;
+    }
+
+    public void setMaintainerID(String maintainerID) {
+        this.maintainerID = maintainerID;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -184,9 +210,6 @@ public abstract class MaintanceActivity {
         if (!Objects.equals(this.site, other.site)) {
             return false;
         }
-        if(!Objects.equals(this.getCategory(), other.getCategory())){
-            return false;
-        }
         return true;
     }
 
@@ -197,7 +220,4 @@ public abstract class MaintanceActivity {
     
     
 
-    
-    public abstract Category getCategory(); 
-    
 }

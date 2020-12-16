@@ -81,11 +81,12 @@ public class PlannerTest {
        Planner p=new Planner();
        assertTrue(p.getActivityList().size()==0 && p.getSiteList().size()==0);
     }
+    /*
     @Test
     public void testInsertActvityNoData(){
        Planner p=new Planner();
        assertFalse(p.createActivity("act005", new Site("site01","Fisciano","Molding"), "Eletrical", "descrizioneAttività" , 120, true, 5, "Informazioni aggiuntive"));
-    }
+    }*/
     @Test
     public void testUpdateActvityNoData(){
         Planner p=new Planner();
@@ -138,14 +139,20 @@ public class PlannerTest {
     public void testGetStringInFileWithErrorPath(){
         Planner p= new Planner();
         //String []c= p.getStringInFile(new File("\\src\\Tickets"));
-        assertNull(p.getStringInFile(new File("\\src\\Ticke")));
+        assertNull(p.getStringInFile(new File("src\\Ticke")));
     }
+    @Test
     public void testGetStringInFileWithNoErrorPath(){
         Planner p= new Planner();
         //String []c= p.getStringInFile(new File("\\src\\Tickets"));
-        assertTrue((p.getStringInFile(new File("\\src\\Tickets"))).length >0);
+        assertTrue((p.getStringInFile(new File("src\\Tickets\\ticket1.txt"))).length >0);
     }
-    
+    @Test
+    public void testGetStringInFile(){
+        Planner p= new Planner();
+        assertEquals("EWO001", p.getStringInFile(new File("src\\Tickets\\ticket1.txt"))[0]);
+    }
+    /*
     @Test
     public void testInsertActivityWithData() throws SQLException{
         this.insertSite();
@@ -156,7 +163,7 @@ public class PlannerTest {
         p.createActivity("act005", new Site("site01", "Factory", "area"), "Eletrical", "Descrizione", 120, true, 20, "Aggiuntivo");
         String id=this.selectActivityId();
         assertTrue(p.getActivityList().size()==1 && id.equals("act005"));
-    }
+    }*/
     
     
     @Test
