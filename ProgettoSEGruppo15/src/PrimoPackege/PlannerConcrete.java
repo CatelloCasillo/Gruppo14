@@ -101,7 +101,7 @@ public class PlannerConcrete extends PlannerAbstract{
     }
 
     @Override
-    public Object[][] getSelectionableAttribute(String currentWeek) {
+    public Object[][] getSelectionableActvity(String currentWeek) {
         int currentWeekNumber=parseInt(currentWeek.trim());
         int numRighe=this.getNumberActivityInWeek(currentWeekNumber);
         System.out.println(numRighe);
@@ -138,18 +138,21 @@ public class PlannerConcrete extends PlannerAbstract{
  */
     @Override
     public boolean deleteActivity(String idActivity, int row) {
-        if(getMaintanceActivity(idActivity).getMaintainerID()==null){
-         if(repoActivity.deleteMaintenanceActivity(idActivity)){
-            activityList.remove(row);
-            return true;
-        }
-        }else{
-            if(repoAvailability.deleteAssignedActivity(idActivity)){
+        MaintanceActivity act = getMaintanceActivity(idActivity);
+        if(act!=null){
+            if(act.getMaintainerID()==null){
+             if(repoActivity.deleteMaintenanceActivity(idActivity)){
                 activityList.remove(row);
                 return true;
             }
+            }else{
+                if(repoAvailability.deleteAssignedActivity(idActivity)){
+                    activityList.remove(row);
+                    return true;
+                }
+            }
         }
-         return false;
+        return false;
     }
 /**
  * This method allows to modify the activity with a specific id, both in the list and in the database
@@ -312,24 +315,38 @@ public class PlannerConcrete extends PlannerAbstract{
         } catch (SQLException ex) {
             Logger.getLogger(Planner.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Maintainer m = new Maintainer(repoMaintainer.getMaintainerID(rst),repoMaintainer.getMaintainerName(rst));
-        return m.getSlotsAvailability(selectedDay);}
+        String mantId = repoMaintainer.getMaintainerID(rst);
+        String mantName = repoMaintainer.getMaintainerName(rst);
+        if(mantId!=null){
+            Maintainer m = new Maintainer(repoMaintainer.getMaintainerID(rst),repoMaintainer.getMaintainerName(rst));
+            return m.getSlotsAvailability(selectedDay);
+        }
+        else{
+            Object [] empty = {null, null, null, null, null, null, null, null, null};
+            return empty;
+        }
+    }
 
     @Override
     public Maintainer getSelectedMaintainer(int selectedIndex) {
-        return maintainers.get(selectedIndex);}
+        if(selectedIndex<0 || this.maintainers==null || selectedIndex>=this.maintainers.size())
+            return null;
+        return maintainers.get(selectedIndex);
+    }
 
     @Override
     public boolean updateMaintainerAvailability(String maintainerID, String day, ArrayList<Integer> updatedtimeSlots) {
         if(repoAvailability.updateMaintainerAvailabilityCurrentWeek(maintainerID, day, updatedtimeSlots.get(0), updatedtimeSlots.get(1), updatedtimeSlots.get(2),updatedtimeSlots.get(3), updatedtimeSlots.get(4), updatedtimeSlots.get(5),updatedtimeSlots.get(6),updatedtimeSlots.get(7)))
             return true;
-        return false;}
+        return false;
+    }
 
     @Override
     public boolean assignActivityFraction(String activityID, String maintainerID, String day, int weekNumber, int[] fractions) {
         if(repoAvailability.assignActivity(activityID, maintainerID, day,weekNumber, fractions[0], fractions[1], fractions[2], fractions[3], fractions[4], fractions[5], fractions[6], fractions[7]))
             return true;
-        return false;}
+        return false;
+    }
 
     @Override
     public boolean updateNotes(String activityId, String notes) {
@@ -338,11 +355,13 @@ public class PlannerConcrete extends PlannerAbstract{
             act.setWorkspacenotes(notes);
             return true;
         }
-        return false;}
+        return false;
+    }
 
     @Override
     public void updateActivityToMaintainer(String activityId, String maintainerId) {
        MaintanceActivity act =this.getMaintanceActivity(activityId);
-        act.setMaintainerID(maintainerId);}
+        act.setMaintainerID(maintainerId);
+    }
     
 }

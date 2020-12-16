@@ -207,6 +207,8 @@ public abstract class MaintanceActivity {
         this.maintainerID = maintainerID;
     }
 
+    
+
     @Override
     public int hashCode() {
         int hash = 7;

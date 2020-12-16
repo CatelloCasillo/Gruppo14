@@ -181,7 +181,7 @@ public class SelectActivityGUI extends javax.swing.JFrame {
             new String [] {
                 "ID", "AREA", "TYPE","<html><div style = 'text-align: center'>Estimated intervention<br> time [min]</div></html>",""
             },
-            planner.getSelectionableAttribute(weekNumber2.getText())
+            planner.getSelectionableActvity(weekNumber2.getText())
         ));
         //setting dei vari renderer
         jTable1.getTableHeader().setDefaultRenderer(new DefaultHeaderRenderer());

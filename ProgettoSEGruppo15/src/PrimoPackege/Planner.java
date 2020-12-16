@@ -184,7 +184,8 @@ public class Planner {
         for (int i=0; i<this.activityList.size(); i++){
             MaintanceActivity act= this.activityList.get(i);
             if(act.getWeekNumber() == weekNumber && act.getMaintainerID() == null)
-                numAct++;
+                if(act.getCategory().equals(MaintanceActivityFactory.Category.PLANNED))
+                    numAct++;
         }
         return numAct;
     }
@@ -193,7 +194,7 @@ public class Planner {
     //per permettere al planner di scegliere l'attività vuole assegnare. Le righe sono inserite
     //in ordine crescente di numero di settimana
     
-    public Object[][] getSelectionableAttribute(String currentWeek){
+    public Object[][] getSelectionableActvity(String currentWeek){
         int currentWeekNumber=parseInt(currentWeek.trim());
         int numRighe=this.getNumberActivityInWeek(currentWeekNumber);
         System.out.println(numRighe);
@@ -318,6 +319,7 @@ public class Planner {
             }
             while(rst2.next()){
                 maintainerCompetences.add(repoUtilities.getCompetenceID(rst2));
+                System.out.println("Ciao");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Planner.class.getName()).log(Level.SEVERE, null, ex);
@@ -355,9 +357,10 @@ public class Planner {
             ArrayList<String>WeekAvailability = new ArrayList<>();
             for(String day : days)
                 WeekAvailability.add(m.getDayAvailability(day));
-            System.out.println(m.getName()+": "+WeekAvailability);
+           // System.out.println(m.getName()+": "+WeekAvailability);
             AvailabilityWeekTable[i] = new Object[]{m.getName(),skillCompliance(selectedActvityId, m.getId()), WeekAvailability.get(0), WeekAvailability.get(1), WeekAvailability.get(2), WeekAvailability.get(3), WeekAvailability.get(4), WeekAvailability.get(5), WeekAvailability.get(6)};
         }
+        
         return AvailabilityWeekTable;
         
     }
@@ -368,10 +371,21 @@ public class Planner {
         } catch (SQLException ex) {
             Logger.getLogger(Planner.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Maintainer m = new Maintainer(repoMaintainer.getMaintainerID(rst),repoMaintainer.getMaintainerName(rst));
-        return m.getSlotsAvailability(selectedDay);
+        String mantId = repoMaintainer.getMaintainerID(rst);
+        String mantName = repoMaintainer.getMaintainerName(rst);
+        if(mantId!=null){
+            Maintainer m = new Maintainer(repoMaintainer.getMaintainerID(rst),repoMaintainer.getMaintainerName(rst));
+            return m.getSlotsAvailability(selectedDay);
+        }
+        else{
+            Object [] empty = {null, null, null, null, null, null, null, null, null};
+            return empty;
+        }
     }
+    
     public Maintainer getSelectedMaintainer(int selectedIndex){
+        if(selectedIndex<0 || this.maintainers==null || selectedIndex>=this.maintainers.size())
+            return null;
         return maintainers.get(selectedIndex);
     }
     
@@ -380,11 +394,12 @@ public class Planner {
             return true;
         return false;
     }
+    
+    
     public boolean assignActivityFraction(String activityID, String maintainerID, String day, int weekNumber,  int [] fractions){
         if(repoAvailability.assignActivity(activityID, maintainerID, day,weekNumber, fractions[0], fractions[1], fractions[2], fractions[3], fractions[4], fractions[5], fractions[6], fractions[7]))
             return true;
-        return false;
-                    
+        return false;         
     }
     
     public boolean updateNotes(String activityId, String notes){
@@ -395,6 +410,7 @@ public class Planner {
         }
         return false;
     }
+    
     public void updateActivityToMaintainer(String activityId, String maintainerId){
         MaintanceActivity act =this.getMaintanceActivity(activityId);
         act.setMaintainerID(maintainerId);
