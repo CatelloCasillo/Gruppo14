@@ -11,6 +11,9 @@ import javax.swing.JLabel;
 /**
  *
  * @author Gabriella
+ * Label con sfondo grigio scuro, dimensione del font 14 e di colore bianco. L'eventuale testo
+ * contenuti in essa sarà allineato centralmente.
+ * 
  */
 public class ActivityInfoLabel extends JLabel {
 

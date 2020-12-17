@@ -17,6 +17,13 @@ import javax.swing.table.DefaultTableCellRenderer;
 /**
  *
  * @author Catello
+ * Renderer di una JTable che permette di visualizzare una stringa del tipo "x min"
+ * In base al valore di x lo sfondo della cella verrà colorato in modo diverso
+ * a seconda della. In particolare x può assumuere solo un valore compreso fra 0 e 60
+ * e ne viene calcolato il suo valore percetuale rispetto a rispetto a 60 e a 
+ * partire da questo valore viene scelto il colore
+ * <p>
+ * A seguito di una seluzione delle celle queste assumeramo uno sfondo nero e il testo in essa contenuto diventerà bianco 
  */
 public class HourPercentageRenderer extends DefaultTableCellRenderer{
     @Override

@@ -18,6 +18,14 @@ import javax.swing.table.TableCellRenderer;
 /**
  *
  * @author Catello
+ * Renderer di un header di una JTable che imposta le celle di header con
+ * lo sfondo arancione, un bordo bianco di spessore 1 per tutti i suoi lati tranne 
+ * quello inferiore che ha spessore 2. 
+ * <p>
+ * Il testo al suo interno viene centrato orizzontalmente
+ * <p>
+ * Imposta inoltre già la dimensione della cella in modo che il testo 
+ * al suo interno sia ben visualizzabile
  */
 public class DefaultHeaderRenderer extends JLabel implements TableCellRenderer{
  

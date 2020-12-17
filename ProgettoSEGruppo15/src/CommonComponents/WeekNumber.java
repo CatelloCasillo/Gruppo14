@@ -14,6 +14,10 @@ import javax.swing.JLabel;
 /**
  *
  * @author Catello
+ * JLabel che mostra il numero della settimana corrente.
+ * <p>
+ * Label di sfondo grigio scuro, font di dimensione 14 bianco e il numero di settimana mostrato al suo interno
+ * è orizzontalmente centranto.
  */
 public class WeekNumber extends JLabel{
 
@@ -27,6 +31,10 @@ public class WeekNumber extends JLabel{
         this.setPreferredSize(new Dimension(37,37));
         this.setText(""+getCurrentWeekNumber());
     }
+    /**
+     * Calcolo del numero della settimana corrente
+     * @return Intero che rappresenta il numero della settimana corrente 
+     */
     private int getCurrentWeekNumber(){
         Calendar calendar=new GregorianCalendar();
         Date currentDate = new Date();

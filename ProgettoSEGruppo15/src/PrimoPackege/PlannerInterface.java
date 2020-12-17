@@ -19,7 +19,7 @@ public interface PlannerInterface {
     public ArrayList<String> getTypology();
     public boolean idControl(String id);
     public Site findSiteInList(String idSite, ArrayList<Site> siteList);
-    public Object[][] getSelectionableAttribute(String currentWeek);
+    public Object[][] getSelectionableActvity(String currentWeek);
     public boolean deleteActivity(String idActivity, int row);
     public boolean updateActivity(int row,String id, String site, String typology,String description, int time, boolean inter, int week );
     public ArrayList<MaintanceActivity> getActivityList();

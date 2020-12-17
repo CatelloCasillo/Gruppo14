@@ -16,6 +16,14 @@ import javax.swing.border.Border;
 /**
  *
  * @author Catello
+ * Una label il cui funzionamento realizza il bottone di chiusura dell'applicazione personalizzato. 
+ * In particolare la label ottenuta avrà un font di dimensione 18, contiene una "X" al suo
+ * interno la quale viene allineato centralmente.
+ * <p>
+ * Quando il cursore del muose si sovrapporà alla label diventerà una
+ * mano e la label diventa di colore bianco. All'uscita del cursore label avrà nuovamente il suo colore originale.
+ * <p>
+ * Al click della Label l'applicazione verrà chiusa con esito postivo
  */
 public class CloseButton extends BaseLabelButton{
     
