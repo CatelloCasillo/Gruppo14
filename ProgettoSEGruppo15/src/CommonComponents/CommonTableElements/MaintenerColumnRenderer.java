@@ -14,6 +14,10 @@ import javax.swing.table.DefaultTableCellRenderer;
 /**
  *
  * @author Catello
+ * Renderer di una JTable che visualizza le righe con un colore di sfondo alternato.
+ * In particolare se l'indice della riga è pari questo sarà rosa scuro se dispari rosa chiaro
+ * <p>
+ * A seguito di una seluzione delle celle queste assumeramo uno sfondo nero e il testo in essa contenuto diventerà bianco 
  */
 public class MaintenerColumnRenderer extends DefaultTableCellRenderer{
      @Override

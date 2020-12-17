@@ -31,8 +31,11 @@ import javax.swing.table.TableCellEditor;
 /**
  *
  * @author Catello
+ * Editor di una JTable che contiene nella sua quinta colonna dei JButton
+ * in particolare questo editor fa si che il bottone sia cliccabile e
+ * posso produrre l'evento relativo al click del muose
  */
-//editor che permette ai bottoni di essere cliccabili e di aprire l'interfaccia successiva a click avvenuto
+
 public class JButtonEditor extends AbstractCellEditor implements TableCellEditor, ActionListener{
     private JButton button;
     private Object editorValue;
@@ -60,7 +63,12 @@ public class JButtonEditor extends AbstractCellEditor implements TableCellEditor
     public Object getCellEditorValue() {
         return editorValue;
     }
-
+    /**
+     * Gestisce l'evento generato dalla pressione della cella.
+     * Evidenzia la cella selezionata per poi recuperare la prima cella della riga selezionata
+     * per poi istanziare le finestra successiva.
+     * @param ae evento che rappresenta la pressione del bottone 
+     */
     @Override
     public void actionPerformed(ActionEvent ae) {
         button.setText("Selezionato");

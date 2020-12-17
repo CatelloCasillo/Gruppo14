@@ -17,9 +17,19 @@ import javax.swing.table.DefaultTableCellRenderer;
 /**
  *
  * @author Catello
+ * Renderer di una JTable che permette di visualizzare una stringa del tipo "n1/n2"
+ * Si assume che n1 ed n2 devono essere numeri interi pena NumberFormatException
+ * <p>
+ * In base al valore percetuale (n1/n2)*100 lo sfondo della cella verrà colorato in modo diverso
+ * <p>
+ * Se n2 è uguale a zero si assume che la percetuale è massima
+ * <p>
+ * Se la cella è vuota viene il suo sfondo viene lasciato a quello di default
+ * <p>
+ * A seguito di una seluzione delle celle queste assumeramo uno sfondo nero e il testo in essa contenuto diventerà bianco
  */
 public class SkillColumnRenderer extends DefaultTableCellRenderer{
-
+        
         @Override
         public Component getTableCellRendererComponent(JTable jtable, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             JLabel cell=(JLabel)super.getTableCellRendererComponent(jtable,value,isSelected,hasFocus,row,column);

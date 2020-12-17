@@ -15,18 +15,32 @@ import javax.swing.JLabel;
 
 /**
  *
- * @author User
+ * @author Catello
+ * JLabel a sfondo nero, font bianco di dimensione 14 ceentrato orizzantalmente che mosstra una stringa
+ * rappresentante un giorno della settimane
  */
 public class DayWeek extends JLabel {
-
+    /**
+     * Imposta il testo nella label al giorno della settimana corrente
+     */
     public DayWeek() {
         super();
         this.initComponent(LocalDate.now());
     }
+    /**
+     * Imposta il testo nella label al giorno della settimana corrente corrispondete alla
+     * date passata come input
+     * @param date può rappresentare qualsiasi data
+     */
     public DayWeek(LocalDate date) {
         super();
         this.initComponent(date);
     }
+    /**
+     * Dato un LocalDate lo converte nella stringa del giorno della settimana corrispondente
+     * @param date qualsiasi data
+     * @return Stringa che rappresenta il giorno della settimana interamente in maiuscolo
+     */
     private int getCurrentNumberDay(LocalDate date){
        Calendar calendar=new GregorianCalendar();
        ZoneId defaultZoneId = ZoneId.systemDefault();
@@ -42,6 +56,11 @@ public class DayWeek extends JLabel {
         this.setPreferredSize(new Dimension(37,37));
         this.setText(""+getCurrentNumberDay(date));
     }
+    /**
+     * Imposta il testo della label al giorno della settimana corrispondente 
+     * a date passato in input
+     * @param date può rappresentare qualsiasi data
+     */
     public void setDayWeek(LocalDate date){
         this.setText(""+getCurrentNumberDay(date));
     }

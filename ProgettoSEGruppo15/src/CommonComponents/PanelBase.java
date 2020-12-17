@@ -9,7 +9,8 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author User
+ * @author Catello
+ * JPanel di colore arancione
  */
 public class PanelBase extends JPanel {
 

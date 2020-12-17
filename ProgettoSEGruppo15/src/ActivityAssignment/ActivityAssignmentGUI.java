@@ -37,6 +37,10 @@ import javax.swing.table.TableColumn;
 /**
  *
  * @author Catello
+ * JFrame che permette al Planner di selezionare in quali fasce orarie lavorative, del manutentore scelto precedemente,
+ * assegnare l'attività precedentemente scelta.
+ * L'operazione viene facilitata dalla visualizzazzione della disponibilità per ogni fascia oraria del manutentore selezionato 
+ * nel giorno selezionato precedentemente
  */
 public class ActivityAssignmentGUI extends javax.swing.JFrame {
     private String selectedActvity;
@@ -55,9 +59,18 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
     private Object [] slots;
     
     /**
-     * Creates new form AssignActivityGUI
+     * Converte un numero intero in una stringa rappresentante la fascia oraria corrispondente
+     * @param index il numero di una fascia oraria
+     * @return La stringa contenente "8:00 - 9:00" se index è 0
+     * La stringa contenente "9:00 - 10:00" se index è 1
+     * La stringa contenente "10:00 - 11:00" se index è 2
+     * La stringa contenente "11:00 - 12:00" se index è 3
+     * La stringa contenente "12:00 - 13:00" se index è 4
+     * La stringa contenente "14:00 - 15:00" se index è 5
+     * La stringa contenente "15:00 - 16:00" se index è 6
+     * La stringa contenente "16:00 - 17:00" se index è 7
+     * Una stringa vuota se index è maggiore di 7 o minore di 0.
      */
-    
     private String indexConverter(int index){
         switch(index){
             case 0: return "8:00 - 9:00";
@@ -71,7 +84,10 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
             default: return "";
         }
     }
-    
+    /**
+     * Calcola la nuova disponibilità del manutentore selezionato e come deve essere spezzata l'attività all'interno
+     * delle sue fasce orarie.
+     */
     private void calculateAssignment(){
         int [] selectedIndex={};
         String output=new String();
@@ -80,25 +96,22 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
         boolean validSelection=false;
         tempNumericSlots = new ArrayList<>();
         tempNumericSlots.addAll(numericSlots);
+        //Calcolo dell'occupazione totale giornaliera del manutentore
         for(int index : selectedIndex){
             if(index>1){
                 remainigTime+=tempNumericSlots.get(index-2);
                 validSelection=true;
             }
-            /*else{
-                validSelection=false;
-                break;
-            }*/
         }
+        //Caso in cui il Planner seleziona delle celle che non contengono la disponibilità
         if(!validSelection){
             this.jTextArea1.setText("Invalid Selection");
-            //codeError = 1;
             this.state = new NoMinutesCells();
             return;
         }
+        //Caso in cui non al munutentore non rimane abbastanza tempo per svolgere quell'attività
         if(remainigTime < this.intervetionTime){
             this.jTextArea1.setText("Invalid Selection");
-            //codeError = 2;
             this.state=new NotEnoughTime();
             return;
         }
@@ -125,10 +138,24 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
             }
         }
         this.jTextArea1.setText(selectionInfo);
-        //codeError=-1;
         this.state =new CorrectSelection(planner, selectedMaintainer, selectedDayOfWeek, selectedActvity, parseInt(this.weekNumber1.getText().trim()), actFractTime, tempNumericSlots, this);
     }
-    
+    /**
+     * 
+     * @param p  L'oggetto che rappresenta il Planner che sta operando attualmente
+     * @param maintenerName Identificativo del manutentore al quale si vuole assegnare l'attività
+     * @param skillCompliance Stringa del tipo "numero di skill possedute dal manutentore selezionato adeguate all'attivita selezionate/
+     * skill necessarie per eseguire l'attività selezionata
+     * @param selectedDayWeek Stringa del giorno della settimana in cui si vuole assegnare l'attività
+     * @param activityInfo Stringa con informazioni aggiuntive sull'attività selezionata
+     * @param notes Stringa che contiene le workSpace notes associate all'attività selezionata
+     * @param selectedDate Data in cui si vuole assegnare l'attività
+     * @param selectedActvity Identificativo dell'attività che si vuole assegnare
+     * @param percentageColor coloro associato a percentage
+     * @param percentage percetuale di occupazione giornaliera del manutentore selezionato
+     * @param selectedMaintainerId Identificativo del manutentore al quale si vuole assegnare l'applicazione
+     * @param estimatedActivityTime Stima delle durata dell'attività selezionata
+     */
     public ActivityAssignmentGUI(PlannerAbstract p, String maintenerName,String skillCompliance,String selectedDayWeek,String activityInfo, String notes,LocalDate selectedDate, String selectedActvity, Color percentageColor, String percentage, String selectedMaintainerId, int estimatedActivityTime) {
         this.selectedActvity=selectedActvity;
         this.numericSlots=new ArrayList<>();
@@ -148,18 +175,12 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-                int [] selectedIndex={};
-                String output=new String();
+                
                 if((!e.getValueIsAdjusting()) && (!ActivityAssignmentGUI.this.cleaned)){
-                        selectedIndex = ActivityAssignmentGUI.this.jTable1.getSelectedColumns();
-                        for(int index : selectedIndex)
-                            output+=index+", ";
-                        //System.out.println(output);
                         calculateAssignment();
                 }
         if(ActivityAssignmentGUI.this.cleaned)
             ActivityAssignmentGUI.this.cleaned=false;
-                
         }
         
         });
@@ -388,51 +409,44 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Conferma la selezione effettuata sulla tabella e a seconda del suo stato esegue:
+     * <p>
+     * Nulla, se nessuna selezione è stata effettuata
+     * <p>
+     * Mostra un finestra di errore se la selezione non è valida(se vengono selezionate colonne che non corrispondono
+     * a righe o se il tempo rimanente al munnetore non è sufficiente per eseguire l'attività selezionata) o se l'operazione
+     * sul repository non va a buon fine
+     * <p>
+     * Assegna l'attività selezionata al munutentore selezionato rispecchiando la divisione della stessa ottenuta tramite la 
+     * selezione del Planner. 
+     * Aggiorna la disponibilità del muanuentore alla luce della nuova attività a lui assegnata
+     * Se entrambe le operazioni vengono effettuate correttamente viene mostrato una finestra che comunica al planner il successo delle stesse
+     * Dopo la sua conferma verrà riderezionato verso SelectActivityGUI
+     * @param evt ActionEvent prodotto da forwardButton1 
+     */
     private void forwardButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forwardButton1ActionPerformed
-        //String [] fraction= content.split(" ");
-        
-       /* JPanel panel=new JPanel();
-        panel.setOpaque(true);
-        panel.setBackground(new Color(248,148,6));
-        if(codeError==1){
-            JOptionPane.showMessageDialog(panel,  "You must select the cells that contain time ","Invalid Selection", JOptionPane.ERROR_MESSAGE);
-        }
-        if(codeError==2){
-            JOptionPane.showMessageDialog(panel,  "Not enough time","Invalid Selection", JOptionPane.ERROR_MESSAGE);
-        }
-        if(codeError==-1){
-            boolean okOp1=planner.updateMaintainerAvailability(this.selectedMaintainer, this.selectedDayOfWeek, this.tempNumericSlots);
-            boolean okOp2=planner.assignActivityFraction(this.selectedActvity, this.selectedMaintainer, this.selectedDayOfWeek, parseInt(this.weekNumber1.getText().trim()), actFractTime);
-            if(okOp1 && okOp2){
-                planner.updateActivityToMaintainer(this.selectedActvity, this.selectedMaintainer);
-                JOptionPane.showMessageDialog(panel,  "Now you will return to select other actvity","Activity assigned succefully", JOptionPane.INFORMATION_MESSAGE);
-                Navigator nav = Navigator.getInstance(planner);
-                nav.changeToSelectActivityWindow(this);
-            }
-            else
-                 JOptionPane.showMessageDialog(panel,  "Operazione sul repository non riusciuta","Errore", JOptionPane.ERROR_MESSAGE);
-        }*/
        this.state.confirmSelection();
     }//GEN-LAST:event_forwardButton1ActionPerformed
-
+    /**
+     * Annulla la selezione attuale sulla tabella e pulisce i campi dell'interfaccia dedicati
+     * alla sua visualizzazione
+     * @param evt ActionEvent prodotto da forwardButton2 
+     */
     private void forwardButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forwardButton2ActionPerformed
         this.cleaned=true;
-        //this.codeError=0;
         this.state = new NoSelection();
         this.jTextArea1.setText("");
         this.jTable1.clearSelection();
     }//GEN-LAST:event_forwardButton2ActionPerformed
-
+    /**
+     * Alla pressione del botttone Elimina dalla visualizzazione questo JFrame e viene visualizzato 
+*      il frame AcitivitySelectionGUI
+     * @param evt ActionEvent prodotto da operationButton1
+     */
     private void operationButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton1ActionPerformed
         Navigator nav=Navigator.getInstance(planner);
         nav.changeToMaintainerSelectionWindow(this);
-        /*MaintainerSelectionGUI maintainerSelection= new MaintainerSelectionGUI(planner,selectedActvity,this.activityInfoLabel1.getText(),this.jTextPane1.getText());
-        maintainerSelection.setVisible(true);
-        maintainerSelection.pack();
-        maintainerSelection.setLocationRelativeTo(null);
-        maintainerSelection.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();*/
     }//GEN-LAST:event_operationButton1ActionPerformed
 
     /**

@@ -18,6 +18,24 @@ import javax.swing.table.TableColumn;
 /**
  *
  * @author Catello
+ * Crea un tabella con 10 colonne e righe pari al numero di manutentori memorizzati
+ * <p>
+ * Le celle di header hanno sfondo arancione, bordo bianco e il testo visualizzato al suo interno è nero
+ * La prima cella di header contiene "Maintainer" , la seconda "skill", le altre contengono l'indicazione della
+ * fascia oraria nel seguente formato "Availab. 9:00 - 10:=="
+ * <p>
+ * La prima colonna ha le celle di sfondo rosa scuro se l'indice della sua riga è pari rosa chiaro altrimenti. Contiene i nomi
+ * dei menutentori
+ * <p>
+ * La seconda colonna contiene la skill compliance del mnutentore in questione relativa all'attività selezionata. Questa deve essere
+ * nel forma "x1/x2" pena NumberFormatException. Lo sfondo della cella cambia a seconda della percetuale di adeguatezza del Munutentore
+ * <p>
+ * Le rimanenti otto colonne contentogo il tempo rimanente in minuti all'interno della fascia oraria del manutentore corrispodente
+ * Il contenuto è nel formato "x min" pena NumberFormatException. Il coloro di sfondo della cella viene impostato a seconda
+ * della percetuale di minuti rimanenti all'interno della fascia oraria che rappresenta.
+ * <p>
+ * Dopo aver effetutato un'operazione di selezione sulle celle questo avranno sfondo nero e testo bianco 
+ * 
  */
 public class MaintainerDailyTable extends JTable{
     private static final String header [] = {
@@ -33,7 +51,13 @@ public class MaintainerDailyTable extends JTable{
                     "<html><div style = 'text-align: center'>Availab.<br><span style = 'font-size: 65%'>15:00 - 16:00</span></div></html>\"",
                     "<html><div style = 'text-align: center'>Availab.<br><span style = 'font-size: 65%'>16:00 - 17:00</span></div></html>\"",
     };
-    
+    /**
+     * Crea una tabella con un sola riga corrispodente al manutentore passaoto come parametro
+     * @param p  L'oggetto che rappresenta il Planner che sta operando attualmente
+     * @param maintainerName Nome del manutentore a cui si vuole assegnare l'attività
+     * @param skillCompliance Stringa contenente il numero di skill del manutentore rispetto quelle necessarie per eseguire l'attività
+     * @param slots Array che contiene la disponibilità rimanente per ogni fascia oraria
+     */
     public MaintainerDailyTable(PlannerAbstract p, String maintainerName, String skillCompliance , Object [] slots) {
         super();
         this.setColumnSelectionAllowed(true);

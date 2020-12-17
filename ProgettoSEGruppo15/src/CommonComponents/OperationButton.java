@@ -15,6 +15,10 @@ import javax.swing.border.Border;
 /**
  *
  * @author Catello
+ * JButton con un colore di sfondo arancione, senza bordo, con font CopperBlack di dimensione 11.
+ * <p>
+ * Qunado il cursore del muose si sovrappone al bottone questo si trasformerà in un mano
+ * 
  */
 public class OperationButton extends JButton{
 
