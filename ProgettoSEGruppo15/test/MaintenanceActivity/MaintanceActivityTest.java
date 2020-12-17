@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package PrimoPackege;
+package MaintenanceActivity;
 
-import static PrimoPackege.MaintanceActivityFactory.Category.PLANNED;
+import MaintenanceActivity.MaintanceActivityFactory;
+import MaintenanceActivity.MaintanceActivity;
+import static MaintenanceActivity.MaintanceActivityFactory.Category.PLANNED;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

@@ -2,37 +2,20 @@ package SelectionGUI;
 
 import CommonComponents.CommonTableElements.DefaultHeaderRenderer;
 import Navigator.Navigator;
-import PrimoPackege.Planner;
-import PrimoPackege.PlannerInterface;
+import Planner.PlannerInterface;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
-import java.awt.Dimension;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import javax.swing.BorderFactory;
 import javax.swing.table.TableColumn;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextPane;
-import javax.swing.SwingConstants;
 import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
-import plannerGUI.FirstPagePlannerGUI;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -43,10 +26,16 @@ import plannerGUI.FirstPagePlannerGUI;
 /**
  *
  * @author Catello
+ * Interfaccia che permette ad un Planner di selezionare un'attività e mostra
+ * alcune informazioni utili per facilitare questa operazione
  */
 public class SelectActivityGUI extends javax.swing.JFrame {
     private PlannerInterface planner;
-    //Creazione di un modello personalizzato per la JTable
+   
+    /**
+     * Creazione di un modello personalizzato per la JTable che rende non
+     * editabili le colonne con indice minore di 4
+     */
     private class MyTableModel extends AbstractTableModel{
         private String[] columnNames;
         private Object[][] data;
@@ -94,10 +83,14 @@ public class SelectActivityGUI extends javax.swing.JFrame {
                 return false;
             } else {
                 return true;
-            } //To change body of generated methods, choose Tools | Templates.
+            } 
         }
     }
-    //Creazione di un header renderer vuoto e dello stesso colore dello sfondo per la quainta colonna
+    //
+    /**
+     * Creazione di un header renderer che permette di visualizzare una cella dello stesso colore di sfondo
+     * della finistra
+     */
     private class ButtonHeaderRenderer extends JLabel implements TableCellRenderer{
 
         public ButtonHeaderRenderer() {
@@ -273,16 +266,15 @@ public class SelectActivityGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    // Chiusura di questa inferfaccia e apertura di FirtstPagePlannerGUI alla pressione del bottone corrispondente
+    
+    /**
+     * Alla pressione del bottone rimuove dalla visualizzazione questo JFrame e viene invece visualizzato FirstPagePlannerGUI 
+     * @param evt Oggetto rappresentante l'action event prodotto da operationButton1
+     * 
+     */
     private void operationButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton1ActionPerformed
         Navigator nav=Navigator.getInstance(planner);
         nav.changeToWelcomeWindow(this);
-        /*FirstPagePlannerGUI welcome= new FirstPagePlannerGUI(planner);
-        welcome.setVisible(true);
-        welcome.pack();
-        welcome.setLocationRelativeTo(null);
-        welcome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();*/
     }//GEN-LAST:event_operationButton1ActionPerformed
 
     /**

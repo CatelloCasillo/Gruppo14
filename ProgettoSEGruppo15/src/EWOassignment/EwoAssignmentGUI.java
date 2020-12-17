@@ -6,11 +6,8 @@
 
 package EWOassignment;
 
-import CommonComponents.CommonTableElements.NoEditableTableModel;
 import ActivityAssignment.ActivityAssignmentGUI;
-import PrimoPackege.Planner;
-import PrimoPackege.PlannerInterface;
-import java.util.ArrayList;
+import Planner.PlannerInterface;
 import java.util.List;
 
 /**

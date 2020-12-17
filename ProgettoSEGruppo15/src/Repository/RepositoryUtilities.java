@@ -28,7 +28,7 @@ public class RepositoryUtilities extends RepositoryBase implements RepositoryUti
             return rst;
 
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryUtilities.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -42,17 +42,11 @@ public class RepositoryUtilities extends RepositoryBase implements RepositoryUti
             return s;
 
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryUtilities.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
 
-    /*
-    @Override
-    public String getCompetenceName(ResultSet rst) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-     */
     @Override
     public ResultSet getCompetenceOfTypology(String typology) {
         StringBuilder temp = new StringBuilder();
@@ -67,7 +61,7 @@ public class RepositoryUtilities extends RepositoryBase implements RepositoryUti
             return rst;
 
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryUtilities.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -80,7 +74,7 @@ public class RepositoryUtilities extends RepositoryBase implements RepositoryUti
             closeConnection();
             return s;
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryUtilities.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -93,7 +87,7 @@ public class RepositoryUtilities extends RepositoryBase implements RepositoryUti
             closeConnection();
             return s;
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryUtilities.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }

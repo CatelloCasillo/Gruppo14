@@ -448,54 +448,5 @@ public class RepositoryAvailabilityTest extends RepositoryTestBase{
         //wrong day
         assertFalse(instance.resetMaintainerAvailabilityCurrentWeek("mant05","fail"));
     }
-
-    /**
-     * Test of getAssignedTimeslotsOfActivity method, of class RepositoryAvailability.
-     */
-    @Test
-    public void testGetAssignedTimeslotsOfActivity() {
-        System.out.println("getAssignedTimeslotsOfActivity");
-        String activityID = "";
-        RepositoryAvailability instance = new RepositoryAvailability();
-        int[] expResult = null;
-        int[] result = instance.getAssignedTimeslotsOfActivity(activityID);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getActivitiesOfTimeSlot method, of class RepositoryAvailability.
-     */
-    @Test
-    public void testGetActivitiesOfTimeSlot() {
-        System.out.println("getActivitiesOfTimeSlot");
-        String maintainerId = "";
-        String day = "";
-        int weeknumber = 0;
-        int timeSlotIndex = 0;
-        RepositoryAvailability instance = new RepositoryAvailability();
-        ResultSet expResult = null;
-        ResultSet result = instance.getActivitiesOfTimeSlot(maintainerId, day, weeknumber, timeSlotIndex);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of deleteAssignedActivity method, of class RepositoryAvailability.
-     */
-    @Test
-    public void testDeleteAssignedActivity() {
-        System.out.println("deleteAssignedActivity");
-        String activityID = "";
-        RepositoryAvailability instance = new RepositoryAvailability();
-        boolean expResult = false;
-        boolean result = instance.deleteAssignedActivity(activityID);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-        
-    }
     
 }

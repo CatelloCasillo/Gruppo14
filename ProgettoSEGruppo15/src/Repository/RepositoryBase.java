@@ -42,10 +42,10 @@ public abstract class RepositoryBase {
             //System.out.println("Connessione Database effettuata");
             return true;
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryBase.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryBase.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }

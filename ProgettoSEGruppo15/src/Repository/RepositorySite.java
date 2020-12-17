@@ -25,7 +25,7 @@ public class RepositorySite extends RepositoryBase implements RepositorySiteInte
             closeConnection();
             return s;
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositorySite.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -38,7 +38,7 @@ public class RepositorySite extends RepositoryBase implements RepositorySiteInte
             closeConnection();
             return s;
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositorySite.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -51,7 +51,7 @@ public class RepositorySite extends RepositoryBase implements RepositorySiteInte
             closeConnection();
             return s;
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositorySite.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -67,7 +67,7 @@ public class RepositorySite extends RepositoryBase implements RepositorySiteInte
             return rst;
 
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositorySite.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }

@@ -1,28 +1,14 @@
 package VerifyGUI;
 
-import MantainerSelection.MaintainerSelectionGUI;
 import Navigator.Navigator;
-import PrimoPackege.Planner;
-import PrimoPackege.PlannerConcrete;
-import PrimoPackege.PlannerInterface;
-import SelectionGUI.SelectActivityGUI;
-import java.awt.Color;
+import Planner.PlannerInterface;
 import java.awt.Desktop;
-import java.awt.Dimension;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.BorderFactory;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.border.Border;
-import javax.swing.filechooser.FileSystemView;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

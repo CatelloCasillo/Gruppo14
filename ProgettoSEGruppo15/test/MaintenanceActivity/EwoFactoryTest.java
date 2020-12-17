@@ -3,9 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package PrimoPackege;
+package MaintenanceActivity;
 
-import static PrimoPackege.MaintanceActivityFactory.Category.PLANNED;
+import MaintenanceActivity.EwoFactory;
+import MaintenanceActivity.EwoActivity;
+import MaintenanceActivity.MaintanceActivityFactory;
+import MaintenanceActivity.MaintanceActivity;
+import static MaintenanceActivity.MaintanceActivityFactory.Category.EWO;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,9 +21,9 @@ import static org.junit.Assert.*;
  *
  * @author Gabriella
  */
-public class PlannedFactoryTest {
+public class EwoFactoryTest {
     
-    public PlannedFactoryTest() {
+    public EwoFactoryTest() {
     }
     
     @BeforeClass
@@ -39,25 +43,25 @@ public class PlannedFactoryTest {
     }
 
     /**
-     * Test of selectMaintanceActivity method, of class PlannedFactory.
+     * Test of selectMaintanceActivity method, of class EwoFactory.
      */
     @Test
     public void testSelectMaintanceActivity() {
         System.out.println("selectMaintanceActivity");
-        MaintanceActivityFactory.Category category = PLANNED;
-        String id = "000";
+        MaintanceActivityFactory.Category category = EWO;
+        String id = "300";
         Site site = new Site("site0", "fact","area");
         String typology = "Electrical";
         String activityDescription = "descrizione";
         int intervationTime = 20;
         boolean interruptible = false;
-        int week = 10;
+        int week = 30;
         String procedureID = "proc1";
-        String fileSMP = "smp";
+        String fileSMP ="smp";
         String maintainerID = "mant";
         String workspace = "work";
-        PlannedFactory instance = new PlannedFactory();
-        MaintanceActivity expResult = new PlannedActivity(category, id, site, typology, activityDescription, intervationTime, interruptible, week, procedureID, fileSMP, maintainerID, workspace);
+        EwoFactory instance = new EwoFactory();
+        MaintanceActivity expResult = new EwoActivity(category, id, site, typology, activityDescription, intervationTime, interruptible, week, procedureID, fileSMP, maintainerID, workspace);
         MaintanceActivity result = instance.selectMaintanceActivity(category, id, site, typology, activityDescription, intervationTime, interruptible, week, procedureID, fileSMP, maintainerID, workspace);
         assertEquals(expResult, result);
         

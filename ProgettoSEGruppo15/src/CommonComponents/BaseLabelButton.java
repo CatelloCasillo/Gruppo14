@@ -16,6 +16,11 @@ import javax.swing.border.Border;
 /**
  *
  * @author Catello
+ * Una label utilizzata come base per realizzare bottoni di minimizzazione e chiusura dell'applicazione 
+ * personalizzati. <p>
+ * In particolare la label ottenuta avrà un font di dimensione 18, il testo contenuto al suo
+ * interno viene allineato orizzontalmente, ha un bordo lineare nero di spessore 1 e quando il cursore 
+ * del muose di sovrapporà alla label diventerà una mano
  */
 public class BaseLabelButton extends JLabel{
     public BaseLabelButton(){

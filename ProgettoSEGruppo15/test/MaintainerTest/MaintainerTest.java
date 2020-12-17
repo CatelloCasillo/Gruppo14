@@ -6,8 +6,9 @@
 package MaintainerTest;
 
 import PlannerTest.PlannerTest;
-import PrimoPackege.Maintainer;
-import Repository.Repository;
+import Maintainer.Maintainer;
+import Repository.RepositoryMaintainer;
+import Repository.RepositoryMaintainerInterface;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -55,7 +56,7 @@ public class MaintainerTest {
         } 
     }
     private void insertMaintainer(String id, String name){
-        Repository r= new Repository();
+        RepositoryMaintainerInterface r= new RepositoryMaintainer();
         r.insertNewMaintainer(id, name, "1234");
     }
     // Test: Recupero dell'id di un certo manutentore da una sua istanza

@@ -1,8 +1,8 @@
 package plannerGUI;
 
 
+import Planner.PlannerInterface;
 import Navigator.Navigator;
-import PrimoPackege.*;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 

@@ -8,8 +8,12 @@ package ActivityAssignment;
 /**
  *
  * @author Catello
+ * Rappresenta lo stato che può essumere una selezione sulle celle di una tabelle
  */
 public interface SelectionState {
+    /**
+     * Azione svolta nel caso di conferma della selezione
+     */
     public void confirmSelection();
     
 }

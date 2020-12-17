@@ -11,7 +11,10 @@ import javax.swing.JLabel;
 /**
  *
  * @author Catello
+ * JLabel con sfondo bianco,font nero di dimensione 14 e centrato orizzontalmente che mostra la stringa
+ * "Week n°"
  */
+
 public class LabelForWeekNumber extends JLabel{
 
     public LabelForWeekNumber() {

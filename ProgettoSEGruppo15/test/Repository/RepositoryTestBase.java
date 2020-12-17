@@ -5,7 +5,6 @@
  */
 package Repository;
 
-import RepositoryTest.RepositoryTest;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -58,7 +57,7 @@ public abstract class RepositoryTestBase {
             insertNewMaintainer("test07", "testMaintainer2", "1234");
             this.stm.executeUpdate(query);
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryTestBase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -81,7 +80,7 @@ public abstract class RepositoryTestBase {
         try {
             this.stm.executeUpdate(query);
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryTestBase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -97,7 +96,7 @@ public abstract class RepositoryTestBase {
             rstFull = this.stm.executeQuery(query);
 
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryTestBase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -113,7 +112,7 @@ public abstract class RepositoryTestBase {
             rstFull2 = this.stm.executeQuery(query);
 
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryTestBase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -123,7 +122,7 @@ public abstract class RepositoryTestBase {
             String query = "select* from MaintenanceActivity where activityWeekNumber<0;";
             rstEmpty = this.stm.executeQuery(query);
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryTestBase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -136,7 +135,7 @@ public abstract class RepositoryTestBase {
             this.stm.executeQuery(query);
 
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryTestBase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -147,7 +146,7 @@ public abstract class RepositoryTestBase {
             this.stm.executeQuery(query);
 
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryTestBase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -174,7 +173,7 @@ public abstract class RepositoryTestBase {
 
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryTestBase.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -192,7 +191,7 @@ public abstract class RepositoryTestBase {
             return true;
 
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryTestBase.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -208,7 +207,7 @@ public abstract class RepositoryTestBase {
             return true;
 
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryTestBase.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -232,7 +231,7 @@ public abstract class RepositoryTestBase {
             rstEmpty.next();
             
         } catch (SQLException ex) {
-            Logger.getLogger(RepositoryTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryTestBase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

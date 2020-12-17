@@ -2,8 +2,8 @@ package plannerGUI;
 
 
 import Navigator.Navigator;
-import static PrimoPackege.MaintanceActivityFactory.Category.PLANNED;
-import PrimoPackege.PlannerInterface;
+import static MaintenanceActivity.MaintanceActivityFactory.Category.PLANNED;
+import Planner.PlannerInterface;
 import javax.swing.JOptionPane;
 
 /*

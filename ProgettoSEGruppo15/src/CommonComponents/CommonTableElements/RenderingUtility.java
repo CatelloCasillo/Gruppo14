@@ -10,9 +10,19 @@ import java.awt.Color;
 /**
  *
  * @author Catello
+ * Classe che contiene metodi di utili utili a oggetti renderer differenti
  */
 public class RenderingUtility {
-     
+    /**
+     * Restituisce un colore a seconda di percentage passato
+     * @param percentage
+     * @return Verde scuro se percetage è compreso fra 100(incluso) e 80 (escluso)
+     * Verde chiaro se è compreso fra 80(incluso) e 50(escluso)
+     * Giallo se è compreso fra 50(incluso) e 20(escluso)
+     * Arancione  se è compreso fra 20(incluso) e 0(escluso)
+     * Rosso se è zero
+     * Per tutti gli altri valori di percentege viene restituito biaco
+     */ 
     public static Color colorPicker(int percentage){
         if(percentage<=100 && percentage>80)
             return new Color(0,153,0);

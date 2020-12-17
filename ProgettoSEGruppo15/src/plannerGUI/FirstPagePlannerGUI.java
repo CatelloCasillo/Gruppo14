@@ -2,8 +2,8 @@ package plannerGUI;
 
 
 import Navigator.Navigator;
-import PrimoPackege.PlannerConcrete;
-import PrimoPackege.PlannerInterface;
+import Planner.PlannerConcrete;
+import Planner.PlannerInterface;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

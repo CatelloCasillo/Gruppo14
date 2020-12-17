@@ -6,8 +6,8 @@
 package plannerGUI;
 
 import Navigator.Navigator;
-import PrimoPackege.MaintanceActivityFactory;
-import PrimoPackege.PlannerInterface;
+import MaintenanceActivity.MaintanceActivityFactory;
+import Planner.PlannerInterface;
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Robot;

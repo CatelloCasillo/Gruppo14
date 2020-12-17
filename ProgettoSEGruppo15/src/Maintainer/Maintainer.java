@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package PrimoPackege;
+package Maintainer;
 
-import Repository.Repository;
+import Repository.RepositoryAvailability;
+import Repository.RepositoryAvailabilityInterface;
 import java.sql.ResultSet;
 
 /**
@@ -15,12 +16,12 @@ import java.sql.ResultSet;
 public class Maintainer {
     private String id;
     private String name;
-    private Repository rep;
+    private RepositoryAvailabilityInterface rep;
 
     public Maintainer(String id, String name) {
         this.id = id;
         this.name = name;
-        this.rep=new Repository();
+        this.rep=new RepositoryAvailability();
     }
 
     public String getId() {

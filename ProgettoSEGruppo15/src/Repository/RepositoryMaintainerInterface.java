@@ -15,29 +15,29 @@ public interface RepositoryMaintainerInterface {
     public ResultSet getMaintainerTable();
     
     /**
-     * 
-     * @param id
+     * Get a ResultSet that cointains all the parameter of the specified Maintainer.
+     * @param id The ID of the Maintainer
      * @return A ResultSet that cointains all the parameter of the specified Maintainer.
      */
     public ResultSet getMaintainer(String id);
     
     /**
      * 
-     * @param rst
+     * @param rst A ResultSet that has to contain the name of a Maintainer.
      * @return The name of the Maintainer present in the ResultSet.
      */
     public String getMaintainerName(ResultSet rst);
     
     /**
      * 
-     * @param rst
+     * @param rst A ResultSet that has to contain the ID of a Maintainer
      * @return The ID of the Maintainer present in the ResultSet.
      */
     public String getMaintainerID(ResultSet rst);
     
     /**
-     * 
-     * @param maintainerID
+     * Get a ResultSet that cointains all the competences of the Maintainer specified by ID.
+     * @param maintainerID The ID of the Maintainer 
      * @return A ResultSet that cointains all the competences of the specified Maintainer.
      */
     public ResultSet getCompetencesOfMaintainer(String maintainerID);

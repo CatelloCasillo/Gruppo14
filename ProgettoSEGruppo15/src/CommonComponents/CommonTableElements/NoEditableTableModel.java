@@ -10,7 +10,9 @@ import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Catello
+ * DefaultTableModel che non permette di modificare all'utente le proprie celle
  */
+
 public class NoEditableTableModel extends DefaultTableModel{
 
         public NoEditableTableModel(Object[][] os, Object[] os1) {

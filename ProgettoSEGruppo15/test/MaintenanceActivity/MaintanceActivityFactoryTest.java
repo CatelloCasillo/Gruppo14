@@ -3,11 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package PrimoPackege;
+package MaintenanceActivity;
 
-import PrimoPackege.MaintanceActivityFactory.Category;
-import static PrimoPackege.MaintanceActivityFactory.Category.EWO;
-import static PrimoPackege.MaintanceActivityFactory.Category.PLANNED;
+import MaintenanceActivity.EwoActivity;
+import MaintenanceActivity.PlannedActivity;
+import MaintenanceActivity.MaintanceActivityFactory;
+import MaintenanceActivity.MaintanceActivity;
+import MaintenanceActivity.MaintanceActivityFactory.Category;
+import static MaintenanceActivity.MaintanceActivityFactory.Category.EWO;
+import static MaintenanceActivity.MaintanceActivityFactory.Category.PLANNED;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

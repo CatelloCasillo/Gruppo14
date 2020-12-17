@@ -3,8 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package PrimoPackege;
+package Planner;
 
+import MaintenanceActivity.MaintanceActivityFactory;
+import MaintenanceActivity.MaintanceActivity;
+import Maintainer.Maintainer;
+import MaintenanceActivity.Site;
 import Repository.RepositoryActivity;
 import Repository.RepositoryActivityInterface;
 import Repository.RepositoryAvailability;
@@ -78,7 +82,7 @@ protected ArrayList<Maintainer> maintainers;
                 this.activityList.add(mainActivity);
            } 
         } catch (SQLException ex) {
-          Logger.getLogger(Planner.class.getName()).log(Level.SEVERE, null, ex);
+          Logger.getLogger(PlannerAbstract.class.getName()).log(Level.SEVERE, null, ex);
       }
     }
     protected final void initSiteList(){
@@ -93,7 +97,7 @@ protected ArrayList<Maintainer> maintainers;
           this.siteList.add(site);
         } 
       } catch (SQLException ex) {
-          Logger.getLogger(Planner.class.getName()).log(Level.SEVERE, null, ex);
+          Logger.getLogger(PlannerAbstract.class.getName()).log(Level.SEVERE, null, ex);
       }
     
     }

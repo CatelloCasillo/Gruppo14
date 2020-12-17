@@ -12,25 +12,15 @@ import CommonComponents.CommonTableElements.NoEditableTableModel;
 import static CommonComponents.CommonTableElements.RenderingUtility.colorPicker;
 import CommonComponents.CommonTableElements.SkillColumnRenderer;
 import Navigator.Navigator;
-import PrimoPackege.Planner;
-import PrimoPackege.PlannerInterface;
+import Planner.PlannerInterface;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import static java.lang.Integer.parseInt;
 import java.time.LocalDate;
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
@@ -41,10 +31,15 @@ import javax.swing.table.TableModel;
 public class MaintainerSelectionGUI extends javax.swing.JFrame {
     private PlannerInterface p;
     private String selectedActivityId;
-    
-
-   
-   
+    /**
+     
+    * Renderer di una JTable che permette di visualizzare una stringa del tipo "x%"
+    * x viene supposto essere un numero intero pena NumberFormatException
+    * In base al valore di x lo sfondo della cella verrà colorato in modo diverso 
+    * <p>
+    * A seguito di una selezione delle celle queste assumeramo uno sfondo nero e il testo in essa contenuto diventerà bianco 
+    */
+     
     private class OtherColumnRenderer extends DefaultTableCellRenderer{
 
         @Override
@@ -67,7 +62,10 @@ public class MaintainerSelectionGUI extends javax.swing.JFrame {
 
         
     /**
-     * Creates new form MaintainerSelectionGUI
+     * 
+     * @param planner Oggetto che rappresenta il Planner che sta operando al momento
+     * @param selectedActivityId identificativo dell'attività selezionata e che si vuole assegnarw
+     * @param activityInformation stringa con informazioniaggiuntive sull'attività selezionata
      */
     public MaintainerSelectionGUI(PlannerInterface planner,String selectedActivityId, String activityInformation) {
         this.p=planner;
@@ -249,7 +247,19 @@ public class MaintainerSelectionGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Alla pressione del bottone Recupera dalla tabella le informazioni necessarie alla visualizzazione del prossimo JFrame dalla stessa
+     * riga della cella selezionata come
+     * il nome del manutentore corrispondente alla disponibilità selezionata(colonna 0),skillcompliance(colonna 1)
+     * la percetuale di occupazione presente nella cella selezionata.
+     * <p>
+     * Viene calcolato il giorno in cui assegnare l'attività a partire dal giorno corrente e dal 
+     * dall'indice della cella selezionata. 
+     * <p>
+     * Infine elimina dalla visualizzazione questo JFrame e viene visualizzato il frame AcitivitySelectionGUI
+     * @param evt Action event generato dal click di un cella con indice di colonna maggiore di 1
+     * 
+     */
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         int row= jTable1.getSelectedRow();
         int col= jTable1.getSelectedColumn();
@@ -267,16 +277,14 @@ public class MaintainerSelectionGUI extends javax.swing.JFrame {
             Color c= colorPicker(parseInt(s[0]));
             Navigator nav=Navigator.getInstance(p);
             nav.changeToActivityAssignmentWindow(this, mantainerName,skillCompliance,selectedWeekDay, selectionDate,c, percentage, row);
-            /*ActivityAssignmentGUI verify= new ActivityAssignmentGUI(p, mantainerName,selectedWeekDay, info ,"", selectionDate,selectedActivityId,c, percentage );
-            verify.setVisible(true);
-            verify.pack();
-            verify.setLocationRelativeTo(null);
-            verify.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            this.dispose();*/
-            //JOptionPane.showMessageDialog(new JFrame(), selectionDate.getDayOfWeek(), "Errore", JOptionPane.ERROR_MESSAGE);
+            
         }
     }//GEN-LAST:event_jTable1MouseClicked
-
+/**
+*  Alla pressione del botttone Elimina dalla visualizzazione questo JFrame e viene visualizzato 
+*  il frame AcitivitySelectionGUI
+ * @param evt Action Event prodotto da operationButton1 
+ */
     private void operationButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton1ActionPerformed
         Navigator nav=Navigator.getInstance(p);
         nav.changeToSelectActivityWindow(this);

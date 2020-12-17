@@ -28,7 +28,7 @@ public class RepositoryMaintainer extends RepositoryBase implements RepositoryMa
             return rst;
 
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryMaintainer.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -44,7 +44,7 @@ public class RepositoryMaintainer extends RepositoryBase implements RepositoryMa
             return rst;
 
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryMaintainer.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -57,7 +57,7 @@ public class RepositoryMaintainer extends RepositoryBase implements RepositoryMa
             closeConnection();
             return s;
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryMaintainer.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -70,7 +70,7 @@ public class RepositoryMaintainer extends RepositoryBase implements RepositoryMa
             closeConnection();
             return s;
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryMaintainer.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -89,7 +89,7 @@ public class RepositoryMaintainer extends RepositoryBase implements RepositoryMa
             return rst;
 
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryMaintainer.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -118,7 +118,7 @@ public class RepositoryMaintainer extends RepositoryBase implements RepositoryMa
             closeConnection();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryMaintainer.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -135,7 +135,7 @@ public class RepositoryMaintainer extends RepositoryBase implements RepositoryMa
             return true;
            
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryMaintainer.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }

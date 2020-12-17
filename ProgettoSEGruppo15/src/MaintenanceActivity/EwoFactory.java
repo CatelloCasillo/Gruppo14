@@ -3,9 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package PrimoPackege;
+package MaintenanceActivity;
 
-import PrimoPackege.MaintanceActivityFactory.Category;
+import MaintenanceActivity.EwoActivity;
+import MaintenanceActivity.MaintanceActivityFactory;
+import MaintenanceActivity.MaintanceActivity;
+import MaintenanceActivity.MaintanceActivityFactory.Category;
 
 /**
  *

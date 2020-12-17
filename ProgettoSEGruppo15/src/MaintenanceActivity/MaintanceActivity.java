@@ -1,6 +1,6 @@
-package PrimoPackege;
+package MaintenanceActivity;
 
-import PrimoPackege.MaintanceActivityFactory.Category;
+import MaintenanceActivity.MaintanceActivityFactory.Category;
 import java.util.Objects;
 
 /*

@@ -42,7 +42,7 @@ public class RepositoryAvailability extends RepositoryBase implements Repository
             return rst;
 
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryAvailability.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -69,7 +69,7 @@ public class RepositoryAvailability extends RepositoryBase implements Repository
             return rst;
 
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryAvailability.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -84,7 +84,7 @@ public class RepositoryAvailability extends RepositoryBase implements Repository
                 timeVector[i - 1] = rst.getInt("" + base + i);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryAvailability.class.getName()).log(Level.SEVERE, null, ex);
             return new int[8];
         }
         return timeVector;
@@ -103,7 +103,7 @@ public class RepositoryAvailability extends RepositoryBase implements Repository
             return rst;
 
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryAvailability.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -132,61 +132,11 @@ public class RepositoryAvailability extends RepositoryBase implements Repository
             closeConnection();
             return false;
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryAvailability.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
 
-    /*
-    @Override
-    public boolean resetMaintainerAvailabilityCurrentWeek(String maintainerID, String day) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getTimeSlot1(ResultSet rst) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getTimeSlot2(ResultSet rst) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getTimeSlot3(ResultSet rst) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getTimeSlot4(ResultSet rst) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getTimeSlot5(ResultSet rst) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getTimeSlot6(ResultSet rst) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getTimeSlot7(ResultSet rst) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getTimeSlot8(ResultSet rst) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getDay(ResultSet rst) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }*/
     @Override
     public boolean assignActivity(String activityID, String maintainerID, String day, int weekNumber, int SlotAssigned1, int SlotAssigned2, int SlotAssigned3, int SlotAssigned4, int SlotAssigned5, int SlotAssigned6, int SlotAssigned7, int SlotAssigned8) {
         //update of maintainerId in activity table
@@ -224,7 +174,7 @@ public class RepositoryAvailability extends RepositoryBase implements Repository
             closeConnection();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryAvailability.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -253,7 +203,7 @@ public class RepositoryAvailability extends RepositoryBase implements Repository
             closeConnection();
             return false;
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryAvailability.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -272,7 +222,7 @@ public class RepositoryAvailability extends RepositoryBase implements Repository
             return rst;
 
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryAvailability.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -289,7 +239,7 @@ public class RepositoryAvailability extends RepositoryBase implements Repository
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryAvailability.class.getName()).log(Level.SEVERE, null, ex);
             return new int[8];
         }
         return timeVector;
@@ -315,7 +265,7 @@ public class RepositoryAvailability extends RepositoryBase implements Repository
             return rst;
 
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryAvailability.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -332,7 +282,7 @@ public class RepositoryAvailability extends RepositoryBase implements Repository
             return rst;
 
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryAvailability.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -391,7 +341,7 @@ public class RepositoryAvailability extends RepositoryBase implements Repository
             return true;
 
         } catch (SQLException ex) {
-            Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RepositoryAvailability.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }

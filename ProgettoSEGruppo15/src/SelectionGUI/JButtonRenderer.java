@@ -21,7 +21,11 @@ import java.awt.event.MouseListener;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableCellRenderer;
 
-//renderer che permette la renderizzazione delle celle come bottoni
+/**
+ * 
+ * @author Catello
+ * Classe che permette di renderizza le celle della quinta colonna come un bottone di sfondo grigio e testo bianco
+ */
 public class JButtonRenderer extends DefaultTableCellRenderer{ 
     @Override
     public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {

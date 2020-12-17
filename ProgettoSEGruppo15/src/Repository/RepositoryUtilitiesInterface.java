@@ -17,13 +17,13 @@ public interface RepositoryUtilitiesInterface {
     
     /**
      * 
-     * @param rst
+     * @param rst A ResultSet that has to contain the ID of a Competence.
      * @return The ID of the Competence present in the ResultSet.
      */
     public String getCompetenceID(ResultSet rst);
 
     /**
-     * 
+     * Get a ResultSet that cointains all the competences required for the specified Typology.
      * @param typology
      * @return A ResultSet that cointains all the competences required for the specified Typology.
      */
@@ -31,14 +31,14 @@ public interface RepositoryUtilitiesInterface {
     
     /**
      * 
-     * @param rst
+     * @param rst A ResultSet that has to contain the ID of a Procedure.
      * @return The ID of the Procedure present in the ResultSet.
      */
     public String getProcedureID(ResultSet rst);
     
     /**
      * 
-     * @param rst
+     * @param rst A ResultSet that has to contain the parameter:"fileSMP" of a Procedure.
      * @return The fileSMP path present in the ResultSet.
      */
     public String getFileSMP(ResultSet rst);
