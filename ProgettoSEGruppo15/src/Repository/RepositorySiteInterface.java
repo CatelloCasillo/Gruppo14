@@ -10,21 +10,21 @@ import java.sql.ResultSet;
 public interface RepositorySiteInterface {
     /**
      * 
-     * @param rst
+     * @param rst A ResultSet that has to contain the ID of a Site
      * @return The ID of the Site present in the ResultSet.
      */
     public String getSiteID(ResultSet rst);
     
     /**
      * 
-     * @param rst
+     * @param rst A ResultSet that has to contain the parameter:"factory" of a Site
      * @return The Factory of the Site present in the ResultSet.
      */
     public String getFactorySite(ResultSet rst);
     
     /**
      * 
-     * @param rst
+     * @param rst A ResultSet that has to contain the parameter:"area" of a Site
      * @return The Area of the Site present in the ResultSet.
      */
     public String getAreaSite(ResultSet rst);

@@ -193,7 +193,7 @@ public class RepositoryActivity extends RepositoryBase implements RepositoryActi
     }
 
     @Override
-    public boolean updateMaintenanceActivity(String id, String site, String typology, String description, int time, boolean inter, int week) {
+    public boolean updateMaintenanceActivity(String id, String site, String typology, String description, int time, boolean interruptible, int week) {
         StringBuilder temp = new StringBuilder();
         temp.append("update MaintenanceActivity"
                 + " set activityDescription = ");
@@ -201,7 +201,7 @@ public class RepositoryActivity extends RepositoryBase implements RepositoryActi
         temp.append(" siteID = ").append(" '").append(site).append("',");
         temp.append(" activityInterventionTime = ").append("  ").append(time).append(" ,");
         temp.append(" activityTypology = ").append("'").append(typology).append("',");
-        temp.append(" interruptibleActivity = ").append("  ").append(inter).append(" ,");
+        temp.append(" interruptibleActivity = ").append("  ").append(interruptible).append(" ,");
         temp.append(" activityWeekNumber = ").append("  ").append(week).append(" ");
         temp.append(" where activityid = ").append(" '").append(id).append("';");
         try {
