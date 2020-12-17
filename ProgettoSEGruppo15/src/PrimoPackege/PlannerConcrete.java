@@ -109,7 +109,6 @@ public class PlannerConcrete extends PlannerAbstract{
     public Object[][] getSelectionableActvity(String currentWeek) {
         int currentWeekNumber=parseInt(currentWeek.trim());
         int numRighe=this.getNumberActivityInWeek(currentWeekNumber);
-        System.out.println(numRighe);
         final int numAttr=4;
         Object attrTable[][]= new Object[numRighe][];
         int j=0;
@@ -307,7 +306,6 @@ public class PlannerConcrete extends PlannerAbstract{
             ArrayList<String>WeekAvailability = new ArrayList<>();
             for(String day : days)
                 WeekAvailability.add(m.getDayAvailability(day));
-            System.out.println(m.getName()+": "+WeekAvailability);
             AvailabilityWeekTable[i] = new Object[]{m.getName(),skillCompliance(selectedActvityId, m.getId()), WeekAvailability.get(0), WeekAvailability.get(1), WeekAvailability.get(2), WeekAvailability.get(3), WeekAvailability.get(4), WeekAvailability.get(5), WeekAvailability.get(6)};
         }
         return AvailabilityWeekTable;}

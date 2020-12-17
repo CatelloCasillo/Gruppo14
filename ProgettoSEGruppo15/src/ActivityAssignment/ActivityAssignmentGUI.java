@@ -109,11 +109,9 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
             if(tempNumericSlots.get(index-2)>=timeToAssing){
             tempNumericSlots.set(index-2,tempNumericSlots.get(index-2) - timeToAssing);
             actFractTime[index-2]=timeToAssing;
-            System.out.println(tempNumericSlots);
             String interval=indexConverter(index-2);
             selectionInfo+=interval+": "+timeToAssing+" min\n";
             for(int j=0;j<8;j++)
-                System.out.print(actFractTime[j]+", ");
             break;
             }
             else{
@@ -154,7 +152,6 @@ public class ActivityAssignmentGUI extends javax.swing.JFrame {
                         selectedIndex = ActivityAssignmentGUI.this.jTable1.getSelectedColumns();
                         for(int index : selectedIndex)
                             output+=index+", ";
-                        //System.out.println(output);
                         calculateAssignment();
                 }
         if(ActivityAssignmentGUI.this.cleaned)

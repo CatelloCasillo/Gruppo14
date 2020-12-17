@@ -87,8 +87,8 @@ public class ViewActivityGUI extends javax.swing.JFrame {
     }
  /**
   * this method check if an activity is already assigned
-  * @param i 
-  * @return 
+  * @param i indicates the row selected
+  * @return true if activity is already assigned, false otherwise
   */   
     private boolean activityAssigned(int i){
         if(i<0)
@@ -374,7 +374,6 @@ public class ViewActivityGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_operationButton1ActionPerformed
 
     private void operationButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton2ActionPerformed
-        
         if(activityAssigned(jTable1.getSelectedRow())){
             disabledField();
             JOptionPane.showMessageDialog(rootPane, "Attività già assegnata impossibile modificare!", "Error message", JOptionPane.ERROR_MESSAGE);

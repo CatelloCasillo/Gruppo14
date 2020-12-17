@@ -297,6 +297,10 @@ public class ActivityEWO extends javax.swing.JFrame {
  */
     private void forwardButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forwardButton1ActionPerformed
         if(p.getMaintanceActivity(id)==null){
+               if(jTextArea3.getText().equals("Time required:")){
+                JOptionPane.showMessageDialog(rootPane, " You must insert other time!");
+                return;
+               }
         p.createActivity(MaintanceActivityFactory.Category.EWO, id, p.findSiteInList((siteID),p.getSiteList()), typology, jTextArea2.getText(), Integer.parseInt(jTextArea3.getText()), false, Integer.parseInt(weekNumber1.getText()),  workspacenote);
         Navigator nav=Navigator.getInstance(p);
         nav.changeToEWOassignment(this,siteID, id, typology, workspacenote,jList1.getSelectedValuesList());

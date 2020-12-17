@@ -33,7 +33,7 @@ public class TicketList extends javax.swing.JFrame{
     private File[] f;
 
 /**
- * Create a personal renderer to show the list of tickets
+ * Create a personal renderer to show the list of tickets with icon
  */
     private class MyCellRenderer extends JLabel implements ListCellRenderer {
 
@@ -214,13 +214,13 @@ public class TicketList extends javax.swing.JFrame{
             s=null;
             s= p.getStringInFile(f[list.getSelectedIndex()]);
              if(s==null ){
-                JOptionPane.showMessageDialog(rootPane, "il Ticket è vuoto!");
+                JOptionPane.showMessageDialog(rootPane, "Ticket is empty!");
             }
     }//GEN-LAST:event_listMouseClicked
 
     private void operationButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_operationButton1ActionPerformed
          if(s==null){
-                JOptionPane.showMessageDialog(rootPane, "Devi selezionare un Ticket!");
+                JOptionPane.showMessageDialog(rootPane, "You must select a Ticket!");
         }
         else{
         Navigator nav=Navigator.getInstance(p);
